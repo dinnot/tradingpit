@@ -1,6 +1,6 @@
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('news/index') ?>
+<?php echo form_open('news/news/index') ?>
 
 	<textarea name="text"></textarea>	
 	<input type="submit" name="submit" value="Search" /> 
