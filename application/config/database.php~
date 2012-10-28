@@ -48,9 +48,9 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'tradingpit.thenewgeeksintown.com';
-$db['default']['username'] = 'tpit_user';
-$db['default']['password'] = 'trading002';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'albalbastru';
 $db['default']['database'] = 'tpit_beta';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
