@@ -2,6 +2,8 @@
     class UsersModel extends CI_Model {
         
         const SALT = "gdIFDGION9-90sg0";
+        const ERROR_USERNAME_EXISTS = 11;
+        const ERROR_EMAIL_EXISTS = 12;
         
         private function encryptPassword($pwd) {
             return md5(md5($pwd.UsersModel::SALT));
@@ -58,6 +60,66 @@
                 return $key;
             } else {
                 return false;
+            }
+        }
+        
+        function getUserSettings() {
+            $this->db->from("usersettings");
+            $query = $this->db->get();
+            $arr = array();
+            foreach($query->result() as $row) {
+                $arr[$row->name] = $row;
+            }
+            return $arr;
+        }
+        
+        function getUserTypes() {
+            $this->db->from("usertypes");
+            $query = $this->db->get();
+            $arr = array();
+            foreach($query->result() as $row) {
+                $arr[$row->name] = $row;
+            }
+            return $arr;
+        }
+        
+        function updateSetting($user, $setting, $value) {
+            $this->db->set(array("value"=>$value));
+            $this->db->where(array("users_id"=>$user, "usersettings_id"=>$setting));
+            $this->db->update("users_has_usersettings");
+        }
+        
+        function createUser($email, $password, $username, $type, $country, $settings) {
+            $data = array("email"=>$email,
+                    "password"=>$this->encryptPassword($password),
+                    "username"=>$username,
+                    "usertypes_id"=>$type,
+                    "countries_id"=>$country,
+                    "comfirm_email"=>md5($email.rand(100000, 999999)),
+                );
+            //check if email or username exists
+            $this->db->select("email, username")->from("users")->where("email", $email)->or_where("username", $username);
+            $query = $this->db->get();
+            if($query->num_rows() > 0) {
+                $row = $query->result();
+                if($row->email == $email) {
+                    return UsersModel::ERROR_EMAIL_EXISTS;
+                } else {
+                    return UsersModel::ERROR_USERNAME_EXISTS;
+                }
+            } else {
+                //create the user and //?send verification email\\
+                $this->db->set($data);
+                $this->db->insert("users");
+                $id = $this->db->insert_id();
+                //add settings
+                $batch = array();
+                foreach($settings as $setting) {
+                    $batch[] = array('usersettings_id'=>$setting['id'], 'value'=>$setting['value'], "users_id"=>$id);
+                }
+                $this->db->insert_batch('users_has_usersettings', $batch);
+                //login
+                return $this->getLogin($email, $password);
             }
         }
     }
