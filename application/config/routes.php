@@ -41,6 +41,7 @@
 $route['default_controller'] = "welcome";
 $route['404_override'] = 'errors/404';
 $route['econ'] = 'econ/econ';
+$route['news'] = 'news/news';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
