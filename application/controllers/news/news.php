@@ -4,12 +4,12 @@
 		public function __construct() {
 		
 			parent::__construct();
-			$this->load->model("NewsModel");
+			$this->load->model("News_Model");
 		}
 
 		public function index() {
 		
-			$data["news"] = $this->NewsModel->get_news();
+			$data["news"] = $this->News_Model->get_news();
 			
 			/////////////// form pt filtru /////////////////////
 			$this->load->helper('form');
