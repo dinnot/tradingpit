@@ -1,5 +1,5 @@
 <?php
-	class NewsModel extends CI_Model {
+	class News_Model extends CI_Model {
 		
 		public function __construct() {
 			
@@ -14,6 +14,8 @@
 			$query = $this->db->get() ; 
 			return $query->result_array();
 		}
+		
+		//
 	}
 	
 ?>
