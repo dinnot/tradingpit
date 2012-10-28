@@ -12,12 +12,8 @@ class Econ extends CI_Controller {
 	
 	public function index () {
 		
-<<<<<<< HEAD
-		$this->load->model ("econ_model");				
-=======
 		$this->load->model ("Econ_model");				
 		$this->load->model ("News_model");
->>>>>>> 8a878c0ee8588efb61256a688a9e3fe3f1717d7f
 		$data['econlevels'] = $this->Econ_model->get_econlevels ();
 		$data['econforcasts'] = $this->Econ_model->get_econforcasts ();		
 		
