@@ -2,3 +2,4 @@
 [26-Oct-2012 18:36:42 UTC] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'tpit'@'localhost' (using password: NO) in /home/tpit/public_html/testdb.php on line 10
 [26-Oct-2012 18:36:42 UTC] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home/tpit/public_html/testdb.php on line 10
 [26-Oct-2012 18:36:42 UTC] PHP Warning:  mysql_fetch_array() expects parameter 1 to be resource, boolean given in /home/tpit/public_html/testdb.php on line 11
+[28-Oct-2012 19:21:55 UTC] PHP Fatal error:  Call to a member function get_econlevels() on a non-object in /home/tpit/public_html/application/controllers/econ/econ.php on line 16
