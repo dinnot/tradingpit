@@ -19,10 +19,13 @@
 			$this->db->from ("econforcasts");
 			$this->db->join("countries", "econforcasts.countries_id = countries.id", "left");
 			$this->db->join("econindicators", "econforcasts.econindicators_id = econindicators.id", "left");
-			$query = $this->db->get ();
 			
+			$this->apply_filter_date ();
+			$this->apply_filter_type ();
+			$this->apply_filter_name ();	
+				
+			$query = $this->db->get ();			
 			$econforcasts = $query->result_array ();			
-
 			return $econforcasts;
 		}
 		
@@ -34,45 +37,28 @@
 			
 			return $econlevels;
 		}
-				
-		function apply_filter_name (&$econforcasts, $filter_name) {
-			if ($filter_name == '') 
-				return ;
-				
-			$new_econforcast = array ();
-			foreach ($econforcasts as $item) {
-				if (stripos ($item['econindicators_name'], $filter_name) !== FALSE)
-					$new_econforcast[] = $item;
+			
+		function apply_filter_date () {
+			$filter_date_start = $this->input->get_post ("filter_date_start"); 
+			$filter_date_end = $this->input->get_post ("filter_date_end");
+			if ($filter_date_start && $filter_date_end) {
+				$this->db->where ('date >', $filter_date_start);
+				$this->db->where ('date <', $filter_date_end);
 			}
-						
-			$econforcasts = $new_econforcast; 
 		}
 		
-		function apply_filter_date (&$econforcasts, $filter_date) {
-			if ($filter_date['start'] == '' || $filter_date['end'] == '') 
-				return ;
-				
-			$new_econforcast = array ();
-			foreach ($econforcasts as $item) {
-				if ($filter_date['start'] <= $item['date'] && $item['date'] <= $filter_date['end'])
-					$new_econforcast[] = $item;
-			}
-									
-			$econforcasts = $new_econforcast; 
+		function apply_filter_type () {
+			$filter_type = $this->input->get_post ("filter_type");
+			if ($filter_type != 0)
+				$this->db->where ('econlevels_id', $filter_type);
 		}
 		
-		function apply_filter_type (&$econforcasts, $filter_type) {
-		
-			if ($filter_type == 0)
-				return ;
-				
-			$new_econforcast = array ();
-			foreach ($econforcasts as $item) 
-				if ($item['econlevels_id'] == $filter_type)
-					$new_econforcast[] = $item;
-	
-			$econforcasts = $new_econforcast; 
+		function apply_filter_name () {
+			$filter_name = $this->input->get_post ("filter_name");
+			if ($filter_name)
+				$this->db->like ('econindicators.name', $filter_name);
 		}
+					
 	};	
 	
 ?>
