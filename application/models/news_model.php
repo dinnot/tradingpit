@@ -1,9 +1,10 @@
-<?php
-	class News_Model extends CI_Model {
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+	class News_model extends CI_Model {
 		
 		public function __construct() {
 			
-			$this->load->database();
+                        parent::__construct();
 		}
 	
 		public function get_news() {
@@ -16,4 +17,8 @@
 		}
 	}
 	
+<<<<<<< HEAD
 ?>
+=======
+?>	
+>>>>>>> d56753890ac0484691a1bcf6baa6e7b0a97d37ce
