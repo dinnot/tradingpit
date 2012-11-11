@@ -43,10 +43,6 @@ $route['404_override'] = 'errors/404';
 $route['econ'] = 'econ/econ';
 $route['news'] = 'news/news';
 
-$route['clients'] = 'trading/clients';
-$route['clients/(:any)'] = 'trading/clients/$1';
-$route['retail_clients'] = 'trading/retail_clients';
-$route['retail_clients/(:any)'] = 'trading/retail_clients/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

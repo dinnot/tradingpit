@@ -25,14 +25,10 @@ class Retail_clients extends CI_Controller {
 	function check_next_client () {
 		
 		$user_id = $this->input->get_post ('user_id');
-		//////////////////////
-		//		$user_id = 1;	//	
-		//////////////////////
 		$response = $this->Retail_clients_model->check_next_client ($user_id);
 		$response['amount'] = $this->Retail_clients_model->get_user_amount ($user_id);
-		$this->output->set_content_type('application/jsonp');
+		$this->output->set_content_type('application/json');
 		$this->output->set_output ( json_encode ( $response ) );
-
 	}
 }
 

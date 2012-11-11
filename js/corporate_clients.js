@@ -3,7 +3,7 @@ current_offers = new Object ();
 
 function send (id) {
 	
-	url = base_url+'index.php/clients/set_quote';
+	url = base_url+'trading/corporate_clients/set_quote';
 	dataIn = {
 		user_id: user_id,
 		offer_id : id,
@@ -88,7 +88,7 @@ function display_offer (data) {
 
 function get_clients_offers () {
 	
-	url = base_url+'index.php/clients/get_new_clients_offers';
+	url = base_url+'trading/corporate_clients/get_new_clients_offers';
 	dataIn = {
 		user_id: user_id,
 		time: new Date().getTime ()
