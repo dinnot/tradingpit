@@ -27,7 +27,12 @@
             }
         }
         
-        function getAlLSettings() {
+        function getSettingValue($name) {
+            $rt =  $this->getSetting($name);
+            return $rt->value;
+        }
+        
+        function getAllSettings() {
             return $this->settings;
         }
         
