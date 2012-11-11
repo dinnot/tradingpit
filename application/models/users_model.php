@@ -27,11 +27,11 @@
         
         function getAuth($key, $module) {
             $ukey = $this->makeUkey($key);
-            $user = $this->getUserBy(array("ukey"=>$key));
+            $user = $this->getUserBy(array("ukey"=>$ukey));
             if($user === false) {
                 return false;
             } else {
-                $access = $this->hasModuleAccess($user->usertype_id, $module);
+                $access = $this->hasModuleAccess($user->usertypes_id, $module);
                 if($access) {
                     return $user;
                 } else {

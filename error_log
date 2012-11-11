@@ -10,3 +10,11 @@
 [03-Nov-2012 22:55:32 UTC] PHP Fatal error:  Call to undefined function random() in /home/tpit/public_html/application/models/users_model.php on line 57
 [03-Nov-2012 22:56:13 UTC] PHP Fatal error:  Class 'UsersModel' not found in /home/tpit/public_html/application/models/users_model.php on line 108
 [04-Nov-2012 23:22:47 UTC] PHP Parse error:  syntax error, unexpected T_SL in /home/tpit/public_html/application/models/news_model.php on line 20
+[08-Nov-2012 16:42:07 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 31201281 bytes) in /home/tpit/public_html/system/core/Exceptions.php on line 185
+[08-Nov-2012 16:43:57 UTC] PHP Fatal error:  Call to a member function results() on a non-object in /home/tpit/public_html/application/models/banks_model.php on line 144
+[08-Nov-2012 16:46:27 UTC] PHP Fatal error:  Call to undefined method CI_DB_mysql_result::results() in /home/tpit/public_html/application/models/banks_model.php on line 144
+[08-Nov-2012 16:49:48 UTC] PHP Fatal error:  Call to undefined function createBotCeo() in /home/tpit/public_html/application/models/banks_model.php on line 153
+[08-Nov-2012 16:50:52 UTC] PHP Fatal error:  Call to undefined function createJob() in /home/tpit/public_html/application/models/banks_model.php on line 125
+[08-Nov-2012 16:51:53 UTC] PHP Fatal error:  Call to undefined function createJob() in /home/tpit/public_html/application/models/banks_model.php on line 125
+[08-Nov-2012 17:04:26 UTC] PHP Fatal error:  Call to a member function getSettingValue() on a non-object in /home/tpit/public_html/application/controllers/general/dashboard.php on line 44
+[08-Nov-2012 18:22:42 UTC] PHP Fatal error:  Call to a member function getFullJob() on a non-object in /home/tpit/public_html/application/controllers/general/dashboard.php on line 64

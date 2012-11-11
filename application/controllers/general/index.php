@@ -46,10 +46,10 @@ class Index extends CI_Controller {
         $result = $this->Users_model->getLogin($this->input->post('email'), $this->input->post('password'));
         if($result !== false) {
             $this->session->set_userdata(array("key"=>$result));
-            redirect('general/dashboard');
+            redirect('/general/dashboard/');
         } else {
             $this->session->set_flashdata('ERROR', "Oops... An error occured");
-            redirect('general/index');
+            redirect('/general/index/');
         }
     }
 };
