@@ -4,7 +4,7 @@
 		
 		public function __construct() {
 			
-                        parent::__construct();
+    	parent::__construct();
 		}
 	
 		public function get_news() {
@@ -17,8 +17,4 @@
 		}
 	}
 	
-<<<<<<< HEAD
 ?>
-=======
-?>	
->>>>>>> d56753890ac0484691a1bcf6baa6e7b0a97d37ce
