@@ -7,7 +7,7 @@
 			parent::__construct();
 			$this->load->model("Dealing_Model");
 			
-			/*
+			
 			$this->load->helper('url');
 			$this->load->library('session');
 			$this->load->model("Users_model");
@@ -27,22 +27,22 @@
 			if(!$valid) {
 				redirect("/errors/404");
 			}
-			*/
+			
 		}
 		
 		public function index() {
 			
-			/*
-			$data["user_id"] = $this->user->id ;
-			$data["fx_deals"] = $this->Dealing_Model->get_fx_deals($this->user->id);
-			$data["mm_deals"] = $this->Dealing_Model->get_mm_deals($this->user->id);
-			*/
 			
+			$data["fx_deals"] = $this->Dealing_Model->get_fx_deals($this->user->username);
+			$data["mm_deals"] = $this->Dealing_Model->get_mm_deals($this->user->username);
+			
+			
+			/*
 			$username = "GOGU";
 			
 			$data["fx_deals"] = $this->Dealing_Model->get_fx_deals($username);
 			$data["mm_deals"] = $this->Dealing_Model->get_mm_deals($username);
-			
+			*/
 		
 			$this->load->view('dealing/index', $data);
 			
