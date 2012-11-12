@@ -24,7 +24,7 @@ class Clients extends CI_Controller {
         }
     }
     if(!$valid) {
-        redirect("/errors/404");
+        redirect("/general/index");
     }
 
 		$this->load->database();

@@ -36,7 +36,7 @@
 					$offers_to_display[] = $offers[$i];
 				
 				if ($time - $offers[$i]['display_date'] >= 60 && $offers[$i]['status'] == 1)
-					$this->set_result ($offers[$i]['offer_id']);
+					$this->set_result ($offers[$i]);
 			}			
 			
 				
@@ -47,25 +47,28 @@
 			$this->db->where ( array ('offer_id' => $offer_id, 'user_id' => $user_id) );
 			$this->db->update ('users_has_corporate_offers', array ('quote' => $quote, 'status' => '1' ) );
 		}
-	
-	
-		function set_result ($offer_id) {
+		
+		function set_result (&$offer) {
 			$this->db->select ("*");
 			$this->db->from ("users_has_corporate_offers");			
 			$this->db->order_by ("quote", "desc");
 			$this->db->join ("clients_offers", "users_has_corporate_offers.offer_id = clients_offers.id", "left");									
-			$this->db->where (array ('offer_id'=>$offer_id));
+			$this->db->where (array ('offer_id'=>$offer['offer_id']));
 			$query = $this->db->get ();
 			$results = $query->result_array ();
 					
 			$best_offer = $results[0]['quote'];
+			print $best_offer.' (BO)<br />';
 			foreach ($results as $item) {
+				print_r ($item);
+				print '<br />';				
 				if ($item['quote'] == $best_offer && $best_offer != 0) 
 					$status = 2;	
 				else
 					$status = 3;
 				
-				$this->db->where ( array ('user_id'=>$item['user_id'], 'offer_id'=>$offer_id) );
+				$offer['status'] = $status;
+				$this->db->where ( array ('user_id'=>$item['user_id'], 'offer_id'=>$offer['offer_id']) );
 				$this->db->update ('users_has_corporate_offers', array ('status'=>$status));
 			}
 		}
