@@ -1,5 +1,6 @@
 var timer_queue = new Array ();
 current_offers = new Object ();
+current_status = new Object ();
 
 function send (id) {
 	
@@ -18,6 +19,7 @@ function send (id) {
 	dataType: 'json',
 	success: function (data, textStatus, jqXHR) {                    
 		action = '';
+		
 		$('#quote_'+id).text ($('#input_quote_'+id).val ());
 		$('#action_'+id).text (' ');		
 		$('#result_'+id).text ('pending');
@@ -28,13 +30,12 @@ function send (id) {
 
 	});
 
+	current_status[id] = 1;
 }
 
 function update_status (id, status) {
 
-	console.log ('status');
-	console.log (status);
-	current_offers[id]['status'] = status;
+	current_status[id] = status;
 
 	if (status == 1) result = 'pending';
 	if (status == 2) result = 'accepted';
@@ -101,10 +102,10 @@ function get_clients_offers () {
       async: true,
       dataType: 'json',
       success: function (data, textStatus, jqXHR) {                    
-      	console.log (data);
+      	
       	for (var i = 0; i < data.length; i++) {
       		if ( !current_offers[data[i]['offer_id']] ) display_offer (data[i]);						
-      		else if ( current_offers[ data[i]['offer_id'] ]['status'] != data[i]['status'] )
+      		else if ( current_status[ data[i]['offer_id'] ] != data[i]['status'] )
       			update_status ( data[i]['offer_id'], data[i]['status'] );
       	}
 			}, 
@@ -127,7 +128,9 @@ function timer () {
 				
 			$('#timer_'+id).text ( rem );
 			if (rem  == 0) {			
-				  if (timer_queue[i]['status'] == 0) send (id);				  				  
+				  if (current_status[id] == 0) 
+				  	send (id);				  				  
+				  
 				  delete timer_queue[i];
 			}
 		}
