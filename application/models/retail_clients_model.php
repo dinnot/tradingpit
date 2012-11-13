@@ -56,7 +56,7 @@
 			// return amount and date			
 			$result['amount'] = 0;
 			$result['amount'] = rand (1000, 12000);
-			$result['date'] = time () + 50 + rand () % 5 - 10;
+			$result['date'] = time () + 40 + rand () % 5 - 10;
 			
 			return $result;
 		}

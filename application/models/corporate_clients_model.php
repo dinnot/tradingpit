@@ -58,10 +58,7 @@
 			$results = $query->result_array ();
 					
 			$best_offer = $results[0]['quote'];
-			print $best_offer.' (BO)<br />';
 			foreach ($results as $item) {
-				print_r ($item);
-				print '<br />';				
 				if ($item['quote'] == $best_offer && $best_offer != 0) 
 					$status = 2;	
 				else
