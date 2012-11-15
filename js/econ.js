@@ -1,18 +1,26 @@
 $("#event_filter").change (
 	function () {
+		
 		get_econforcasts ();
 	}
 );
 
-$("#type_filter").change (
+$("#event_filter").keyup (
 	function () {
-		get_econforcasts ();
+		if ($("#event_filter").val () == "") 
+			get_econforcasts ();
 	}
 );
 
 $("#event_filter").click (
 	function () {
 		$("#event_filter").val ("");
+	}
+);
+
+$("#type_filter").change (
+	function () {
+		get_econforcasts ();
 	}
 );
 
@@ -51,8 +59,6 @@ function get_econforcasts () {
 		data_in['date_end_filter'] = end;
 	}
 	
-	console.log (data_in);
-	
 	$.ajax({
 			action: 'POST',
       url: url,
@@ -60,12 +66,10 @@ function get_econforcasts () {
       async: true,
       dataType: 'json',
       success: function (data,textStatus, jqXHR) {                    
-				console.log ("dada");
-				console.log (data);    		
     		display_econforcasts (data);
 			}, 
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
-        console.log(textStatus, errorThrown);
+//        console.log(textStatus, errorThrown);
       }
 
 		});
