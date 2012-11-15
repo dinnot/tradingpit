@@ -32,7 +32,7 @@ $("#datepickerStart").change (
 
 function get_econforcasts () {
 	
-	var url = "http://localhost/tradingpit/econ/econ/get_econforcasts";
+	var url = base_url+"econ/econ/get_econforcasts";
 	data_in = new Object ();
 	
 	var event_filter = $("#event_filter").val ();

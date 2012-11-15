@@ -13,7 +13,7 @@
 			$what[] = "econforcasts.forecast"; $what[] = "econforcasts.actual";
 			$what[] = "countries.name AS countries_name";
       $what[] = "econindicators.name AS econindicators_name";
-      $what[] = "econlevels_id";
+      $what[] = "econlevels_id"; $what[] = "econindicators_id";
                                                                   
 			$this->db->select ($what);
 			$this->db->from ("econforcasts");
@@ -37,6 +37,7 @@
 				$this->db->select ("forecast");
 				$this->db->from ("econforcasts");
 				$this->db->where ("date <", $econforcasts[$i]['date']);
+				$this->db->where ("econindicators_id", $econforcasts[$i]['econindicators_id']);
 				$this->db->order_by ("date", "desc");
 				$this->db->limit (1);
 				$query = $this->db->get ();

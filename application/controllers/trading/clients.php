@@ -27,7 +27,6 @@ class Clients extends CI_Controller {
         redirect("/general/index");
     }
 
-		$this->load->database();
 		$this->load->helper('form');
 		$this->load->helper('url');
 		$this->load->model('Corporate_clients_model');		
