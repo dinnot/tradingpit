@@ -73,8 +73,13 @@
             </ul>
             <div class="date-time-info">
               <ul>
+<<<<<<< HEAD
                  <li class="first" id="time"></li>
                 <li id="date"></li>
+=======
+                <li class="first">13:34 PM</li>
+                <li>10/14/2012</li>
+>>>>>>> 645b72aa00d6309b7bd3881b1d250266081f2d06
               </ul>
             </div><!-- end date-time-info -->
           </nav>
