@@ -4,14 +4,29 @@ class Econ extends CI_Controller {
 	
 	public function __construct () {
 		
-		parent::__construct ();		
-
-		$this->load->helper('form');
+		parent::__construct ();
+				
     $this->load->database();
-    $this->load->helper('url');
+	  $this->load->helper('url');
     $this->load->library('session');
     $this->load->model("Users_model");
-		
+    $this->module_name = "clients";
+    $valid = false;
+    if($this->session->userdata("key")) {
+        $key = $this->session->userdata("key");
+        $auth = $this->Users_model->getAuth($key, $this->module_name);
+        $this->user = $auth;
+        if($auth !== false) {
+            $this->user = $auth;
+            $valid = true;
+        }
+    }
+    if(!$valid) {
+        redirect("/general/index");
+    }
+
+
+		$this->load->helper('form');
 		$this->load->model ("Econ_model");				
 		$this->load->model ("News_model");    
 	}
