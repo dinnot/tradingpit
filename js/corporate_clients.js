@@ -37,6 +37,7 @@ function update_status (id, status) {
 
 	current_status[id] = status;
 
+	resunt = "";
 	if (status == 1) result = 'pending';
 	if (status == 2) result = 'accepted';
 	if (status == 3) result = 'no deal';
@@ -47,6 +48,7 @@ function update_status (id, status) {
 function display_offer (data) {
 		
 	current_offers[data['offer_id']] = {'status': data['status']};	
+	current_status[data['offer_id']] = data['status']		
 			
 			
 	var status = data['status'];
@@ -102,11 +104,13 @@ function get_clients_offers () {
       async: true,
       dataType: 'json',
       success: function (data, textStatus, jqXHR) {                    
-      	
+      
       	for (var i = 0; i < data.length; i++) {
       		if ( !current_offers[data[i]['offer_id']] ) display_offer (data[i]);						
-      		else if ( current_status[ data[i]['offer_id'] ] != data[i]['status'] )
-      			update_status ( data[i]['offer_id'], data[i]['status'] );
+      		else {
+      			if ( current_status[ data[i]['offer_id'] ] != data[i]['status'] )
+      				update_status ( data[i]['offer_id'], data[i]['status'] );
+      		}
       	}
 			}, 
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -138,4 +142,4 @@ function timer () {
 }
 
 setInterval (timer , 1000);
-setInterval (get_clients_offers, 10000);
+setInterval (get_clients_offers, 4000);

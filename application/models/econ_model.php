@@ -21,12 +21,32 @@
 			$this->db->join("econindicators", "econforcasts.econindicators_id = econindicators.id", "left");
 			
 			$this->apply_filter_date ();
-			$this->apply_filter_type ();
-			$this->apply_filter_name ();	
+			$this->apply_type_filter ();
+			$this->apply_event_filter ();	
 				
 			$query = $this->db->get ();			
-			$econforcasts = $query->result_array ();			
+			$econforcasts = $query->result_array ();		
+			$this->get_prior ($econforcasts);	
 			return $econforcasts;
+		}
+		
+		// mai bine calculam si o tinem in baza de date cand introducem un nou forecast
+		function get_prior (&$econforcasts) {
+			$len = count ($econforcasts);
+			for ($i = 0; $i < $len; $i++) {
+				$this->db->select ("forecast");
+				$this->db->from ("econforcasts");
+				$this->db->where ("date <", $econforcasts[$i]['date']);
+				$this->db->order_by ("date", "desc");
+				$this->db->limit (1);
+				$query = $this->db->get ();
+				if ($query->num_rows () == 0)
+					$econforcasts[$i]['prior'] = "-";
+				else {
+					$result = $query->row ();
+					$econforcasts[$i]['prior'] = $result->forecast;
+				}
+			}
 		}
 		
 		function get_econlevels () {
@@ -39,24 +59,25 @@
 		}
 			
 		function apply_filter_date () {
-			$filter_date_start = $this->input->get_post ("filter_date_start"); 
-			$filter_date_end = $this->input->get_post ("filter_date_end");
-			if ($filter_date_start && $filter_date_end) {
-				$this->db->where ('date >', $filter_date_start);
-				$this->db->where ('date <', $filter_date_end);
+			$date_start_filter = strtotime ($this->input->get_post ("date_start_filter")); 
+			$date_end_filter = strtotime ( $this->input->get_post ("date_end_filter"));
+	
+			if ($date_start_filter && $date_end_filter) {
+				$this->db->where ('date >=', $date_start_filter);
+				$this->db->where ('date <=', $date_end_filter);
 			}
 		}
 		
-		function apply_filter_type () {
-			$filter_type = $this->input->get_post ("filter_type");
-			if ($filter_type != 0)
-				$this->db->where ('econlevels_id', $filter_type);
+		function apply_type_filter () {
+			$type_filter = $this->input->get_post ("type_filter");
+			if ($type_filter != 0)
+				$this->db->where ('econlevels_id', $type_filter);
 		}
 		
-		function apply_filter_name () {
-			$filter_name = $this->input->get_post ("filter_name");
-			if ($filter_name)
-				$this->db->like ('econindicators.name', $filter_name);
+		function apply_event_filter () {
+			$event_filter = $this->input->get_post ("event_filter");
+			if ($event_filter)
+				$this->db->like ('econindicators.name', $event_filter);
 		}
 					
 	};	

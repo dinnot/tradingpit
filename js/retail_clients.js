@@ -37,6 +37,7 @@ function check_next_client () {
       async: true,
       dataType: 'json',
       success: function (data, textStatus, jqXHR) {                    
+      	console.log (data);
     		$('#retail_sell_0').text (data['amount'][0]['sell']);
     		$('#retail_buy_0').text (data['amount'][0]['buy']);
     		$('#retail_sell_1').text (data['amount'][1]['sell']);
