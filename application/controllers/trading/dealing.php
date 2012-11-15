@@ -32,16 +32,12 @@
 		
 		public function index() {
 			
-			/*
-			$data["user_id"] = $this->user->id ;
-			$data["fx_deals"] = $this->Dealing_Model->get_fx_deals($this->user->id);
-			$data["mm_deals"] = $this->Dealing_Model->get_mm_deals($this->user->id);
-			*/
 			
-			$username = "GOGU";
+			//$user_id = $this->user-id ;
+			$user_id = 2;
 			
-			$data["fx_deals"] = $this->Dealing_Model->get_fx_deals($username);
-			$data["mm_deals"] = $this->Dealing_Model->get_mm_deals($username);
+			$data["fx_deals"] = $this->Dealing_Model->get_fx_deals($user_id);
+			$data["mm_deals"] = $this->Dealing_Model->get_mm_deals($user_id);
 			
 		
 			$this->load->view('dealing/index', $data);

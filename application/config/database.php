@@ -49,10 +49,10 @@ $active_group = 'default';
 $active_record = TRUE;
 
 
-$db['default']['hostname'] = 'tradingpit.thenewgeeksintown.com';
-$db['default']['username'] = 'tpit_user';
-$db['default']['password'] = 'trading002';
-$db['default']['database'] = 'tpit_beta';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'apaplata';
+$db['default']['database'] = 'php';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
@@ -64,6 +64,8 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
+
+
 
 
 /* End of file database.php */
