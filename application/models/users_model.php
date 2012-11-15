@@ -6,7 +6,7 @@
         const ERROR_EMAIL_EXISTS = 12;
         
         private function encryptPassword($pwd) {
-            return md5(md5($pwd.UsersModel::SALT));
+            return md5(md5($pwd.Users_model::SALT));
         }
         
         private function makeUkey($key) {
@@ -18,7 +18,6 @@
             $this->db->from("users");
             $this->db->where($cond);
             $query = $this->db->get();
-            
             if ($query->num_rows() > 0) {
                return $query->row(); 
             } else {
@@ -28,11 +27,11 @@
         
         function getAuth($key, $module) {
             $ukey = $this->makeUkey($key);
-            $user = $this->getUserBy(array("ukey"=>$key));
+            $user = $this->getUserBy(array("ukey"=>$ukey));
             if($user === false) {
                 return false;
             } else {
-                $access = $this->hasModuleAccess($user->usertype_id, $module);
+                $access = $this->hasModuleAccess($user->usertypes_id, $module);
                 if($access) {
                     return $user;
                 } else {
@@ -54,7 +53,7 @@
         function getLogin($email, $password) {
             $user = $this->getUserBy(array("email"=>$email, "password"=>$this->encryptPassword($password)));
             if($user !== false) {
-                $key = md5($user->username.$user->id.random(1000000, 9999999));
+                $key = md5($user->username.$user->id.rand(1000000, 9999999));
                 $ukey = $this->makeUkey($key);
                 $this->db->update("users", array('ukey'=>$ukey), "id = {$user->id}");
                 return $key;
@@ -89,23 +88,23 @@
             $this->db->update("users_has_usersettings");
         }
         
-        function createUser($email, $password, $username, $type, $country, $settings) {
+        function createUser($email, $password, $username, $type, $country, $settings = false) {
             $data = array("email"=>$email,
                     "password"=>$this->encryptPassword($password),
                     "username"=>$username,
                     "usertypes_id"=>$type,
                     "countries_id"=>$country,
-                    "comfirm_email"=>md5($email.rand(100000, 999999)),
+                    "confirm_email"=>md5($email.rand(100000, 999999)),
                 );
             //check if email or username exists
             $this->db->select("email, username")->from("users")->where("email", $email)->or_where("username", $username);
             $query = $this->db->get();
             if($query->num_rows() > 0) {
-                $row = $query->result();
+                $row = $query->row();
                 if($row->email == $email) {
-                    return UsersModel::ERROR_EMAIL_EXISTS;
+                    return Users_model::ERROR_EMAIL_EXISTS;
                 } else {
-                    return UsersModel::ERROR_USERNAME_EXISTS;
+                    return Users_model::ERROR_USERNAME_EXISTS;
                 }
             } else {
                 //create the user and //?send verification email\\
