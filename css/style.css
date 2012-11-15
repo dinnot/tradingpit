@@ -1,0 +1,408 @@
+/*   
+Trading Pit
+Author: Stefan Alexandru
+Author URI: http://www.alexwebdesign.ro
+*/
+
+/* =============================================================================
+   	CSS Reset (http://meyerweb.com/eric/tools/css/reset/)
+   ========================================================================== */
+  
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,and,address,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video,input,textarea,select{background:transparent;border:0;font-size:100%;margin:0;outline:0;padding:0;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}del{text-decoration:line-through}hr{background:transparent;border:0;clear:both;color:transparent;height:1px;margin:0;padding:0}mark{background-color:#ffffb3;font-style:italic}input,select{vertical-align:middle}ins{background-color:red;color:white;text-decoration:none}ol,ul{list-style:none}table{border-collapse:collapse;border-spacing:0}
+
+/* =============================================================================
+   	Master CSS
+   ========================================================================== */
+
+body {
+	font-family: Verdana;
+	font-size: 13px; 
+	-webkit-font-smoothing: antialiased; 
+	-webkit-text-size-adjust: 100%;
+	background: #fff url(../images/body-bg.png) repeat-x top center;
+}
+
+a {
+	text-decoration: none;
+}
+
+.container {
+	width: 930px;
+	margin: auto;
+}
+
+/* ======================================
+   	Header
+   ====================================== */
+
+header {
+	background: url(../images/header-bg.png) no-repeat top center;
+	height: 196px;
+}
+
+.top-section {
+	font-size: 0;
+}
+
+.top-header {
+	position: relative;
+	height: 169px;
+}
+
+nav ul, nav ul li.level-one {
+	display: inline-block;
+	vertical-align: top;
+	position: relative;
+}
+
+nav ul li.level-one ul {
+	display: none;
+	position: absolute;
+	top:25px;
+	min-width: 150px;
+	font-size: 13px; 
+	z-index: 5;
+}
+
+nav ul li.level-one ul li {
+	display: block;
+	font-size: 13px; 
+}
+
+nav ul li.level-one ul li a {
+	background: #0d0d0d;
+	display: block;
+}
+
+nav ul li.level-one:hover ul {
+	display: block;
+}
+
+nav ul li a {
+	padding:6px 13px;
+	color:#b0b0b0;
+	display: inline-block;
+	font-size: 13px; 
+}
+
+nav ul li a:hover, nav ul li a.current  {
+	background:#2b2b2b;
+	color:#fff;
+}
+
+nav ul li a.light-blue {
+	color:#c5e2e6;
+}
+
+.date-time-info {
+	float: right;
+	margin:6px 12px 0 0;
+}
+
+.date-time-info ul li {
+	color: #FFFFFF;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: bold;
+    margin-right: 5px;
+    margin-top: 1px;
+    vertical-align: top;
+}
+
+.date-time-info ul li.first {
+	border-right: 1px solid #fff;
+	padding-right: 5px;
+}
+.navigation-bar {
+	position: relative;
+	margin-bottom: 40px;
+	
+}
+.navigation-bar .nav-bar-bottom-bg {
+	background:url(../images/navigation-bar-bottom-bg.png) no-repeat bottom center;
+	width: 928px;
+	height: 38px;
+	position: absolute;
+	bottom:-40px;
+	left:1px;
+	z-index: 3;
+}
+
+/* ======================================
+   	Main content
+   ====================================== */
+
+.main-content {
+	background:#f2f2f2;
+	padding-top:40px;
+	min-height: 600px;
+}
+
+/* ======================================
+   	Economy page
+   ====================================== */
+
+.upload-file-container, .select-container, .datepicker-container {
+	display: inline-block;
+}
+
+.datepicker-container {
+	float: right;
+	margin-right: 20px;
+}
+
+.datepicker-container input {
+	width: 80px;
+	font-size: 11px;
+}
+
+.top-main {
+	margin-bottom: 20px;
+}
+
+.radio-buttons-container {
+	text-align: right;
+	padding-right: 20px;
+	color:#5c5c5c;
+	font-size: 11px;
+	margin:10px 0 20px 0;
+}
+
+.radio-buttons-container .label {
+	position: relative;
+	top:2px;
+	margin-right:8px;
+	font-weight: bold;
+}
+
+.radio-buttons-container .label.last {
+	margin-right: 0;
+}
+
+.silver-gradient {
+	background: #c6c6c6; /* Old browsers */
+	background: -moz-linear-gradient(top,  #c6c6c6 0%, #dcdcdc 48%, #c6c6c6 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c6c6c6), color-stop(48%,#dcdcdc), color-stop(100%,#c6c6c6)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #c6c6c6 0%,#dcdcdc 48%,#c6c6c6 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #c6c6c6 0%,#dcdcdc 48%,#c6c6c6 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #c6c6c6 0%,#dcdcdc 48%,#c6c6c6 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #c6c6c6 0%,#dcdcdc 48%,#c6c6c6 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c6c6c6', endColorstr='#c6c6c6',GradientType=0 ); /* IE6-9 */
+
+}
+
+.upload-file-container input, .datepicker-container input {
+	height: 22px;
+}
+
+.datepicker-container input {
+	vertical-align: top;
+}
+
+.datepicker-container span {
+	margin:0px 3px 0 7px;
+	vertical-align: super;
+}
+
+.select-container select {
+	padding:1px 0px 0 3px;
+	height: 21px;
+}
+
+.upload-file-container {
+	margin-left: 28px;
+}
+
+/* =============================
+   	Economy table
+   ============================= */
+
+.table-container {
+	position: relative;
+}
+
+.table-container table {
+	width: 98%;
+	margin: auto;
+}
+
+.table-bottom-shadow {
+	background:url(../images/table-bottom-shadow.png) no-repeat top center;
+	position: absolute;
+	bottom:-37px;
+	height: 25px;
+	width: 665px;
+	left: 121px;
+	display: block;
+}
+
+.table-container table thead {
+	background:#6d6d6d;
+}
+
+.table-container.economy table thead {
+	background: #276ea1; /* Old browsers */
+	background: -moz-linear-gradient(top,  #276ea1 0%, #1e5787 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#276ea1), color-stop(100%,#1e5787)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #276ea1 0%,#1e5787 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #276ea1 0%,#1e5787 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #276ea1 0%,#1e5787 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #276ea1 0%,#1e5787 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#276ea1', endColorstr='#1e5787',GradientType=0 ); /* IE6-9 */
+}
+
+.table-container table thead th {
+	color:#fff;
+	border-left:1px solid #fff;
+	padding:6px 0 6px 5px;
+	text-align: left;
+	font-weight: normal;
+}
+
+.table-container table thead th {
+	border-right:1px solid #d6d6d6;
+}
+
+.table-container table thead th.first {
+	border-left: 1px solid #d6d6d6;
+}
+
+.table-container.economy table thead th {
+	border-right:1px solid #46c6ff;
+}
+
+.table-container.economy table thead th.first {
+	border-left: 1px solid #46c6ff;
+}
+
+.table-container table tbody tr {
+	border-bottom: 1px solid #d6d6d6;
+}
+
+.table-container table tbody tr td {
+	border-right: 1px solid #d6d6d6;
+	padding:6px 5px 6px 5px;
+}
+
+.table-container.economy table tbody tr.active {
+	border-bottom:5px solid #0462ab;
+	background: #d9e3fd; /* Old browsers */
+	background: -moz-linear-gradient(top,  #d9e3fd 0%, #ffffff 49%, #ffffff 77%, #9ccbf0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d9e3fd), color-stop(49%,#ffffff), color-stop(77%,#ffffff), color-stop(100%,#9ccbf0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #d9e3fd 0%,#ffffff 49%,#ffffff 77%,#9ccbf0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #d9e3fd 0%,#ffffff 49%,#ffffff 77%,#9ccbf0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #d9e3fd 0%,#ffffff 49%,#ffffff 77%,#9ccbf0 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #d9e3fd 0%,#ffffff 49%,#ffffff 77%,#9ccbf0 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9e3fd', endColorstr='#9ccbf0',GradientType=0 ); /* IE6-9 */
+}
+.table-container.economy table tbody tr:hover {
+	background: #d9e3fd; /* Old browsers */
+	background: -moz-linear-gradient(top,  #d9e3fd 0%, #ffffff 49%, #ffffff 77%, #9ccbf0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d9e3fd), color-stop(49%,#ffffff), color-stop(77%,#ffffff), color-stop(100%,#9ccbf0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #d9e3fd 0%,#ffffff 49%,#ffffff 77%,#9ccbf0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #d9e3fd 0%,#ffffff 49%,#ffffff 77%,#9ccbf0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #d9e3fd 0%,#ffffff 49%,#ffffff 77%,#9ccbf0 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #d9e3fd 0%,#ffffff 49%,#ffffff 77%,#9ccbf0 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9e3fd', endColorstr='#9ccbf0',GradientType=0 ); /* IE6-9 */
+}
+
+.table-container table tbody tr td.first {
+	border-left: 1px solid #d6d6d6;
+}
+
+td.blue-td {
+	color:#3f759c;
+}
+
+.rating-icon {
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 24px;
+	height: 16px;
+	display: inline-block;
+}
+
+.rating-icon.max {
+	background-image: url(../images/rating-icon-max.png);
+}
+
+.rating-icon.three-quarters {
+	background-image: url(../images/rating-icon-three-quarters.png);
+}
+
+.rating-icon.half {
+	background-image: url(../images/rating-icon-half.png);
+}
+
+.rating-icon.min {
+	background-image: url(../images/rating-icon-min.png);
+}
+
+.table-container.economy table tbody tr:hover .rating-icon.max {
+	background-image: url(../images/rating-icon-max-active.png);
+}
+
+.table-container.economy table tbody tr:hover .rating-icon.three-quarters {
+	background-image: url(../images/rating-icon-three-quarters-active.png);
+}
+
+.table-container.economy table tbody tr:hover .rating-icon.half {
+	background-image: url(../images/rating-icon-half-active.png);
+}
+
+.table-container.economy table tbody tr:hover .rating-icon.min {
+	background-image: url(../images/rating-icon-min-active.png);
+}
+
+/* =============================
+   	Economy table
+   ============================= */
+
+.table-container.news thead {
+	background: #c45143; /* Old browsers */
+	background: -moz-linear-gradient(top,  #c45143 0%, #b34034 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c45143), color-stop(100%,#b34034)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #c45143 0%,#b34034 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #c45143 0%,#b34034 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #c45143 0%,#b34034 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #c45143 0%,#b34034 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c45143', endColorstr='#b34034',GradientType=0 ); /* IE6-9 */
+}
+
+.table-container.news table thead th {
+	border-right:1px solid #ff947a;
+	color:#000;
+}
+
+.table-container.news table thead th.first {
+	border-left: 1px solid #ff947a;
+}
+
+td.red-td {
+	color:#b51300;
+}
+
+.table-container.news table tbody tr:hover,
+.table-container.news table tbody tr.active {
+	border-bottom:5px solid #813533;
+	background: #f3e8e3; /* Old browsers */
+	background: -moz-linear-gradient(top,  #f3e8e3 0%, #ffffff 59%, #e3c6c6 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f3e8e3), color-stop(59%,#ffffff), color-stop(100%,#e3c6c6)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #f3e8e3 0%,#ffffff 59%,#e3c6c6 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #f3e8e3 0%,#ffffff 59%,#e3c6c6 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #f3e8e3 0%,#ffffff 59%,#e3c6c6 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #f3e8e3 0%,#ffffff 59%,#e3c6c6 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3e8e3', endColorstr='#e3c6c6',GradientType=0 ); /* IE6-9 */
+
+}
+
+.search-input-container {
+	display: inline-block;
+	margin:0 17px 0 28px;
+}
+
+input.search {
+	font-size: 12px;
+	padding:3px 5px;
+	min-width:225px; 
+}
