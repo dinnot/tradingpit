@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Dealing_Model extends CI_Model {
+	class Dealing_model extends CI_Model {
 	
 		public function __construct () {
 			
@@ -8,9 +8,21 @@
 		}
 		
 		public function get_fx_deals ( $user_id ) {
+		
+			$what = array() ; 
+			$what[] = "amount_base_ccy" ;		
+			$what[] = "price" ;
+			$what[] = "u2.username as counter_party" ;
+			$what[] = "value_date" ;
+			$what[] = "trade_date" ;
+			$what[] = "fx_deals.id as fx_deals_id" ;
+			$what[] = "u1.username as user_name" ;
+			$what[] = "c1.shortname as first_currency" ;
+			$what[] = "c2.shortname as second_currency" ;
+			$what[] = "periods.name as period_name" ;
 			
-			$this->db->select("amount_base_ccy, price, u2.username as counter_party, value_date, trade_date, fx_deals.id as fx_deals_id, u1.username as user_name, c1.shortname as first_currency, c2.shortname as second_currency, periods.name as period_name");
 			
+			$this->db->select($what);
 			$this->db->from('fx_deals');
 			$this->db->join('currency_pairs','currency_pairs.id = ccy_pair','left');  
 			$this->db->join('currencies c1','currency_pairs.currency0 = c1.id','left') ;
@@ -30,8 +42,19 @@
 
 		public function get_mm_deals ( $user_id ) {
 		
-			$this->db->select("amount_base_ccy, price, u2.username as counter_party, value_date, trade_date, mm_deals.id as mm_deals_id, u1.username as user_name, c1.shortname as first_currency, c2.shortname as second_currency, periods.name as period_name");
-			
+			$what = array() ; 
+			$what[] = "amount_base_ccy" ;		
+			$what[] = "price" ;
+			$what[] = "u2.username as counter_party" ;
+			$what[] = "value_date" ;
+			$what[] = "trade_date" ;
+			$what[] = "mm_deals.id as mm_deals_id" ;
+			$what[] = "u1.username as user_name" ;
+			$what[] = "c1.shortname as first_currency" ;
+			$what[] = "c2.shortname as second_currency" ;
+			$what[] = "periods.name as period_name" ;
+		
+			$this->db->select($what);
 			$this->db->from('mm_deals');
 			$this->db->join('currency_pairs','currency_pairs.id = ccy_pair','left');  
 			$this->db->join('currencies c1','currency_pairs.currency0 = c1.id','left') ;

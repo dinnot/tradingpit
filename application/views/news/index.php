@@ -1,69 +1,123 @@
-<?php echo validation_errors(); ?>
-
-<?php echo form_open('news/news/index') ?>
-
-	<textarea name="text"></textarea>	
-	<input type="submit" name="submit" value="Search" /> 
-
-</form>
-
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<script src = "<?php print base_url ()?>js/jquery.js"> </script>
-		<script>
-			$(document).ready(function(){
-				$(".show").click(function(){
-					$(".hide").hide();
-					$(".show").show();
-					$(this).hide();
-					$(this).next().show();
-				});
-			});
-			
-			$(document).ready(function(){
-				$(".hide").click(function(){ 
-					$(this).hide();
-					$(".show").show();
-				});
-			});
-		</script>
-</head> 
+  <meta charset="utf-8" />
 
-<table cellpadding = "10" >
-	<tr>
-		<td> Country   </td>
-		<td> Date      </td>
-		<td> Time      </td>
-		<td> Headline  </td>
-	</tr>
-	
-	<?php foreach ($news as $news_item): ?>
+  <title>News - Trading Pit</title>
+   <meta name="description" content="" />
+  <link rel="stylesheet" href="<?php print base_url() ?>css/style.css" />
+  <link href="<?php print base_url() ?>css/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+  <script src="<?php print base_url() ?>js/jquery-1.8.2.min.js"></script>
+  <script src="<?php print base_url() ?>js/jquery-ui-1.9.1.custom.js"></script>
+  <script src="<?php print base_url() ?>js/date.js"></script>
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script>
+    $(document).ready(function() {
+      $('.table-container tbody tr').click(function() {
+        $('.table-container tbody tr').removeClass('active');
+        $(this).addClass('active');
+      })
+    })
+  </script>
+ 
+</head>
 
-		<?php  if( $string_to_search == NULL || stristr( (string)$news_item["body"], $string_to_search )  ) :  ?>
-		
+<body>
+  <header>
+      <article class="top-section container">
+        <section class="top-header">
+        </section><!-- end top-header -->
+        <section class="navigation-bar">
+          <nav>
+            <ul>
+
+              <li class="level-one">
+                <a href="#" class="first-level current">News</a>
+                <ul>
+                  <li><a href="#">Auction calendar</a></li>
+                  <li><a href="#">Economic calendar</a></li>
+                </ul>
+              </li>
+
+              <li class="level-one">
+                <a href="#" class="first-level">Alerts</a>
+              </li>
+
+            </ul>
+            <div class="date-time-info">
+              <ul>
+                <li class="first" id="time"></li>
+                <li id="date"></li>
+              </ul>
+            </div><!-- end date-time-info -->
+          </nav>
+          <span class="nav-bar-bottom-bg"></span>
+        </section><!-- end navigation-bar -->
+
+        </article><!-- end top-section container -->
+
+      </header>
+
+    <article class="container">
+
+      <article class="main-content">
+
+        <section class="top-main">
+
+          <div class="search-input-container">
+            <input type="text" id = "body_filter" class="silver-gradient search" value = "SEARCH">
+          </div><!-- end upload-file-container -->
+
+          <div class="select-container">
+            <select id = "country_filter" class="silver-gradient">
+            	<option value="0"> All countries</option>
+						<?php foreach ($news as $news_item): ?>
+								<option value="<?= $news_item['countries_id'] ?>"><?= $news_item['country_name'] ?></option>		
+						<?php endforeach; ?>
+              </select>
+          </div><!-- end upload-file-container -->
+        </section><!-- end top-main -->
+        <div class="table-container news">
+          <table>
+            <thead>
+              <tr>
+                <th class="first">Date</th>
+                <th>Time</th>
+                <th>Country</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody id = "news_table">
+            
+           	 <?php foreach ($news as $news_item): ?>
+
 			<tr>
-				<td> <?php echo $news_item["name"] ;             ?>     </td>  
-				<td> <?php echo date("M-d",$news_item["date"]) ; ?>     </td>  
-				<td> <?php echo date("H:i",$news_item["date"]) ; ?>     </td>
-				<td>
-					<div class = "show"> 
-				
-					<?php 
-						$L = strlen($news_item["body"]) ;
-						
-						if( $L <= 20 ) {
-							echo $news_item["body"] ;         
-						}
-						else echo (substr($news_item["body"],0,17)."...") ;
-					?>   
-					</div>
-					
-					<div class = "hide" hidden = "hidden"> <?php echo $news_item["body"] ?> </div>
+				<td class="first"> <?php echo date("M-d",$news_item["date"]) ; ?>     </td>  
+				<td class="red-td"> <?php echo date("H:i",$news_item["date"]) ; ?>     </td>
+				<td> <?php echo $news_item["country_name"] ;             ?>     </td>  
+				<td>	
+					<div class = "show"> <?php echo $news_item["headline"] ; ?> </div>
+					<div class = "hide" hidden = "hidden"> <?php echo $news_item["body"] ?> </div> 
 				</td> 
 			</tr>
 		
-		<?php endif  ?>
-		
-	<?php endforeach ?>
+		<?php endforeach ?>
+              
+            </tbody>
+          </table>
+          <span class="table-bottom-shadow"></span>
+        </div><!-- end economy-table-container -->
 
-</table>
+      </article><!-- end main-content -->
+	
+    </article><!-- end container -->
+
+</body>
+
+<script src="<?php print base_url() ?>js/jquery.js">  </script>
+<script src="<?php print base_url() ?>js/news.js">  </script>
+
+</html>

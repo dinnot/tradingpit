@@ -9,7 +9,7 @@
 			
 			
 			$this->load->helper('url');
-			
+			/*
 			$this->load->library('session');
 			$this->load->model("Users_model");
 			$this->module_name = "dashboard";
@@ -28,23 +28,23 @@
 			if(!$valid) {
 				redirect("/errors/404");
 			}
-			
+			*/
 		}
 
 		public function index() {
-		
-			
+				
 			$data["news"] = $this->News_Model->get_news();
 			
-			/////////////// form pt filtru /////////////////////
-			$this->load->helper('form');
-			$this->load->library('form_validation');
-		
-			$this->form_validation->set_rules('text','text');
-		
-			$data["string_to_search"] = $this->input->post('text');
 			$this->load->view('news/index', $data);
 			
 		}
+		
+		function get_news() {
+
+			$news = $this->News_Model->get_news();		
+
+	   		$this->output->set_content_type('application/jsonp');
+			$this->output->set_output ( json_encode ( $news ) );
+  		 }
 	}
 ?>

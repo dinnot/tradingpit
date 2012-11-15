@@ -5,9 +5,9 @@
 		public function __construct() {
 		
 			parent::__construct();
-			$this->load->model("Dealing_Model");
+			$this->load->model("Dealing_model");
 			
-			
+			/*
 			$this->load->helper('url');
 			$this->load->library('session');
 			$this->load->model("Users_model");
@@ -27,7 +27,7 @@
 			if(!$valid) {
 				redirect("/errors/404");
 			}
-			
+			*/
 		}
 		
 		public function index() {
@@ -36,8 +36,8 @@
 			//$user_id = $this->user-id ;
 			$user_id = 2;
 			
-			$data["fx_deals"] = $this->Dealing_Model->get_fx_deals($user_id);
-			$data["mm_deals"] = $this->Dealing_Model->get_mm_deals($user_id);
+			$data["fx_deals"] = $this->Dealing_model->get_fx_deals($user_id);
+			$data["mm_deals"] = $this->Dealing_model->get_mm_deals($user_id);
 			
 		
 			$this->load->view('dealing/index', $data);
