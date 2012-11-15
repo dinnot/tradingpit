@@ -48,8 +48,6 @@ function get_econforcasts () {
 		data_in['event_filter'] = event_filter;
 
 	var type_filter = $("#type_filter").val ();
-	if (type_filter != 0)
-		data_in['type_filter'] = type_filter;
 	
 	var start = $("#datepickerStart").val ();
 	var end = $("#datepickerEnd").val ();
