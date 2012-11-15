@@ -144,7 +144,11 @@
             $currencies = $this->db->get("currencies");
             $data = array();
             foreach($currencies->result() as $currency) {
-                $data[] = array("banks_id"=>$bank_id, "currencies_id"=>$currency->id, "amount"=>0);
+                $amount = 0;
+                if($currency->shortname == "RIK") {
+                    $amount = 252000000;
+                }
+                $data[] = array("banks_id"=>$bank_id, "currencies_id"=>$currency->id, "amount"=>$amount);
             }
             $this->db->insert_batch("banks_balances", $data);
             $data_shares = array();
@@ -187,6 +191,10 @@
             $contract = $this->createEmploymentContract($clauses, $clauses_values);
             $this->db->set(array("contracts_id"=>$contract, "banks_id"=>$bank, "jobpositions_id"=>$position, "available"=>$availability))->insert("jobs");
             return $this->db->insert_id();
+        }
+        
+        public function signContract($cid) {
+            $this->db->set(array("signed_secondparty"=>1))->where("id", $cid)->update("contracts");
         }
     }
 ?>
