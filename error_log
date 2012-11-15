@@ -18,3 +18,11 @@
 [08-Nov-2012 16:51:53 UTC] PHP Fatal error:  Call to undefined function createJob() in /home/tpit/public_html/application/models/banks_model.php on line 125
 [08-Nov-2012 17:04:26 UTC] PHP Fatal error:  Call to a member function getSettingValue() on a non-object in /home/tpit/public_html/application/controllers/general/dashboard.php on line 44
 [08-Nov-2012 18:22:42 UTC] PHP Fatal error:  Call to a member function getFullJob() on a non-object in /home/tpit/public_html/application/controllers/general/dashboard.php on line 64
+[15-Nov-2012 15:08:52 UTC] PHP Fatal error:  Call to undefined function form_open() in /home/tpit/public_html/application/views/general/dashboard.php on line 6
+[15-Nov-2012 15:38:47 UTC] PHP Fatal error:  Call to undefined function form_open() in /home/tpit/public_html/application/views/general/dashboard.php on line 6
+[15-Nov-2012 15:39:20 UTC] PHP Fatal error:  Call to undefined function form_open() in /home/tpit/public_html/application/views/general/dashboard.php on line 6
+[15-Nov-2012 16:07:13 UTC] PHP Fatal error:  Call to undefined function form_open() in /home/tpit/public_html/application/views/general/dashboard.php on line 6
+[15-Nov-2012 17:35:35 UTC] PHP Fatal error:  Call to undefined function base_url() in /home/tpit/public_html/application/views/news/index.php on line 12
+[15-Nov-2012 17:35:49 UTC] PHP Fatal error:  Call to undefined function form_open() in /home/tpit/public_html/application/views/general/dashboard.php on line 6
+[15-Nov-2012 19:11:43 UTC] PHP Fatal error:  Call to a member function where() on a non-object in /home/tpit/public_html/application/models/trading_model.php on line 127
+[15-Nov-2012 19:12:51 UTC] PHP Fatal error:  Call to a member function where() on a non-object in /home/tpit/public_html/application/models/trading_model.php on line 127

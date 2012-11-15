@@ -71,7 +71,7 @@ class Dashboard extends CI_Controller {
     
     public function signcontract($id) {
         $this->load->model("Banks_model");
-        $this->Banks_model->signContract($contract['cid']);
+        $this->Banks_model->signContract($id);
         redirect("/general/dashboard");
     }
 };

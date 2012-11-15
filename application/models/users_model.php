@@ -14,8 +14,9 @@
         }
         
         function getUserBy($cond) {
-            $this->db->select("*");
+            $this->db->select("users.*, jobs.banks_id as bid");
             $this->db->from("users");
+            $this->db->join("jobs", "users.jobs_id = jobs.id", "left");
             $this->db->where($cond);
             $query = $this->db->get();
             if ($query->num_rows() > 0) {
@@ -117,6 +118,17 @@
                     $batch[] = array('usersettings_id'=>$setting['id'], 'value'=>$setting['value'], "users_id"=>$id);
                 }
                 $this->db->insert_batch('users_has_usersettings', $batch);
+                
+                //users_balances and users_fx_positions
+                $currencies = $this->db->get("currencies");
+                $data = array();
+                foreach($currencies->result() as $currency) {
+                    $amount = 0;
+                    $data[] = array("users_id"=>$id, "currencies_id"=>$currency->id, "amount"=>$amount);
+                }
+                $this->db->insert_batch("users_balances", $data);
+                $this->db->insert_batch("users_fx_positions", $data);
+                
                 //login
                 return $this->getLogin($email, $password);
             }

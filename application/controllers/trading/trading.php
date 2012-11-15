@@ -1,0 +1,107 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Trading extends CI_Controller {
+	
+    public function __construct () {		
+        
+        parent::__construct ();		
+        
+        $this->load->database();
+        $this->load->helper('url');
+        $this->load->library('session');
+        $this->load->model("Users_model");
+        $this->module_name = "dashboard";
+        $valid = false;
+        if($this->session->userdata("key")) {
+            $key = $this->session->userdata("key");
+            $auth = $this->Users_model->getAuth($key, $this->module_name);
+            if($auth !== false) {
+                $this->user = $auth;
+                $valid = true;
+            }
+        }
+        if(!$valid) {
+            redirect("/errors/404");
+        }
+        $this->load->model("Trading_model");
+    }
+
+    public function index () {	
+        $pairs = $this->Trading_model->getPairs();
+        $this->load->view("trading/index", array("pairs"=>$pairs, "amounts"=>array(1,2,3,4,5), "user"=>$this->user->id));
+    }
+    
+    public function add() {
+        $data = $_POST;
+        $this->load->model("Game_model");
+        $settings = $this->Game_model->getAllSettings();
+        $ret = $this->Trading_model->createEnquiries($this->user->id, $this->user->bid, 7, $data['pair'], $data['amount'], $settings);
+        $this->load->view("ajax", array("error"=>false, "data"=>$ret));
+    }
+    
+    public function respond($data) {
+        $data = $_POST;
+        $ret = $this->Trading_model->respondEnquiry($data->id, $this->user->id, $data->buy, $data->sell);
+        if($ret !== false) {
+            $this->load->view("ajax", array("error"=>false, "data"=>$ret));
+        } else {
+            $this->load->view("ajax", array("error"=>true));
+        }
+    }
+    
+    public function buy($data) {
+        $data = $_POST;
+        $ret = $this->Trading_model->buyEnquiry($data->id, $this->user->id);
+        if($ret !== false) {
+            $this->load->view("ajax", array("error"=>false, "data"=>$ret));
+        } else {
+            $this->load->view("ajax", array("error"=>true));
+        }
+    }
+    
+    public function sell($data) {
+        $data = $_POST;
+        $ret = $this->Trading_model->sellEnquiry($data->id, $this->user->id);
+        if($ret !== false) {
+            $this->load->view("ajax", array("error"=>false, "data"=>$ret));
+        } else {
+            $this->load->view("ajax", array("error"=>true));
+        }
+    }
+    
+    public function cancel($data) {
+        $data = $_POST;
+        $ret = $this->Trading_model->cancelEnquiry($data->id, $this->user->id);
+        if($ret !== false) {
+            $this->load->view("ajax", array("error"=>false, "data"=>$ret));
+        } else {
+            $this->load->view("ajax", array("error"=>true));
+        }
+    }
+    
+    public function status() {
+        $data = $_POST;
+        $ids = $data['ids'];
+        $sts = array();
+        foreach($data['sts'] as $x=>$st) {
+            $sts[$ids[$x]] = $st;
+        }
+        $ret = $this->Trading_model->statusEnquiry($this->user->id, $ids, $sts);
+        if($ret !== false) {
+            $this->load->view("ajax", array("error"=>false, "data"=>$ret));
+        } else {
+            $this->load->view("ajax", array("error"=>true));
+        }
+    }
+    
+    public function newen() {
+        $ids = $_POST;
+        $ret = $this->Trading_model->newEnquiries($this->user->id, $ids);
+        if($ret !== false) {
+            $this->load->view("ajax", array("error"=>false, "data"=>$ret));
+        } else {
+            $this->load->view("ajax", array("error"=>true));
+        }
+    }
+};
+
