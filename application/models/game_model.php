@@ -33,6 +33,9 @@
         }
         
         function getAllSettings() {
+            if(!$this->fetched) {
+                $this->fetchSettings();
+            }
             return $this->settings;
         }
         

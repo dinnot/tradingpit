@@ -8,6 +8,7 @@ class Dashboard extends CI_Controller {
         
         $this->load->database();
         $this->load->helper('url');
+        $this->load->helper('form');
         $this->load->library('session');
         $this->load->model("Users_model");
         $this->module_name = "dashboard";
@@ -32,11 +33,11 @@ class Dashboard extends CI_Controller {
             $this->load->model("Banks_model");
             $job = $this->Banks_model->getFullJob($this->user->jobs_id);
             if($job['signed_secondparty'] == 0) {
-                redirect("/general/dashboard/signcontract/".$this->user->jobs_id);
+                redirect("/general/dashboard/showcontract/".$this->user->jobs_id);
             }
         }
         $data['error'] = $this->session->flashdata('ERROR');
-        $this->load->view("general/dashboard", $data);
+        redirect("/trading/trading");
     }
     
     public function getgeneraljob() {
@@ -57,13 +58,22 @@ class Dashboard extends CI_Controller {
             $this->Banks_model->createJob($bank, $position, $clauses, $clauses_values, 3); //repeat 2 times - hardcoded
             $job = $this->Banks_model->getFreeJob($this->user->id, $position);
         }
-        redirect("/general/dashboard/signcontract/".$job);
+        redirect("/general/dashboard/showcontract/".$job);
     }
     
-    public function signcontract($job) {
+    public function showcontract($job) {
+        $this->load->helper('url');
         $this->load->model("Banks_model");
         $data["contract"] = $this->Banks_model->getFullJob($job);
+        $data["contract"]["uname"] = $this->user->username;
+        $data["signurl"] = base_url("/general/dashboard/signcontract/{$data['contract']['cid']}");
         $this->load->view("general/contract", $data);
+    }
+    
+    public function signcontract($id) {
+        $this->load->model("Banks_model");
+        $this->Banks_model->signContract($id);
+        redirect("/general/dashboard");
     }
 };
 

@@ -1,18 +1,26 @@
 $("#event_filter").change (
 	function () {
+		
 		get_econforcasts ();
 	}
 );
 
-$("#type_filter").change (
+$("#event_filter").keyup (
 	function () {
-		get_econforcasts ();
+		if ($("#event_filter").val () == "") 
+			get_econforcasts ();
 	}
 );
 
 $("#event_filter").click (
 	function () {
 		$("#event_filter").val ("");
+	}
+);
+
+$("#type_filter").change (
+	function () {
+		get_econforcasts ();
 	}
 );
 
@@ -32,7 +40,7 @@ $("#datepickerStart").change (
 
 function get_econforcasts () {
 	
-	var url = "http://localhost/tradingpit/econ/econ/get_econforcasts";
+	var url = base_url+"econ/econ/get_econforcasts";
 	data_in = new Object ();
 	
 	var event_filter = $("#event_filter").val ();
@@ -40,8 +48,7 @@ function get_econforcasts () {
 		data_in['event_filter'] = event_filter;
 
 	var type_filter = $("#type_filter").val ();
-	if (type_filter != 0)
-		data_in['type_filter'] = type_filter;
+	data_in['type_filter'] = type_filter;
 	
 	var start = $("#datepickerStart").val ();
 	var end = $("#datepickerEnd").val ();
@@ -51,8 +58,6 @@ function get_econforcasts () {
 		data_in['date_end_filter'] = end;
 	}
 	
-	console.log (data_in);
-	
 	$.ajax({
 			action: 'POST',
       url: url,
@@ -60,12 +65,10 @@ function get_econforcasts () {
       async: true,
       dataType: 'json',
       success: function (data,textStatus, jqXHR) {                    
-				console.log ("dada");
-				console.log (data);    		
     		display_econforcasts (data);
 			}, 
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
-        console.log(textStatus, errorThrown);
+//        console.log(textStatus, errorThrown);
       }
 
 		});

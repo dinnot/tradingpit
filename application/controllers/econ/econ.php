@@ -26,7 +26,6 @@ class Econ extends CI_Controller {
 			redirect("/general/index");
 		}
 
-
 		$this->load->helper('form');
 		$this->load->model ("Econ_model");				
 		$this->load->model ("News_model");    

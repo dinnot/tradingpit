@@ -171,7 +171,9 @@
     </article><!-- end container -->
 
 </body>
-
+	<script>
+		var base_url = "<?= base_url() ?>";
+	</script>
   <script src="<?php print base_url() ?>js/econ.js"></script>
 
 </html>

@@ -5,6 +5,49 @@
 		function __construct () {
 			parent::__construct();
 		}
+
+		public function get_user_bank ($user_id) {
+			$this->db->from ("users");
+			$this->db->where ("users.id", $user_id);
+			$this->db->join ("jobs", "users.id = jobs.id", "left");			
+			$result = $this->db->get ()->row ();
+			
+			return $result->banks_id;
+		}
+
+		public function update_balances($user, $bank, $amount, $currency) {
+      $this->db->set("amount", "amount + {$amount}", false)->where(array("users_id"=>$user, "currencies_id"=>$currency))->update("users_fx_positions");
+      $this->db->set("amount", "amount + {$amount}", false)->where(array("banks_id"=>$user, "currencies_id"=>$currency))->update("banks_balances");
+    }
+		
+		function insert_fx_deal ($deal) {
+			$this->db->insert ("fx_deals", $deal);
+		}
+		
+		function make_deal ($offer, $price) {
+			print "plm";
+			$new_amount = $this->get_total_day_amount ($offer->user_id, $offer->pair_id, $offer->deal) + $offer->amount;
+			$this->update_total_day_amount ($offer->user_id, $offer->pair_id, $offer->deal, $new_amount);
+		
+			$bank = $this->get_user_bank ($offer->user_id);
+			if ($offer->deal == 1) $offer->amount = -$offer->amount;
+		
+			$deal = array ();
+			$deal['user_id'] = $offer->user_id;
+			$deal['ccy_pair'] = $offer->pair_id;
+			$deal['amount_base_ccy'] = $offer->amount;
+			$deal['price'] = $price;
+			$deal['counter_party'] = 0;
+			$deal['value_date'] = $offer->date;
+			$deal['trade_date'] = $offer->date;
+			
+			print_r ($deal);
+			$bank = $this->get_user_bank ($offer->user_id);		
+			$this->update_balances ($offer->user_id, $bank, $offer->amount, $offer->pair_id);				
+			$this->insert_fx_deal ($deal);
+		
+		}
+
 							
 		function get_best_rate ($pair_id, $deal) {
 		
@@ -45,7 +88,7 @@
 			$query = $this->db->get ();
 			$rate = $query->row ();
 			
-			if ($deal == 0) 
+			if ($deal == 1) 
 				return $rate->sell;
 			else
 				return $rate->buy;
@@ -56,7 +99,7 @@
 			// return amount and date			
 			$result['amount'] = 0;
 			$result['amount'] = rand (1000, 12000);
-			$result['date'] = time () + 40 + rand () % 5 - 10;
+			$result['date'] = time () + 60 + rand () % 5 - 10;
 			
 			return $result;
 		}
@@ -67,10 +110,8 @@
 	  		$this->db->update ('users_has_retail_offers', $client);
 		}
 					
-		function generate_next_client ($user_id, $pair_id, $deal) {
-			
-			$rate = $this->get_rate_exchange (array ('user_id'=>$user_id, 'pair_id'=>$pair_id), $deal);
-			
+		function generate_next_client ($user_id, $pair_id, $deal, $rate) {
+						
 			if ($rate == 0) return ;		
 							
 			$best_rate = $this->get_best_rate ($pair_id, $deal);			
@@ -101,42 +142,45 @@
 		function update_total_day_amount ($user_id, $pair_id, $deal, $amount) {
 			$this->db->where (array ('user_id' => $user_id, 'pair_id'=> $pair_id));
 			$what = array ();
-			if ($deal == 0) $what['sell'] = $amount;			
+			if ($deal == 1) $what['sell'] = $amount;			
 			else $what['buy'] = $amount;
 			$this->db->update ("users_retail_amount", $what);
 		}
-		
-		function make_deal ($deal) {
-			// insert in deal table
-			
-			// update total_day_amount
-			$new_amount = $this->get_total_day_amount ($deal->user_id, $deal->pair_id, $deal->deal) + $deal->amount;
-			$this->update_total_day_amount ($deal->user_id, $deal->pair_id, $deal->deal, $new_amount);
-		}
 				
 		function check_next_client ($user_id) {
-			
+						
 			$clients = array ();			
 	
-			for ($pair_id = 0; $pair_id <= 1; $pair_id++)
-				for ($deal = 0; $deal <= 1; $deal++) {
+			for ($deal = 1; $deal <= 2; $deal++) {
+				for ($pair_id = 1; $pair_id <= 2; $pair_id++) {					
+					$price = $this->get_rate_exchange (array ('user_id'=>$user_id, 'pair_id'=>$pair_id), $deal);
+				
 					$this->db->from ('users_has_retail_offers');
 					$this->db->where ( array ('user_id' => $user_id, 'pair_id' => $pair_id, 'deal' => $deal) );
 					$query = $this->db->get ();
-					if ($query->num_rows == 0) 
+					if ($query->num_rows == 0) {
 						$this->db->insert ("users_has_retail_offers", array ('user_id' => $user_id, 'pair_id' => $pair_id, 'deal' => $deal,
 																															'date' => 0, 'amount' => 0));
+
+						$this->generate_next_client ($user_id, $pair_id, $deal,$price);
+					}
 					else {
+					
 						$result = $query->row ();
+					
 						if ($result->date != 0 && $result->date <= time ())	{
 							$this->update_next_client ($user_id, $result->pair_id, $result->deal, array ('date' => 0, 'amount' =>'0'));													
+							
 							$clients[] = $result;
-							$this->make_deal ($result);
+							$this->make_deal ($result, $price);
+							$this->generate_next_client ($user_id, $pair_id, $deal,$price);
 						}
+						
+						if ($result->date == 0)
+							$this->generate_next_client ($user_id, $pair_id, $deal,$price);
 					}					
-					
-					$this->generate_next_client ($user_id, $pair_id, $deal);
 				}
+			}
 			
 			return $clients;
 		}
@@ -148,8 +192,8 @@
 			$results = $query->result_array ();
 			
 			$rate = array ();
-			$rate[0]['sell'] = 0; $rate[1]['sell'] = 0;
-			$rate[0]['buy'] = 0; $rate[1]['buy'] = 0;
+			$rate[1]['sell'] = 0; $rate[2]['sell'] = 0;
+			$rate[1]['buy'] = 0; $rate[2]['buy'] = 0;
 			
 			foreach ($results as $item) {
 				$rate[ $item['pair_id'] ]['sell'] = $item['sell'];				
@@ -174,7 +218,7 @@
 		function get_user_amount ($user_id) {
 			
 			$amount = array ();
-			for ($pair_id = 0; $pair_id <= 1; $pair_id++) {
+			for ($pair_id = 1; $pair_id <= 2; $pair_id++) {
 				$this->db->from ("users_retail_amount");
 				$this->db->where (array('user_id' => $user_id, 'pair_id' => $pair_id));
 				$query = $this->db->get ();
