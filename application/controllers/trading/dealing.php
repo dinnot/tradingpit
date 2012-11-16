@@ -33,8 +33,8 @@
 		public function index() {
 			
 			
-			//$user_id = $this->user-id ;
-			$user_id = 2;
+			$user_id = $this->user->id ;
+			//$user_id = 2;
 			
 			$data["fx_deals"] = $this->Dealing_model->get_fx_deals($user_id);
 			$data["mm_deals"] = $this->Dealing_model->get_mm_deals($user_id);
