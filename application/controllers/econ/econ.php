@@ -45,7 +45,7 @@ class Econ extends CI_Controller {
 		$econforcasts = $this->Econ_model->get_econforcasts ();		
 
 		$this->output->set_content_type('application/jsonp');
-	$this->output->set_output ( json_encode ( $econforcasts ) );
+		$this->output->set_output ( json_encode ( $econforcasts ) );
 	}
 };
 

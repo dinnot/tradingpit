@@ -117,6 +117,10 @@
 
 </body>
 
+<script>
+	var base_url = "<?= base_url() ?>";
+</script>
+
 <script src="<?php print base_url() ?>js/jquery.js">  </script>
 <script src="<?php print base_url() ?>js/news.js">  </script>
 

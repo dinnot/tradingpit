@@ -34,10 +34,18 @@
 	<tr> 
 		<td> AGG </td>
 		<td></td>
-		<td> <?php echo $agg['reporting_currency'] ?> </td>
+		<td> 
+			<div class = "hide TER"> <?php echo $agg['reporting_currency'][0] ?> </div>
+			<div class = "hide RIK" hidden = "hidden"> <?php echo $agg['reporting_currency'][1] ?> </div>
+			<div class = "hide HAT" hidden = "hidden"> <?php echo $agg['reporting_currency'][2] ?> </div>
+		</td>
 		<td> <?php echo $agg['position_limit'] ?> </td>
 		<td> N/A </td>
-		<td> <?php echo $agg['risk'] ?> </td>
+		<td> 
+			<div class = "hide TER"> <?php echo $agg['risk'][0] ?> </div>
+			<div class = "hide RIK" hidden = "hidden"> <?php echo $agg['risk'][1] ?> </div>
+			<div class = "hide HAT" hidden = "hidden"> <?php echo $agg['risk'][2] ?> </div>
+		</td>	
 	</tr>
 </table> 
 
@@ -48,28 +56,27 @@
 <div id = "HAT"> HAT </div>
 
 
+
 <script src="<?php print base_url() ?>js/jquery.js"></script>
 
 <script>
+	
 	$("#TER").click( function () {
-					alert("TER");
 					$(".hide").hide();
 					$(".TER").show(); 
 				});
 	
 			
 	$("#HAT").click( function () {
-					alert("HAT");
 					$(".hide").hide();
 					$(".HAT").show(); 
 				});
 	
 
 	$("#RIK").click( function () {
-					alert("RIK");
 					$(".hide").hide();
 					$(".RIK").show(); 
 				});	
-
 </script>			
+
 

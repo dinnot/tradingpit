@@ -7,9 +7,8 @@
 			parent::__construct();
 			$this->load->model("News_Model");
 			
-			
 			$this->load->helper('url');
-			/*
+			
 			$this->load->library('session');
 			$this->load->model("Users_model");
 			$this->module_name = "dashboard";
@@ -28,7 +27,7 @@
 			if(!$valid) {
 				redirect("/errors/404");
 			}
-			*/
+			
 		}
 
 		public function index() {

@@ -12,7 +12,7 @@ $("#country_filter").change (
 
 function get_news () {
 	
-	var url = "http://localhost/tradingpit/index.php/news/news/get_news";
+	var url = base_url+"index.php/news/news/get_news";
 	data_in = new Object ();
 	
 	var body_filter = $("#body_filter").val() ;

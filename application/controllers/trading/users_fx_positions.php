@@ -6,9 +6,9 @@
 		
 			parent::__construct();
 			$this->load->model("Users_fx_positions_model");
-			
-			/*
 			$this->load->helper('url');
+			
+			
 			$this->load->library('session');
 			$this->load->model("Users_model");
 			$this->module_name = "dealing";
@@ -27,7 +27,7 @@
 			if(!$valid) {
 				redirect("/errors/404");
 			}
-			*/
+			
 		}
 		
 		public function index () {
@@ -61,9 +61,9 @@
 			$rep_ccy[2][2] = 1 ; 
 			
 			
-			$data['agg']['reporting_currency'] = 0 ;
+			$data['agg']['reporting_currency'] = array() ;
 			$data['agg']['position_limit'] = $user_percentage * $data['fx_positions'][0]['banks_amount'] ;
-			$data['agg']['risk'] = "IN LIMIT" ;
+			$data['agg']['risk'] = array() ;
 			
 			for( $i = 0 ; $i < 3 ; $i++ ) {
 			
@@ -71,8 +71,10 @@
 			
 				$data['fx_positions'][$i]['reporting_currency'] = array() ;
 				$data['fx_positions'][$i]['risk'] = array() ;
-								
-								
+				
+				array_push($data['agg']['reporting_currency'],0);				
+				array_push($data['agg']['risk'],"IN LIMIT");	
+				
 				for( $j = 0 ; $j < 3 ; $j++ ) {
 					
 					
@@ -81,8 +83,8 @@
 	
 					
 
-					if( abs($data['fx_positions'][$i]['reporting_currency'][$j]) > abs($data['agg']['reporting_currency']))
-						$data['agg']['reporting_currency'] = $data['fx_positions'][$i]['reporting_currency'][$j] ;
+					if( abs($data['fx_positions'][$i]['reporting_currency'][$j]) > abs($data['agg']['reporting_currency'][$i]))
+						$data['agg']['reporting_currency'][$i] = $data['fx_positions'][$i]['reporting_currency'][$j] ;
 					
 					
 					
@@ -90,10 +92,12 @@
 						array_push($data['fx_positions'][$i]['risk'], "BREAK");
 					
 				}
+			
+				if( abs($data['agg']['reporting_currency'][$i]) > $data['agg']['position_limit'] )
+					$data['agg']['risk'][$i] = "BREAK" ;
+			
 			}	
 			
-			if( abs($data['agg']['reporting_currency']) > $data['agg']['position_limit'] )
-				$data['agg']['risk'] = "BREAK" ;
 			
 			$this->load->view('users_fx_positions/index', $data);	
 		}
