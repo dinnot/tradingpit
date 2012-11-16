@@ -24,14 +24,6 @@
 			$time = time ();			
 			$data = array ('date' => $time);			
 			for ($i = 0; isset ($offers[$i]) ; $i++) {
-				/*if ($offers[$i]['display_date'] == 0) {
-					$this->db->where ('id', $offers[$i]['offer_id']);	
-					$offers[$i]['display_date'] = $time;
-					
-					$this->db->update ('clients_offers', $data);
-					$offers_to_display[] = $offers[$i];
-				}
-				else */
 				if ($time - $offers[$i]['display_date'] <= $seconds) 
 					$offers_to_display[] = $offers[$i];
 				
@@ -46,6 +38,43 @@
 		function set_quote ($offer_id, $user_id, $quote) {
 			$this->db->where ( array ('offer_id' => $offer_id, 'user_id' => $user_id) );
 			$this->db->update ('users_has_corporate_offers', array ('quote' => $quote, 'status' => '1' ) );
+		}
+
+		public function get_user_bank ($user_id) {
+			$this->db->from ("users");
+			$this->db->where ("users.id", $user_id);
+			$this->db->join ("jobs", "users.id = jobs.id", "left");			
+			$result = $this->db->get ()->row ();
+			
+			return $result->banks_id;
+		}
+		
+    public function update_balances($user, $bank, $amount, $currency) {
+      $this->db->set("amount", "amount + {$amount}", false)->where(array("users_id"=>$user, "currencies_id"=>$currency))->update("users_fx_positions");
+      $this->db->set("amount", "amount + {$amount}", false)->where(array("banks_id"=>$user, "currencies_id"=>$currency))->update("banks_balances");
+    }
+		
+		function insert_fx_deal ($deal) {
+			$this->db->insert ("fx_deals", $deal);
+		}
+		
+		function make_deal ($offer) {
+			$bank = $this->get_user_bank ($offer['user_id']);
+			if ($offer['deal'] == 1) $offer['amount'] = -$offer['amount'];
+		
+			$deal = 	array ();
+			$deal['user_id'] = $offer['user_id'];
+			$deal['ccy_pair'] = $offer['currency'];
+			$deal['amount_base_ccy'] = $offer['amount'];
+			$deal['price'] = $offer['quote'];
+			$deal['counter_party'] = - ($offer['client_id']);
+			$deal['value_date'] = $offer['date'];
+			$deal['trade_date'] = $offer['date'];
+		
+			if ($offer['market'] == "FX") {
+				$this->update_balances ($offer['user_id'], $bank, $offer['amount'], $offer['currency']);				
+				$this->insert_fx_deal ($deal);
+			}
 		}
 		
 		function set_result (&$offer) {
@@ -67,6 +96,9 @@
 				$offer['status'] = $status;
 				$this->db->where ( array ('user_id'=>$item['user_id'], 'offer_id'=>$offer['offer_id']) );
 				$this->db->update ('users_has_corporate_offers', array ('status'=>$status));
+				if ($status == 2) {
+					$this->make_deal ($item);
+				}
 			}
 		}
 	

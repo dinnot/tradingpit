@@ -73,7 +73,7 @@ function display_offer (data) {
 		'<td id="name_'+id+'">'+data['name']+'</td>'+
 		'<td id="market_'+id+'">'+data['market']+'</td>'+
 		'<td id="amount_'+id+'">'+data['amount']+'</td>'+
-		'<td id="ccy_'+id+'">'+data['first_ccy']+'/'+data['second_ccy']+'</td>'+
+		'<td id="ccy_'+id+'">'+data['currency']+'</td>'+
 		'<td id="deal_'+id+'">'+data['deal']+'</td>'+
 		'<td id="period_'+id+'">'+data['period_id']+'</td>'+		
 		'<td id="quote_'+id+'">'+quote+'</td>'+
@@ -142,4 +142,4 @@ function timer () {
 }
 
 setInterval (timer , 1000);
-setInterval (get_clients_offers, 4000);
+setInterval (get_clients_offers, 10000);
