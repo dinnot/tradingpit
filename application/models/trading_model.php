@@ -2,14 +2,15 @@
     class Trading_model extends CI_Model {
         
         public function updateBalances($user, $bank, $amount, $currency) {
+            $amount *= 1000000;
             $this->db->set("amount", "amount + {$amount}", false)->where(array("users_id"=>$user, "currencies_id"=>$currency))->update("users_fx_positions");
-            $this->db->set("amount", "amount + {$amount}", false)->where(array("banks_id"=>$user, "currencies_id"=>$currency))->update("banks_balances");
+            $this->db->set("amount", "amount + {$amount}", false)->where(array("banks_id"=>$bank, "currencies_id"=>$currency))->update("banks_balances");
         }
         
         public function createEnquiries($user, $bank, $number, $pair, $amount, $game_settings) {
             $pairs = $this->getPairs();
             $toadd = array();
-            $query = $this->db->select("users.*, jobs.banks_id as bid, banks.name as bname, up.username as username_p, bp.name as bname_p")->from("users")->from("users up")->from("banks bp")->where("up.id", $user)->where("bp.id", $bank)->join("jobs", "users.jobs_id = jobs.id", "left")->join("banks", "banks.id = jobs.banks_id")->where(array("users.id !="=>$user, "users.last_trading >="=>(time()-60)))->order_by("id", "random")->limit($number)->get();
+            $query = $this->db->select("users.*, jobs.banks_id as bid, banks.name as bname, up.username as username_p, bp.name as bname_p")->from("users")->from("users up")->from("banks bp")->where("up.id", $user)->where("bp.id", $bank)->join("jobs", "users.jobs_id = jobs.id", "left")->join("banks", "banks.id = jobs.banks_id")->where(array("banks.id !="=>$bank, "users.last_trading >="=>(time()-60)))->order_by("id", "random")->limit($number)->get();
             if($query->num_rows() > 0) {
                 foreach($query->result() as $row) {
                     $toadd[] = array("first_bank"=>$bank,
@@ -30,7 +31,7 @@
             }
             $number -= count($toadd);
             if($number > 0) { //add some bot banks
-                $query2 = $this->db->select("users.*, jobs.banks_id as bid, banks.name as bname, up.username as username_p, bp.name as bname_p")->from("users")->from("users up")->from("banks bp")->where("up.id", $user)->where("bp.id", $bank)->join("jobs", "users.jobs_id = jobs.id", "left")->join("banks", "banks.id = jobs.banks_id")->where(array("users.id !="=>$user, "users.usertypes_id"=>6))->order_by("id", "random")->limit($number)->get();
+                $query2 = $this->db->select("users.*, jobs.banks_id as bid, banks.name as bname, up.username as username_p, bp.name as bname_p")->from("users")->from("users up")->from("banks bp")->where("up.id", $user)->where("bp.id", $bank)->join("jobs", "users.jobs_id = jobs.id", "left")->join("banks", "banks.id = jobs.banks_id")->where(array("banks.id !="=>$bank, "users.usertypes_id"=>6))->order_by("id", "random")->limit($number)->get();
                 if($query2->num_rows() > 0) {
                     foreach($query2->result() as $row) {
                         $toadd[] = array("first_bank"=>$bank,
@@ -86,9 +87,9 @@
                 $curr1 = $pair->currency0;
                 $curr2 = $pair->currency1;
                 $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount, $curr1);
-                $this->updateBalances($deal->first_user, $deal->first_bank, 0 - $deal->amount, $curr2);
-                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount, $curr2);
-                $this->updateBalances($deal->second_user, $deal->second_bank, 0 - $deal->amount, $curr1);
+                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount * $deal->price_sell * -1, $curr2);
+                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount * $deal->price_sell, $curr2);
+                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount * -1, $curr1);
                 return 3;
             } else {
                 return false;
@@ -114,10 +115,10 @@
                 $pair = $pair->row();
                 $curr1 = $pair->currency0;
                 $curr2 = $pair->currency1;
-                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount, $curr2);
-                $this->updateBalances($deal->first_user, $deal->first_bank, 0 - $deal->amount, $curr1);
+                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount * -1, $curr1);
+                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount * $deal->price_buy, $curr2);
+                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount * $deal->price_buy * -1, $curr2);
                 $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount, $curr1);
-                $this->updateBalances($deal->second_user, $deal->second_bank, 0 - $deal->amount, $curr2);
                 return 4;
             } else {
                 return false;
@@ -126,7 +127,7 @@
         
         public function cancelEnquiry($id, $user, $reason = false) {
             //ignore reason for now...
-            $this->db->set(array("status"=>2))->where(array("id"=>$id, "second_user"=>$user))->update("enquiries");
+            $this->db->set(array("status"=>0))->where("id", $id)->where("(second_user = {$user} OR first_user = {$user})")->update("enquiries");
             return true;
         } 
         
@@ -142,12 +143,13 @@
         }
         
         public function newEnquiries($user, $ids) {
-            $query = $this->db->where_not_in("id", $ids)->where(array("second_user", $user, "status"=>1))->get("enquiries");
+            if($ids) {
+                $this->db->where_not_in("id", $ids);
+            }
+            $query = $this->db->where(array("second_user"=>$user, "time >="=>(time() - 55), "status"=>1))->get("enquiries");
             $return = array();
             foreach($query->result() as $row) {
-                if($row->status != $sts[$row->id]) {
                     $return[] = $row;
-                }
             }
             return $return;
         }

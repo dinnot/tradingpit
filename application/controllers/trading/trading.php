@@ -24,6 +24,7 @@ class Trading extends CI_Controller {
             redirect("/errors/404");
         }
         $this->load->model("Trading_model");
+        $this->Users_model->updateTrading($this->user->id);
     }
 
     public function index () {	
@@ -39,9 +40,9 @@ class Trading extends CI_Controller {
         $this->load->view("ajax", array("error"=>false, "data"=>$ret));
     }
     
-    public function respond($data) {
+    public function respond() {
         $data = $_POST;
-        $ret = $this->Trading_model->respondEnquiry($data->id, $this->user->id, $data->buy, $data->sell);
+        $ret = $this->Trading_model->respondEnquiry($data['id'], $this->user->id, $data['buy'], $data['sell']);
         if($ret !== false) {
             $this->load->view("ajax", array("error"=>false, "data"=>$ret));
         } else {
@@ -49,9 +50,9 @@ class Trading extends CI_Controller {
         }
     }
     
-    public function buy($data) {
+    public function buy() {
         $data = $_POST;
-        $ret = $this->Trading_model->buyEnquiry($data->id, $this->user->id);
+        $ret = $this->Trading_model->buyEnquiry($data['id'], $this->user->id);
         if($ret !== false) {
             $this->load->view("ajax", array("error"=>false, "data"=>$ret));
         } else {
@@ -59,9 +60,9 @@ class Trading extends CI_Controller {
         }
     }
     
-    public function sell($data) {
+    public function sell() {
         $data = $_POST;
-        $ret = $this->Trading_model->sellEnquiry($data->id, $this->user->id);
+        $ret = $this->Trading_model->sellEnquiry($data['id'], $this->user->id);
         if($ret !== false) {
             $this->load->view("ajax", array("error"=>false, "data"=>$ret));
         } else {
@@ -69,9 +70,9 @@ class Trading extends CI_Controller {
         }
     }
     
-    public function cancel($data) {
+    public function cancel() {
         $data = $_POST;
-        $ret = $this->Trading_model->cancelEnquiry($data->id, $this->user->id);
+        $ret = $this->Trading_model->cancelEnquiry($data['id'], $this->user->id);
         if($ret !== false) {
             $this->load->view("ajax", array("error"=>false, "data"=>$ret));
         } else {
@@ -81,12 +82,16 @@ class Trading extends CI_Controller {
     
     public function status() {
         $data = $_POST;
-        $ids = $data['ids'];
-        $sts = array();
-        foreach($data['sts'] as $x=>$st) {
-            $sts[$ids[$x]] = $st;
+        if(isset($data['ids']) && count($data['ids']) > 0) {
+            $ids = $data['ids'];
+            $sts = array();
+            foreach($data['sts'] as $x=>$st) {
+                $sts[$ids[$x]] = $st;
+            }
+            $ret = $this->Trading_model->statusEnquiry($this->user->id, $ids, $sts);
+        } else {
+            $ret = false;
         }
-        $ret = $this->Trading_model->statusEnquiry($this->user->id, $ids, $sts);
         if($ret !== false) {
             $this->load->view("ajax", array("error"=>false, "data"=>$ret));
         } else {
@@ -95,7 +100,11 @@ class Trading extends CI_Controller {
     }
     
     public function newen() {
-        $ids = $_POST;
+        if(isset($_POST['ids'])) {
+            $ids = $_POST['ids'];
+        } else {
+            $ids = false;
+        }
         $ret = $this->Trading_model->newEnquiries($this->user->id, $ids);
         if($ret !== false) {
             $this->load->view("ajax", array("error"=>false, "data"=>$ret));
