@@ -38,10 +38,10 @@ function check_next_client () {
       dataType: 'json',
       success: function (data, textStatus, jqXHR) {                    
       	console.log (data);
-    		$('#retail_sell_0').text (data['amount'][0]['sell']);
-    		$('#retail_buy_0').text (data['amount'][0]['buy']);
     		$('#retail_sell_1').text (data['amount'][1]['sell']);
     		$('#retail_buy_1').text (data['amount'][1]['buy']);
+    		$('#retail_sell_2').text (data['amount'][2]['sell']);
+    		$('#retail_buy_2').text (data['amount'][2]['buy']);
     	}, 
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
         console.log(textStatus, errorThrown);
@@ -49,4 +49,4 @@ function check_next_client () {
 		});
 }
 
-setInterval (check_next_client, 10000);
+setInterval (check_next_client, 3000);
