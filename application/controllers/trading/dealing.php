@@ -11,7 +11,7 @@
 			$this->load->helper('url');
 			$this->load->library('session');
 			$this->load->model("Users_model");
-			$this->module_name = "dealing";
+			$this->module_name = "blotters";
 			$valid = false;
         
 			if($this->session->userdata("key")) {
