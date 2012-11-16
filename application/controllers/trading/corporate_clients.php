@@ -15,7 +15,7 @@ class Corporate_clients extends CI_Controller {
   function get_new_clients_offers () {
 		
 		$user_id = $this->input->get_post ("user_id");
-		if (rand () % 130 == 0)
+		if (rand () % 10 == 0)
 			$this->generate_offer ();	
 		$offers = $this->Corporate_clients_model->get_new_offers ($user_id);
 		$this->output->set_content_type('application/jsonp');
@@ -44,21 +44,20 @@ class Corporate_clients extends CI_Controller {
 		$suggestion = 0;
 		$users = $this->Corporate_clients_model->get_users ($suggestion);
 		
-		$offer['market'] = rand () % 2;
-		if ($offer['market'] == 0) {
+//		$offer['market'] = rand () % 2;
+	//	if ($offer['market'] == 0) {
 			$offer['market'] = "FX";
-			$offer['first_ccy'] = 1;
-			$offer['second_ccy'] = 2;
-		}
-		else {
-			$offer['market'] = "MM";
-			$offer['first_ccy'] = 1;
-			$offer['second_ccy'] = 1;
-		}  	
+			$offer['currency'] = rand () % 3 + 1;
+//		}
+	//	else {
+//			$offer['market'] = "MM";
+//			$offer['first_ccy'] = 1;
+//			$offer['second_ccy'] = 1;
+//		}  	
 		
 		$offer['client_id'] = $this->Corporate_clients_model->get_random_client ();
 		$offer['amount'] = rand () % 10 + 1;
-		$offer['deal'] = "BUY";
+		$offer['deal'] = rand () % 2 + 1;
 		$offer['period_id'] = 1;
 		$offer['date'] = time () + 1;
 		
