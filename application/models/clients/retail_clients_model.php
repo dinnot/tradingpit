@@ -25,7 +25,7 @@
 		}
 		
 		function make_deal ($offer, $price) {
-			print "plm";
+			
 			$new_amount = $this->get_total_day_amount ($offer->user_id, $offer->pair_id, $offer->deal) + $offer->amount;
 			$this->update_total_day_amount ($offer->user_id, $offer->pair_id, $offer->deal, $new_amount);
 		
@@ -41,7 +41,6 @@
 			$deal['value_date'] = $offer->date;
 			$deal['trade_date'] = $offer->date;
 			
-			print_r ($deal);
 			$bank = $this->get_user_bank ($offer->user_id);		
 			$this->update_balances ($offer->user_id, $bank, $offer->amount, $offer->pair_id);				
 			$this->insert_fx_deal ($deal);

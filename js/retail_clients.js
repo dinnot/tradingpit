@@ -49,4 +49,4 @@ function check_next_client () {
 		});
 }
 
-setInterval (check_next_client, 3000);
+setInterval (check_next_client, 10000);
