@@ -9,8 +9,10 @@ class Retail_clients extends CI_Controller {
 		$this->load->database();
 		$this->load->helper('form');
 		$this->load->helper('url');
-		$this->load->model('Corporate_clients_model');
-		$this->load->model('Retail_clients_model');
+		$this->load->model('clients/Corporate_clients_model');		
+		$this->load->model('clients/Retail_clients_model');
+		$this->load->model('clients/Clients_model');		
+		$this->load->model('clients/Clients_trading_model');
 	}
 
 	function set_exchange_rate () {
