@@ -10,6 +10,7 @@
 		function set_quote ($offer_id, $user_id, $quote) {
 			$this->db->from ("clients_offers")->where ('id', $offer_id);
 			$result = $this->db->get ()->row ();
+
 			if ($result->pending == 0)
 				return 0;
 				
@@ -53,7 +54,7 @@
 		// stabilim userii castigatori pentru corporate-offer
 		// transmitem prin referinta sa actualizam statusu pentru js
 		function set_result_corporate (&$offer) {		
-			$this->db->update ("clients_offers", array ("pending" => 0));		
+			$this->db->where('id', $offer['offer_id'])->update ("clients_offers", array ("pending" => 0));		
 
 			$this->db->select ("*");
 			$this->db->from ("users_has_corporate_offers");			
