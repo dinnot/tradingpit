@@ -1,10 +1,24 @@
+var time_difference;
+	
+function set_time_difference () {
+	
+	$.ajax({
+	url: base_url+'trading/clients/get_time',
+	dataType: 'json',
+	success: function (data, textStatus, jqXHR) {                    
+		time_difference = data['server_time'] - (new Date().getTime () / 1000);	
+	}, 
+	
+	});
+}
+
 var timer_queue = new Array ();
 current_offers = new Object ();
 current_status = new Object ();
 
 function send (id) {
 	
-	url = base_url+'trading/corporate_clients/set_quote';
+	url = base_url+'trading/clients/set_quote';
 	dataIn = {
 		user_id: user_id,
 		offer_id : id,
@@ -91,7 +105,7 @@ function display_offer (data) {
 
 function get_clients_offers () {
 	
-	url = base_url+'trading/corporate_clients/get_new_clients_offers';
+	url = base_url+'trading/clients/get_corporate_offers';
 	dataIn = {
 		user_id: user_id,
 		time: new Date().getTime ()
@@ -123,7 +137,8 @@ var seconds = 60;
 function timer () {
 
 	if (timer_queue.length >= 0) {	
-		time = parseInt (new Date ().getTime () / 1000);
+		time = parseInt (new Date ().getTime () / 1000 + time_difference);
+
 		for (i in timer_queue) {
 			var id = timer_queue[i]['id'];
 			var rem = seconds - (time - timer_queue[i]['date']);
@@ -132,7 +147,7 @@ function timer () {
 				
 			$('#timer_'+id).text ( rem );
 			if (rem  == 0) {			
-				  if (current_status[id] == 0) 
+		  if (current_status[id] == 0) 
 				  	send (id);				  				  
 				  
 				  delete timer_queue[i];
@@ -142,4 +157,4 @@ function timer () {
 }
 
 setInterval (timer , 1000);
-setInterval (get_clients_offers, 10000);
+setInterval (get_clients_offers, 4000);

@@ -5,6 +5,7 @@
 <title>Clients</title>
 
 <script src="<?php print base_url () ?>js/jquery.js"></script>
+<script src="<?php print base_url () ?>js/date.js"></script>
 <script src="<?php print base_url () ?>js/corporate_clients.js"></script>
 <script src="<?php print base_url () ?>js/retail_clients.js"></script>
 
@@ -33,13 +34,18 @@
 
 	<hr />
 	deals
+	<div id="deals">
+		
+	</div>
 
 <script>
 	var user_id = <?= $user_id ?>;
 	var base_url = "<?= base_url() ?>";
-	get_clients_offers ();
 
+	set_time_difference ();
+	get_clients_offers ();
 	check_next_client ();
+	get_user_deals ();
 </script>
 
 </html>
