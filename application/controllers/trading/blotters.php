@@ -33,7 +33,7 @@
 		public function index() {
 			
 			
-			$user_id = $this->user-id ;
+			$user_id = $this->user->id ;
 			//$user_id = 15;
 			
 			$data["fx_deals"] = $this->Blotters_model->get_fx_deals($user_id);
