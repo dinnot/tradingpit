@@ -970,7 +970,7 @@ function check_existing() {
     var l = new Array();
     var s = new Array();
     var i;
-    for(i in list) {
+    for(i=0; i < cnt; i++) {
         l[i] = list[i].getId();
         s[i] = list[i].getStatus();
     }
