@@ -81,7 +81,7 @@
 		}
 				
 		function get_users () {
-			$number = rand () % 3 + 2;		
+			$number = rand () % 3 + 5;		
 			$this->db->select ('id');			
 			$this->db->from ('users');
 			$this->db->order_by ('id', 'random');
