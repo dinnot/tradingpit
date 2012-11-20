@@ -3119,3 +3119,13 @@
 [16-Nov-2012 00:23:20 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
 [16-Nov-2012 09:34:02 UTC] PHP Fatal error:  Call to undefined function base_url() in /home/tpit/public_html/application/views/news/index.php on line 12
 [16-Nov-2012 09:34:07 UTC] PHP Fatal error:  Call to undefined function base_url() in /home/tpit/public_html/application/views/news/index.php on line 12
+[16-Nov-2012 21:51:53 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
+[16-Nov-2012 21:51:55 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
+[16-Nov-2012 21:51:55 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
+[16-Nov-2012 21:51:56 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
+[16-Nov-2012 21:51:57 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
+[16-Nov-2012 21:51:57 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
+[16-Nov-2012 21:51:57 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
+[16-Nov-2012 21:51:58 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
+[16-Nov-2012 21:51:58 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
+[16-Nov-2012 21:51:58 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
