@@ -34,6 +34,9 @@
 
 	<hr />
 	deals
+	<div id="deals">
+		
+	</div>
 
 <script>
 	var user_id = <?= $user_id ?>;
@@ -42,6 +45,7 @@
 	set_time_difference ();
 	get_clients_offers ();
 	check_next_client ();
+	get_user_deals ();
 </script>
 
 </html>
