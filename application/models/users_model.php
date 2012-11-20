@@ -13,6 +13,10 @@
             return md5($key.$_SERVER['REMOTE_ADDR']);
         }
         
+        function updateTrading($id) {
+            $this->db->set(array("last_trading"=>time()))->where("id", $id)->update("users");
+        }
+        
         function getUserBy($cond) {
             $this->db->select("users.*, jobs.banks_id as bid");
             $this->db->from("users");

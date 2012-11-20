@@ -75,8 +75,8 @@
         <th>pair</th>
         <th>amount</th>
         <th>bf</th>
-        <th>buy</th>
         <th>sell</th>
+        <th>buy</th>
         <th>action</th>
     </tr>
 </table>
@@ -112,6 +112,163 @@ function deleteEnq(id) {
     }
 }
 
+function toutEnq(idv) {
+    var i;
+    for(i = 0; i < cnt; i++) {
+       if(list[i].getId() == idv) {
+           if(list[i].getStatus() < 2) {
+               cancelEnq(idv);
+           }
+           return;
+       }
+    }
+}
+
+function incEnq(idv) {
+    var i;
+    for(i = 0; i < cnt; i++) {
+       if(list[i].getId() == idv) {
+           list[i].inc();
+           return;
+       }
+    }
+}
+
+function trnEnq(idv) {
+    for(i = 0; i < cnt; i++) {
+       if(list[i].getId() == idv) {
+           list[i].setInAction(true);
+           break;
+       }
+    }
+    
+    $("#enq"+idv+"_bf").attr("disabled", "disabled");
+    $("#enq"+idv+"_buy").attr("disabled", "disabled");
+    $("#enq"+idv+"_sell").attr("disabled", "disabled");
+    $("#enq"+idv+"_trn").html("...");
+    var bf = $("#enq"+idv+"_bf").val();
+    var pbuy = parseInt($("#enq"+idv+"_buy").val());
+    var psell = parseInt($("#enq"+idv+"_sell").val());
+    bf = parseFloat(bf);
+    if(psell < pbuy) {
+        var t = bf+1;
+        psell = t+ psell / 10000;
+    } else {
+        psell = bf + psell / 10000;
+    }
+    
+    pbuy = bf + pbuy / 10000;
+    
+    $.ajax({
+        type: "POST",
+        data: {id: idv, buy: pbuy, sell: psell},
+        url: "/trading/trading/respond/",
+        cache: false
+    }).done(function(data) {
+        data = jQuery.parseJSON(data);
+        if(!data.error) {
+            $("#enq"+idv).css("background-color", "yellow");
+            var vhtm = "<input type='button' value='RISK' onclick='cancelEnq("+idv+")' />";
+            setTimeout(function(){$("#enq"+idv+"_trn").html(vhtm);}, 15000);
+        } else {
+            
+        }
+        for(i = 0; i < cnt; i++) {
+           if(list[i].getId() == idv) {
+               list[i].setInAction(false);
+               break;
+           }
+        }
+    });
+}
+
+function buyEnq(idv) {
+    var i;
+    for(i = 0; i < cnt; i++) {
+       if(list[i].getId() == idv) {
+           list[i].setInAction(true);
+           break;
+       }
+    }
+    $.ajax({
+        type: "POST",
+        data: {id: idv},
+        url: "/trading/trading/buy/",
+        cache: false
+    }).done(function(data) {
+        data = jQuery.parseJSON(data);
+        if(!data.error) {
+            $("#enq"+idv).css("background-color", "green");
+            setTimeout(function(){deleteEnq(idv)}, 5000);
+        } else {
+            for(i = 0; i < cnt; i++) {
+               if(list[i].getId() == idv) {
+                   list[i].setInAction(false);
+                   break;
+               }
+            }
+        }
+    });
+}
+
+function sellEnq(idv) {
+    var i;
+    for(i = 0; i < cnt; i++) {
+       if(list[i].getId() == idv) {
+           list[i].setInAction(true);
+           break;
+       }
+    }
+    $.ajax({
+        type: "POST",
+        data: {id: idv},
+        url: "/trading/trading/sell/",
+        cache: false
+    }).done(function(data) {
+        data = jQuery.parseJSON(data);
+        if(!data.error) {
+            $("#enq"+idv).css("background-color", "red");
+            setTimeout(function(){deleteEnq(idv)}, 5000);
+        } else {
+            for(i = 0; i < cnt; i++) {
+               if(list[i].getId() == idv) {
+                   list[i].setInAction(false);
+                   break;
+               }
+            }
+        }
+    });
+}
+
+function cancelEnq(idv) {
+    var i;
+    for(i = 0; i < cnt; i++) {
+       if(list[i].getId() == idv) {
+           list[i].setInAction(true);
+           break;
+       }
+    }
+    $.ajax({
+        type: "POST",
+        data: {id: idv},
+        url: "/trading/trading/cancel/",
+        cache: false
+    }).done(function(data) {
+        data = jQuery.parseJSON(data);
+        if(!data.error) {
+            $("#enq"+idv).css("background-color", "#555555");
+            setTimeout(function(){deleteEnq(idv)}, 5000);
+        } else {
+            for(i = 0; i < cnt; i++) {
+               if(list[i].getId() == idv) {
+                   list[i].setInAction(false);
+                   break;
+               }
+            }
+        }
+    });
+}
+
 function enquiry() {
     this.status = -1;
     this.where = "queue";
@@ -123,6 +280,10 @@ function enquiry() {
         this.data.id = id;
         this.data.status = sts;
         this.where = where
+    }
+    
+    this.setInAction = function(val) {
+        this.in_action = val;
     }
     
     this.del = function() {
@@ -142,6 +303,9 @@ function enquiry() {
     }
     
     this.recalc = function() {
+        if(this.in_action) {
+            return;
+        }
         var new_sts = this.data.status;
         if(this.where == "outgoing") {
             if(new_sts == 1) {
@@ -151,7 +315,7 @@ function enquiry() {
                 html += "<td>"+this.data.pair+"</td>";
                 html += "<td>"+this.data.amount+"</td>";
                 html += "<td colspan=3>waiting...</td>";
-                html += "<td>action</td>";
+                html += "<td>-</td>";
                 $("#enq"+this.data.id).html(html);
             } else if(new_sts == 2) {
                 var html = "";
@@ -162,14 +326,19 @@ function enquiry() {
                 html += "<td>"+calcBf(this.data.price_buy)+"</td>";
                 html += "<td>"+calcPips(this.data.price_buy)+"</td>";
                 html += "<td>"+calcPips(this.data.price_sell)+"</td>";
-                html += "<td>action</td>";
+                html += "<td><input type='button' onclick='sellEnq("+this.data.id+")' value='Sell'><input type='button' onclick='buyEnq("+this.data.id+")' value='Buy'><input type='button' onclick='cancelEnq("+this.data.id+")' value='NTG'></td>";
                 $("#enq"+this.data.id).html(html);
             }
         } else if(this.where == "incoming") {
+            var dis = this;
             if(new_sts == 3) {
-                
+                $("#enq"+this.data.id+"_trn").html("");
+                $("#enq"+this.data.id).css("background-color", "red");
+                setTimeout(function(){deleteEnq(dis.data.id)}, 5000);
             } else if(new_sts == 4) {
-                
+                $("#enq"+this.data.id+"_trn").html("");
+                $("#enq"+this.data.id).css("background-color", "green");
+                setTimeout(function(){deleteEnq(dis.data.id)}, 5000);
             }
         }
     }
@@ -182,7 +351,33 @@ function enquiry() {
                 html += "</tr>";
                 $('#outgoing tr:last').after(html);
             }
+        } else if(this.where == "queue") {
+            if(this.data.status == 1) {
+                var html = "<tr id='enq"+this.data.id+"'>";
+                html += "<td>"+this.data.first_bname+"</td>";
+                html += "<td>"+this.data.pair+"</td>";
+                html += "<td>"+this.data.amount+"</td>";
+                html += "<td><input type='button' onclick='incEnq("+this.data.id+")' value='Open' /></td>";
+                html += "</tr>";
+                $('#queue tr:last').after(html);
+            }
         }
+    }
+    
+    this.inc = function() {
+        $("#enq"+this.data.id).remove();
+        var html = "<tr id='enq"+this.data.id+"'>";
+        html += "<td>"+this.data.first_code+"</td>";
+        html += "<td>"+this.data.first_bname+"</td>";
+        html += "<td>"+this.data.pair+"</td>";
+        html += "<td>"+this.data.amount+"</td>";
+        html += "<td><input type='text' id='enq"+this.data.id+"_bf' /></td>";
+        html += "<td><input type='text' id='enq"+this.data.id+"_buy' /></td>";
+        html += "<td><input type='text' id='enq"+this.data.id+"_sell' /></td>";
+        html += "<td id='enq"+this.data.id+"_trn'><input type='button' value='Transmit' onclick='trnEnq("+this.data.id+")' /></td>";
+        html += "</tr>";
+        $('#incoming tr:last').after(html);
+        this.where = "incoming";
     }
     
     this.activate = function() {
@@ -200,8 +395,7 @@ $("#call_form").submit(function() {
         type: "POST",
         data: {pair: p, amount: a},
         url: "/trading/trading/add/",
-        cache: false,
-        dataTypeString: "json"
+        cache: false
     }).done(function(data) {
         data = jQuery.parseJSON(data);
         var i;
@@ -209,6 +403,7 @@ $("#call_form").submit(function() {
             list[cnt] = new enquiry();
             list[cnt].init(data[i], -1, "outgoing");
             list[cnt].calc();
+            setTimeout("toutEnq("+data[i]+")", 60000);
             cnt++;
         }
     });
@@ -227,15 +422,14 @@ function check_existing() {
         type: "POST",
         data: {"ids": l, "sts": s},
         url: "/trading/trading/status/",
-        cache: false,
-        dataTypeString: "json"
+        cache: false
     }).done(function(data) {
-        console.log(data);
         data = jQuery.parseJSON(data);
         var i;
         for(i in data) {
             if(data[i].status == 0) {
-                deleteEnq(data[i].id);
+                $("#enq"+data[i].id).css("background-color", "#555555");
+                setTimeout(function(){deleteEnq(data[i].id)}, 5000);
             } else {
                 var j;
                 for(j = 0; j < cnt; j++) {
@@ -247,7 +441,7 @@ function check_existing() {
             }
         }
     });
-    //setTimeout("check_existing();", 500);
+    setTimeout("check_existing();", 500);
 }
 
 function check_new() {
@@ -258,23 +452,35 @@ function check_new() {
     }
     $.ajax({
         type: "POST",
-        data: l,
+        data: {"ids": l},
         url: "/trading/trading/newen/",
-        cache: false,
-        dataTypeString: "json"
+        cache: false
     }).done(function(data) {
+        data = jQuery.parseJSON(data);
         var i;
         for(i in data) {
-            list[cnt] = new enquiry();
-            list[cnt].init(data[i].id, data[i].status, "queue");
-            list[cnt].setData(data[i]);
-            list[cnt].calc();
-            cnt++;
+            var j;
+            var found = false;
+            for(j in list) {
+                if(list[j].getId() == data[i].id) {
+                    found = true;
+                } 
+            }
+            if(!found) {
+                list[cnt] = new enquiry();
+                list[cnt].init(data[i].id, data[i].status, "queue");
+                list[cnt].setData(data[i]);
+                list[cnt].calc();
+                cnt++;
+            }
         }
     });
     setTimeout("check_new();", 500);
 }
-
+$(function() {
+    check_new();
+    check_existing();
+});
 </script>
 
 </body>

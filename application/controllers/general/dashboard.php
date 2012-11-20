@@ -37,7 +37,7 @@ class Dashboard extends CI_Controller {
             }
         }
         $data['error'] = $this->session->flashdata('ERROR');
-        $this->load->view("general/dashboard", $data);
+        redirect("/trading/trading");
     }
     
     public function getgeneraljob() {
