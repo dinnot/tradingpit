@@ -21,7 +21,7 @@
 			$offers = $query->result_array ();
 		
 			$offers_to_display = array ();
-			$seconds = 24*3600;
+			$seconds = 80;
 			
 			$time = time ();			
 			$data = array ('date' => $time);	
@@ -38,6 +38,43 @@
 			}					
 				
 			return $offers_to_display;
+		}
+	
+		function get_best_offer (&$offer) {
+			$this->db->from ("users_has_corporate_offers");
+			$this->db->where ("offer_id", $offer['offer_id']);
+			
+			if ($offer['market'] == "FX") {
+				if ($offer['deal'] == "SELL") {
+					$this->db->order_by ("quote", "desc");
+					$this->db->where ("quote >", 0);
+				}
+				else {
+					$this->db->order_by ("quote", "asc");
+					$this->db->where ("quote >", 0);
+				}
+				
+				$query = $this->db->get ();
+				if ($query->num_rows == 0)
+					return 0;
+					
+				$results = $query->result_array ();				
+				$best['quote'] = $results[0]['quote'];
+				$best['num'] = 0;
+				foreach ($results as $item) {
+					if ($item['quote'] == $best['quote'])
+						$best['num']++;
+					else 
+						break;
+				}
+				
+				return $best;
+			}	
+			if ($offer['market'] == "MM") {
+				return 0;
+			}
+			
+			return 0;
 		}
 	
 		// generare proasta :D
