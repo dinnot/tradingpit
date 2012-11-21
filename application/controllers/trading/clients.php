@@ -36,7 +36,6 @@ class Clients extends CI_Controller {
 	
 	public function index () {		
 		$user_id = $this->user->id;
-		print $this->user->username;
 		
 		$data['user_id'] = $user_id;
 		$data['retail_rate'] = $this->retail_clients_model->get_all_rate_exchange ($user_id);

@@ -1,4 +1,4 @@
-function set_exchange_rate (pair_id) {
+/*function set_exchange_rate (pair_id) {
 
 	url = base_url+"trading/clients/set_exchange_rate";
 	data_in = {
@@ -84,3 +84,12 @@ function get_user_deals () {
 
 setInterval (get_user_deals, 4000);
 setInterval (check_next_client, 4000);
+*/
+
+function swap (pair) {
+	pair2 = 1;
+	if (pair == 1) pair2 = 2;	
+	
+	$('#pair_'+pair2).hide ();	
+	$('#pair_'+pair).show ();
+}

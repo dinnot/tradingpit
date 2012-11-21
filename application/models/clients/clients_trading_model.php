@@ -106,18 +106,17 @@
 
 			$this->db->select ("*");
 			$this->db->from ("users_has_corporate_offers");			
-			$this->db->order_by ("quote", "desc");
 			$this->db->join ("clients_offers", "users_has_corporate_offers.offer_id = clients_offers.id", "left");									
 			$this->db->where (array ('offer_id'=>$offer['offer_id']));
 			
 			$query = $this->db->get ();
 			$results = $query->result_array ();
 
-			// prost
-			$best_offer['price'] = $results[0]['quote'];			
-			
+			$best_offer = $this->corporate_clients_model->get_best_offer ($offer);			
+			$offer['amount'] = $offer['amount'] / $best_offer['num'];
 			foreach ($results as $item) {
-				if ($item['quote'] == $best_offer['price'] && $best_offer['price'] != 0) {
+				$item['amount'] = $offer['amount'];
+				if ($item['quote'] == $best_offer['quote'] && $best_offer['quote'] != 0) {
 					$offer['status'] = 2; // make_deal
 					$this->make_corporate_deal ($item);
 				}
