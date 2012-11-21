@@ -164,5 +164,6 @@ function timer () {
 	}
 }
 
+
 setInterval (timer , 1000);
 setInterval (get_clients_offers, 4000);

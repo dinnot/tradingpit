@@ -10,6 +10,8 @@
   <script src="<?php print base_url () ?>js/jquery-1.8.2.min.js"></script>
   <script src="<?php print base_url () ?>js/jquery-ui-1.9.1.custom.js"></script>
 	<script src="<?php print base_url () ?>js/corporate_clients.js"></script>
+		<script src="<?php print base_url () ?>js/retail_clients.js"></script>
+
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -117,67 +119,11 @@
         </section><!-- end main-section -->
 
         <section class="main-section corporate-clients middle">
-          <div class="main-section-inside">
-            <div class="client-action-box sells">
-              <div class="action-box-inside">
-                <p>Client sells</p>
-                <p class="amount">362,148</p>
-                <p>Bank buys</p>
-              </div><!-- end action-box-inside -->
-            </div><!-- end client-action-box sells -->
-
-            <div class="retail-box">
-              <p class="retail-box-title">Retail</p>
-              <ul>
-                <li class="prev-control"><a href="#"></a></li>
-                <li>TER/RIK</li>
-                <li class="next-control"><a href="#"></a></li>
-              </ul>
-              <div class="retail-box-white-zone">
-
-                <div class="top-values">
-                  <span class="top-value left">3.9</span>
-                  <span class="top-value right">3.9</span>
-                </div><!-- end top-values -->
-
-                <div class="middle-values">
-                  <span class="middle-value left">250</span>
-                  <span class="middle-value right">550</span>
-                </div><!-- end middle-values -->
-                <button>Send</button>
-              </div><!-- end retail-box-white-zone -->
-
-            </div><!-- end retail-box -->
-
-            <div class="client-action-box buys">
-              <div class="action-box-inside">
-                <p>Client buys</p>
-                <p class="amount">753,824</p>
-                <p>Bank sells</p>
-              </div><!-- end action-box-inside -->
-            </div><!-- end client-action-box buys -->
-
-            <div class="widget client-ter">
-
-              <div class="widget-title">
-                <ul>
-                <li class="first current"><a href="#">TER/RIK</a></li>
-                <li><a href="#">HAT/RIK</a></li>
-              </ul>
-              </div><!-- end widget-title -->
-
-              <div class="widget-content">
-                <p>TOTAL VOLUME</p>
-                <p class="value">1.000.000</p>
-                <p>NET POSITION<span>FROM CLIENTS</span></p>
-                <p class="value">1.000.000</p>
-                <p>Pnl</p>
-                <p class="value">10.000</p>
-              </div><!-- end widget-content -->
-
-            </div><!-- end widget tier1 -->
-          </div><!-- end main-section-inside -->
-        </section><!-- end main-section -->
+         	<?php
+							include_once ("retail.php");
+						?>
+						
+         </section><!-- end main-section -->
 
         <section class="main-section corporate-clients dark-bg">
           <div class="main-section-inside">
