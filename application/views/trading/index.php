@@ -997,7 +997,7 @@ function check_existing() {
             }
         }
     });
-//    setTimeout("check_existing();", 900);
+    setTimeout("check_existing();", 900);
 }
 
 function check_new() {
@@ -1033,7 +1033,7 @@ function check_new() {
             }
         }
     });
-//    setTimeout("check_new();", 700);
+    setTimeout("check_new();", 700);
 }
 $(function() {
     check_new();
