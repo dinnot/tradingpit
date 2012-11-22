@@ -79,13 +79,13 @@ function display_econforcasts (econforcasts) {
 
 	$('#econforcasts_table').text('');
 	
-	for (var i = 0; i < econforcasts.length; i++) {
+	for (var i = econforcasts.length - 1; i >= 0; i--) {
 		var timestamp = econforcasts[i]['date'] * 1000;
 		data1 = new Date(timestamp).toString('dd/MMM');
 		data2 = new Date(timestamp).toString('HH:mm');
 		
 		$("#econforcasts_table").append ("<tr>");
-		$('#econforcasts_table tr:last').append($("<td class=\"first\"></td>").text(econforcasts[i]['id']));
+		$('#econforcasts_table tr:last').append($("<td class=\"first\"></td>").text( econforcasts.length - i ));
 		$('#econforcasts_table tr:last').append($("<td class=\"blue-td\"></td>").text(data1));
 		$('#econforcasts_table tr:last').append($("<td class=\"blue-td\"></td>").text(data2));
 		$('#econforcasts_table tr:last').append($("<td class=\"blue-td\"></td>").text(econforcasts[i]['countries_name']));
@@ -93,7 +93,7 @@ function display_econforcasts (econforcasts) {
 		$('#econforcasts_table tr:last').append($("<td class=\"blue-td\"></td>").text(""));
 		$('#econforcasts_table tr:last').append($("<td class=\"blue-td\"></td>").text(econforcasts[i]['econindicators_name']));
 		$('#econforcasts_table tr:last').append($("<td class=\"blue-td\"></td>").text(""));
-		$('#econforcasts_table tr:last').append($("<td class=\"blue-td\"></td>").text(""));
+		$('#econforcasts_table tr:last').append($("<td class=\"blue-td\"></td>").text(econforcasts[i]['survey']));
 		$('#econforcasts_table tr:last').append($("<td class=\"blue-td\"></td>").text(econforcasts[i]['actual']));
 		$('#econforcasts_table tr:last').append($("<td class=\"blue-td\"></td>").text(econforcasts[i]['prior']));
 		$('#econforcasts_table tr:last').append($("<td class=\"blue-td\"></td>").text(econforcasts[i]['forecast']));
@@ -109,3 +109,4 @@ function clock () {
 
 clock ();
 setInterval (clock, 1000);
+get_econforcasts ();

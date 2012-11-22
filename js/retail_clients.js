@@ -1,12 +1,25 @@
-/*function set_exchange_rate (pair_id) {
+
+function get_price (bf, pips) {
+	while (pips.length < 3)
+	 pips = "0" + pips;
+	 
+	console.log (bf+pips);
+	return bf + pips;
+}
+
+function set_exchange_rate (pair_id) {
 
 	url = base_url+"trading/clients/set_exchange_rate";
+	sell = get_price ( $('#bf_sell_'+pair_id).val(),  $('#pips_sell_'+pair_id).val());
+	buy = get_price ( $('#bf_buy_'+pair_id).val(),  $('#pips_buy_'+pair_id).val ());
 	data_in = {
 		'user_id' : user_id,
 		'pair_id' : pair_id,
-		'sell' : $('#sell_'+pair_id).val (),
-		'buy' : $('#buy_'+pair_id).val () 
+		'sell' : sell,
+		'buy' : buy 
 	}	
+
+	console.log (data_in);
 
 	$.ajax({
 		type: 'POST',
@@ -37,11 +50,14 @@ function check_next_client () {
       async: true,
       dataType: 'json',
       success: function (data, textStatus, jqXHR) {                    
-      	
     		$('#retail_sell_1').text (data['amount'][1]['sell']);
     		$('#retail_buy_1').text (data['amount'][1]['buy']);
     		$('#retail_sell_2').text (data['amount'][2]['sell']);
     		$('#retail_buy_2').text (data['amount'][2]['buy']);
+    		$('#total_volume_1').text ( parseFloat (data['amount'][1]['sell']) + parseFloat (data['amount'][1]['buy']));
+    		$('#net_position_1').text ( parseFloat (-data['amount'][1]['sell']) +  parseFloat ( data['amount'][1]['buy']));
+    		$('#total_volume_2').text ( parseFloat (data['amount'][2]['sell']) +  parseFloat ( data['amount'][2]['buy']));
+    		$('#net_position_2').text ( parseFloat (-data['amount'][2]['sell']) +  parseFloat ( data['amount'][2]['buy']));
     	}, 
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
         console.log(textStatus, errorThrown);
@@ -53,10 +69,20 @@ function display_deals (deals) {
 	
 	$("#deals").text ("");
 	for (i = 0; i < deals.length; i++) {
+		code = 'CLNT';
+		if (deals[i]['counter_party'] == 0) code = "RTL";
+		Time = new Date ( deals[i]['trade_date'] * 1000 );
+		time = Time.toString("h:mm:ss");	
+		data = Time.toString("dd/MM");
 		$("#deals").append (
-			'amount : ' + deals[i]['amount_base_ccy'] + ' ccy : ' + deals[i]['ccy_pair'] + ' price : ' + deals[i]['price'] +' counter_party : ' + deals[i]['counter_party'] + ' time : ' + deals[i]['trade_date']
+			'<tr>'+
+			'<td>'+code+'</td>'+
+			'<td>'+data+'</td>'+
+			'<td>'+time+'</td>'+		
+			'<td>'+deals[i]['price']+'</td>'+
+			'<td>'+deals[i]['amount_base_ccy']+'</td>'+
+			'</tr>'
 		);
-		$("#deals").append ('<hr />');
 	}
 }
 
@@ -84,7 +110,6 @@ function get_user_deals () {
 
 setInterval (get_user_deals, 4000);
 setInterval (check_next_client, 4000);
-*/
 
 function swap (pair) {
 	pair2 = 1;

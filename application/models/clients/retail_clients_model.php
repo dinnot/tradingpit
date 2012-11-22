@@ -109,7 +109,7 @@
 			$client = $query->row();
 			
 			$result['amount'] = rand () % ($client->max_amount - 1000) + 1000;
-			$result['date'] = time () + $client->secs;
+			$result['date'] = time () + $client->secs + rand () % 11 - 5;
 			
 			return $result;
 		}
@@ -129,11 +129,22 @@
 			if ($pips_difference < 0) $pips_difference = -$pips_difference;
 			
 			$client = $this->get_client_details ($pips_difference);			
-			print $client->date - time ();
-			print '<br />';
 			
 			if ($client['amount'] != 0) 
 				$this->update_next_client ($user_id, $pair_id, $deal, $client);			
+		}
+							
+		function get_bf ($price) {
+			$bf = $price * 10; $bf = (int) $bf; $bf/= 10;
+			return number_format($bf, 1, '.', '');
+		}
+		
+		function get_pips ($price) {
+			$bf = $price * 10; $bf = (int) $bf; $bf/= 10;
+			$pips = $price - $bf;
+			$pips = $pips * 10000;
+			$pips = (int) $pips;
+			return $pips;
 		}
 							
 		function get_all_rate_exchange ($user_id) {
@@ -143,12 +154,17 @@
 			$results = $query->result_array ();
 			
 			$rate = array ();
-			$rate[1]['sell'] = 0; $rate[2]['sell'] = 0;
-			$rate[1]['buy'] = 0; $rate[2]['buy'] = 0;
+			$rate[1]['sell_bf'] = '0.0'; $rate[2]['sell_bf'] = '0.0';
+			$rate[1]['buy_bf'] = '0.0'; $rate[2]['buy_bf'] = '0.0';
+			
+			$rate[1]['sell_pips'] = 0; $rate[2]['sell_pips'] = 0;
+			$rate[1]['buy_pips'] = 0; $rate[2]['buy_pips'] = 0;
 			
 			foreach ($results as $item) {
-				$rate[ $item['pair_id'] ]['sell'] = $item['sell'];				
-				$rate[ $item['pair_id'] ]['buy'] = $item['buy'];
+				$rate[ $item['pair_id'] ]['sell_bf'] = $this->get_bf ($item['sell']);				
+				$rate[ $item['pair_id'] ]['sell_pips'] = $this->get_pips ($item['sell']);
+				$rate[ $item['pair_id'] ]['buy_bf'] = $this->get_bf ($item['buy']);				
+				$rate[ $item['pair_id'] ]['buy_pips'] = $this->get_pips ($item['buy']);
 			}
 		
 			return $rate;
