@@ -69,13 +69,13 @@
 		
 			$this->db->from ("users_retail_rate");
 			if ($deal == 1) {
-				// user sell
-				$this->db->order_by ("sell", "asc");
+				// clients sell
+				$this->db->order_by ("sell", "desc");
 				$this->db->where ('sell >', 0);
 			}
 			else {
-				// user buy
-				$this->db->order_by ("buy", "desc");
+				// clients buy
+				$this->db->order_by ("buy", "asc");
 				$this->db->where ('buy >', 0);
 			}
 		
