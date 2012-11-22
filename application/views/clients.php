@@ -10,7 +10,9 @@
   <script src="<?php print base_url () ?>js/jquery-1.8.2.min.js"></script>
   <script src="<?php print base_url () ?>js/jquery-ui-1.9.1.custom.js"></script>
 	<script src="<?php print base_url () ?>js/corporate_clients.js"></script>
-		<script src="<?php print base_url () ?>js/retail_clients.js"></script>
+	<script src="<?php print base_url () ?>js/retail_clients.js"></script>
+  <script src="<?php print base_url() ?>js/date.js"></script>
+
 
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -118,6 +120,8 @@
           </div><!-- end main-section-inside -->
         </section><!-- end main-section -->
 
+			
+
         <section class="main-section corporate-clients middle">
          	<?php
 							include_once ("retail.php");
@@ -132,6 +136,7 @@
                 <div class="section-title">
                   <h2><span class="text-container"><span class="green-square"></span>Positions</span></h2>
                 </div><!-- end section-title -->
+                	<!--
                   <div class="ticket-conv-tabs">
                     <ul>
                       <li class="current"><a href="#">Ticket/Conv</a></li>
@@ -146,49 +151,12 @@
                           <th class="first">Code</th>
                           <th>Date</th>
                           <th>Time</th>
-                          <th>User</th>
-                          <th>Swift</th>
-                          <th>Period</th>
-                          <th>Deal</th>
                           <th>Rate</th>
-                          <th>Volume</th>
-                          <th>Status</th>
-                          <th>Maker</th>
-                          <th class="last">Taker</th>
+                          <th class="last">Volume</th>
                         </tr>
                       </thead>
 
-                      <tbody>
-
-                        <tr class="first">
-                          <td>BFBZ</td>
-                          <td>05 JUL</td>
-                          <td>13:33</td>
-                          <td>FLRN</td>
-                          <td>HAT/RIK</td>
-                          <td>SPOT</td>
-                          <td>SELL</td>
-                          <td>4.1180</td>
-                          <td>2MIO</td>
-                          <td>123456</td>
-                          <td>BFBZ</td>
-                          <td>AATK</td>
-                        </tr>
-
-                        <tr class="last">
-                          <td>HSAN</td>
-                          <td>05 JUL</td>
-                          <td>13:11</td>
-                          <td>FLRN</td>
-                          <td>TER/RIK</td>
-                          <td>SPOT</td>
-                          <td>BUY</td>
-                          <td>3.9245</td>
-                          <td>2MIO</td>
-                          <td>EB1234</td>
-                          <td>AATK</td>
-                          <td>HSAN</td>
-                        </tr>
+                      <tbody id="deals">
 
                       </tbody>
                     </table>
@@ -239,6 +207,8 @@
 
 	set_time_difference ();
 	get_clients_offers ();
+	get_user_deals ();
+	check_next_client ();
 </script>
 
 

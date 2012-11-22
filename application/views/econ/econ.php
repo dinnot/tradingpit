@@ -141,25 +141,6 @@
             <tbody id="econforcasts_table">
 
 		
-		<?php foreach ($econforcasts as $item): ?>
-		
-			<tr>
-			<td class="first"><?=$item['id']?></td>
-			<td class="blue-td"><?=date('m/d', $item['date'])?></td> 
-			<td class="blue-td"><?=date('g:i', $item['date'])?></td>
-			<td class="blue-td"><?=$item['countries_name']?></td>
-			<td></td>
-			<td></span></td>
-			<td class="blue-td"><?=$item['econindicators_name']?></td>
-			<td></td>
-			<td></td>
-			<td class="blue-td"><?=$item['actual']?></td>
-			<td class="blue-td"><?=$item['prior']?></td>
-			<td class="blue-td"><?=$item['forecast']?></td>
-			</tr>
-		
-		<?php endforeach; ?>
-		
 
             </tbody>
           </table>
