@@ -46,8 +46,6 @@ function send (id) {
 		quote : $('#input_quote_'+id).val ()
 	}
 	
-	console.log (dataIn);
-	
 	$.ajax({
 	type: 'POST',
 	url: url,
