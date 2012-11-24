@@ -3129,3 +3129,55 @@
 [16-Nov-2012 21:51:58 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
 [16-Nov-2012 21:51:58 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
 [16-Nov-2012 21:51:58 UTC] PHP Fatal error:  Cannot redeclare class Dealing in /home/tpit/public_html/application/controllers/trading/dealing.php on line 95
+[20-Nov-2012 22:30:16 UTC] PHP Fatal error:  Call to a member function make_retail_deal() on a non-object in /home/tpit/public_html/application/models/clients/retail_clients_model.php on line 34
+[20-Nov-2012 22:30:19 UTC] PHP Fatal error:  Call to a member function make_retail_deal() on a non-object in /home/tpit/public_html/application/models/clients/retail_clients_model.php on line 34
+[20-Nov-2012 22:30:22 UTC] PHP Fatal error:  Call to a member function make_retail_deal() on a non-object in /home/tpit/public_html/application/models/clients/retail_clients_model.php on line 34
+[20-Nov-2012 22:30:25 UTC] PHP Fatal error:  Call to a member function make_retail_deal() on a non-object in /home/tpit/public_html/application/models/clients/retail_clients_model.php on line 34
+[20-Nov-2012 22:30:31 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:30:33 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:30:40 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:30:42 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:30:43 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:30:44 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:30:46 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:30:49 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:30:52 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:30:55 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:30:58 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:01 UTC] PHP Fatal error:  Call to a member function make_retail_deal() on a non-object in /home/tpit/public_html/application/models/clients/retail_clients_model.php on line 34
+[20-Nov-2012 22:31:04 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:10 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:12 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:16 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:18 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:19 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:25 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:27 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:31 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:34 UTC] PHP Fatal error:  Call to a member function make_retail_deal() on a non-object in /home/tpit/public_html/application/models/clients/retail_clients_model.php on line 34
+[20-Nov-2012 22:31:37 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:38 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:40 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:43 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:46 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:49 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:52 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:31:55 UTC] PHP Fatal error:  Call to a member function make_retail_deal() on a non-object in /home/tpit/public_html/application/models/clients/retail_clients_model.php on line 34
+[20-Nov-2012 22:31:58 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:01 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:04 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:08 UTC] PHP Fatal error:  Call to a member function make_retail_deal() on a non-object in /home/tpit/public_html/application/models/clients/retail_clients_model.php on line 34
+[20-Nov-2012 22:32:10 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:13 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:16 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:19 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:22 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:25 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:28 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:31 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:34 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:37 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:41 UTC] PHP Fatal error:  Call to a member function make_retail_deal() on a non-object in /home/tpit/public_html/application/models/clients/retail_clients_model.php on line 34
+[20-Nov-2012 22:32:43 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:46 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[20-Nov-2012 22:32:49 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31

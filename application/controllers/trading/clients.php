@@ -36,12 +36,11 @@ class Clients extends CI_Controller {
 	
 	public function index () {		
 		$user_id = $this->user->id;
-		print $this->user->username;
 		
 		$data['user_id'] = $user_id;
 		$data['retail_rate'] = $this->retail_clients_model->get_all_rate_exchange ($user_id);
 		$data['amount'] = $this->clients_trading_model->get_user_amount ($user_id);
-		
+				
 		$this->load->view ("clients", $data); 
   }
   
@@ -54,7 +53,7 @@ class Clients extends CI_Controller {
 	 // corporate	
 	 function get_corporate_offers () {		
 		$user_id = $this->input->get_post ("user_id");
-		if (rand () % 80 == 0)
+		if (rand () % 30 == 0)
 			$this->generate_corporate_client ();	
 	
 		$offers = $this->corporate_clients_model->get_corporate_offers ($user_id);

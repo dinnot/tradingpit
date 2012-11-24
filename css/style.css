@@ -560,7 +560,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	vertical-align: top;
 }
 .incoming-calls .sidebar {
-	padding-bottom:20px;
+	padding-bottom: 100px;
+    padding-top: 15px;
 }
 .sidebar {
 	width: 255px;
@@ -574,7 +575,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	padding:0 25px;
 	width: 580px;
 	background: #f2f2f2;
-	margin-top:7px;
+	margin-top:15px;
 }
 
 .main-section-content .table-container {
@@ -623,6 +624,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .main-section-content .table-container.orange thead th {
 	background: #ba6433;
 	border-right: 1px solid #6a0000;
+	font-size: 11px;
 }
 
 .main-section-content .table-container.orange thead th.action {
@@ -672,6 +674,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 .main-section-content .table-container.orange td.silver-bg {
 	background: #d1d1d1;
+	text-align: center;
 }
 
 .main-section-content .table-container.orange tr:hover td.dark-red-bg,
@@ -1068,7 +1071,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cecece', end
 }
 
 .table-container.black {
-	margin-top:15px;
+	margin-top:164px;
 	position: relative;
 }
 
@@ -2165,3 +2168,143 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#181818', end
 	border: 1px solid #ccc;
 }
 
+
+/* ======================================
+   	Landing page
+   ====================================== */
+
+.landing-page {
+	background: url(../images/landing-page-bg.jpg) no-repeat top center;
+}
+.landing-page-container {
+	width: 1320px;
+	margin:auto;
+}
+
+.traderion-logo {
+	margin:10px 0 0 10px;
+}
+
+.traderion-logo,.login-container {
+	display: inline-block;
+}
+
+.login-container {
+	float: right;
+	margin-top:17px;
+}
+
+.login-container .label,
+.login-container .value,
+.login-container ul,
+.login-container ul li,
+.landing-top-info ul li {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.login-container .label {
+	text-transform: uppercase;
+	color: #fff;
+	font-size: 14px;
+	margin: 5px 8px 0 60px;
+}
+
+.login-container ul {
+	margin:5px 0 0 35px;
+}
+
+.login-container ul li a {
+	text-transform: uppercase;
+	color: #fff;
+	font-size: 14px;
+	padding:1px 16px 3px;
+}
+
+.login-container ul li.current a {
+	background: #3d3d3d;
+}
+
+.login-container ul li.first a {
+	border-right: 1px solid #fff;
+}
+
+.login-container .dark-gray-input {
+	background-color:#484848;
+	border:1px solid #444444;
+	box-shadow: inset 0 0 5px #3e3e3e;
+	height: 22px;
+	padding:1px 5px 0 5px;
+	width: 175px;
+	color: #fff;
+}
+
+.landing-top-info {
+	width: 960px;
+	margin: auto;
+	margin-top:187px;
+	padding-left:500px;
+}
+
+.landing-top-info ul {
+	width: 474px;
+	text-align: center;
+}
+
+.landing-top-info ul li {
+	color:#81844f;
+	font-size: 12px;
+	margin-left: 24px;
+}
+
+.landing-top-info ul li.first {
+	margin-left: 0;
+}
+
+.landing-panel {
+	width: 375px;
+	height: 627px;
+	background:url(../images/landing-page-panel.png) no-repeat; 
+	padding-top: 130px;
+    position: relative;
+    top: -257px;
+}
+
+.landing-panel p.welcome-message {
+	font-size: 55px;
+	text-align: center;
+	text-transform: uppercase;
+	margin-bottom: 17px;
+    margin-top: 5px;
+}
+.landing-panel p.slogan {
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 15px;
+	margin-bottom: 22px;
+}
+
+.landing-panel p {
+	color: #fff;
+	font-size: 15px;
+	width: 322px;
+	margin: auto;
+	margin-bottom: 27px;
+}
+
+.blue-span {
+	color:#80e0ff;
+}
+
+.landing-panel p .blue-span {
+	font-weight: bold;
+}
+
+a.play-now {
+	color: #FFFFFF;
+    display: block;
+    font-size: 27px;
+    text-align: center;
+    text-transform: uppercase;
+    padding-top:2px;
+}

@@ -9,6 +9,7 @@
 		function get_econforcasts () {
 		
 			$what = array ();
+			$what[] = "econforcasts.prior";$what[] = "econforcasts.survey";
 			$what[] = "econforcasts.id"; $what[] = "econforcasts.date"; 
 			$what[] = "econforcasts.forecast"; $what[] = "econforcasts.actual";
 			$what[] = "countries.name AS countries_name";
@@ -26,7 +27,7 @@
 				
 			$query = $this->db->get ();			
 			$econforcasts = $query->result_array ();		
-			$this->get_prior ($econforcasts);	
+//			$this->get_prior ($econforcasts);	
 			return $econforcasts;
 		}
 		
@@ -62,6 +63,16 @@
 		function apply_filter_date () {
 			$date_start_filter = strtotime ($this->input->get_post ("date_start_filter")); 
 			$date_end_filter = strtotime ( $this->input->get_post ("date_end_filter"));
+
+			if ($date_end_filter) 
+				$date_end_filter = $date_end_filter + 24*3600;
+
+			if (!$date_end_filter || !$date_start_filter) {
+				$date_end_filter = time ();
+				$date_start_filter = time () - 3 * 24 * 3600;
+			}
+			
+			$date_end_filter = min ($date_end_filter, time ());
 	
 			if ($date_start_filter && $date_end_filter) {
 				$this->db->where ('date >=', $date_start_filter);

@@ -16,6 +16,27 @@ var timer_queue = new Array ();
 current_offers = new Object ();
 current_status = new Object ();
 
+function get_status (status, id) {
+	if (status == 0) 
+		return '<a href="#" onClick="send('+id+')" class="pending">SEND<span class="counter" id="counter_'+id+'">0</span><span class="status">PENDING</span></a>';
+	if (status == 1)
+		return '<a href="#" class="pending">SENT<span class="counter" id="counter_'+id+'">0</span><span class="status">PENDING</span></a>';
+	if (status == 2)
+		return '<a href="#" class="accepted">SENT<span class="counter" id="counter_'+id+'">0</span><span class="status">ACCEPTED</span></a>';
+	if (status == 3)
+		return '<a href="#" class="no-deal">SENT<span class="counter" id="counter_'+id+'">0</span><span class="status">NO DEAL</span></a>';
+}
+
+
+function update_status (id, status) {
+
+	current_status[id] = status;
+	status = get_status (status, id);
+	$("#status_"+id).text(" ");
+	$("#status_"+id).append(status);
+}
+
+
 function send (id) {
 	
 	url = base_url+'trading/clients/set_quote';
@@ -35,8 +56,7 @@ function send (id) {
 		action = '';
 		
 		$('#quote_'+id).text ($('#input_quote_'+id).val ());
-		$('#action_'+id).text (' ');		
-		$('#result_'+id).text ('pending');
+		update_status (id, 1);
 	}, 
 	error: function(XMLHttpRequest, textStatus, errorThrown) {
 		console.log(textStatus, errorThrown);
@@ -47,40 +67,24 @@ function send (id) {
 	current_status[id] = 1;
 }
 
-function update_status (id, status) {
-
-	current_status[id] = status;
-
-	resunt = "";
-	if (status == 1) result = 'pending';
-	if (status == 2) result = 'accepted';
-	if (status == 3) result = 'no deal';
-	
-	$("#result_"+id).text (result);
-}
-
 function display_offer (data) {
 		
 	current_offers[data['offer_id']] = {'status': data['status']};	
 	current_status[data['offer_id']] = data['status']		
 			
 			
-	var status = data['status'];
+	var status = data['status'];	
+	var id = data['offer_id'];
 	if (status == 0) {		
-		quote = '<input id="input_quote_'+data['offer_id']+'" value=0.00 />';		
-		action = '<button onclick=send('+data['offer_id']+')>send</button>';
+		quote = '<input type="text" id="input_quote_'+id+'" class="general-td-input" value="0.0000" style="width:45px;">';		
 	}
 	else {
 		quote = data['quote'];
 		action = '';
 	}
 	
-	result = '';
-	if (status == 1) result = 'pending';
-	if (status == 2) result = 'accepted';
-	if (status == 3) result = 'no deal';
+	status = get_status (status, id);
 	
-	var id = data['offer_id'];
 	$("#corporate_clients").append (
 		'<tr id="offer_'+data['offer_id']+'">'+
 		'<td>CLNT</td>'+
@@ -91,10 +95,13 @@ function display_offer (data) {
 		'<td id="deal_'+id+'">'+data['deal']+'</td>'+
 		'<td id="period_'+id+'">'+data['period_id']+'</td>'+		
 		'<td id="quote_'+id+'">'+quote+'</td>'+
-		'<td id="action_'+id+'">'+action+'</td>'+
-		'<td id="timer_'+id+'">0</td>'+		
-		'<td id="result_'+id+'">'+result+'</td>'+
 		'</tr>'
+	);
+	
+	$("#status_list").append (
+		'<li id="status_'+id+'">'+
+			status +
+		'</li>'
 	);
 		
 	if (data['status'] <= 1) {
@@ -118,7 +125,6 @@ function get_clients_offers () {
       async: true,
       dataType: 'json',
       success: function (data, textStatus, jqXHR) {                    
-      
       	for (var i = 0; i < data.length; i++) {
       		if ( !current_offers[data[i]['offer_id']] ) display_offer (data[i]);						
       		else {
@@ -145,7 +151,7 @@ function timer () {
 			if (rem < 0)
 				rem = 0;
 				
-			$('#timer_'+id).text ( rem );
+			$('#counter_'+id).text ( rem );
 			if (rem  == 0) {			
 		  if (current_status[id] == 0) 
 				  	send (id);				  				  
@@ -155,6 +161,7 @@ function timer () {
 		}
 	}
 }
+
 
 setInterval (timer , 1000);
 setInterval (get_clients_offers, 4000);
