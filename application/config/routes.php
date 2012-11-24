@@ -42,6 +42,7 @@ $route['default_controller'] = "general/index";
 $route['404_override'] = 'errors/404';
 $route['econ'] = 'econ/econ';
 $route['news'] = 'news/news';
+$route['news/(:any)'] = 'news/news/$1' ; 
 
 
 /* End of file routes.php */
