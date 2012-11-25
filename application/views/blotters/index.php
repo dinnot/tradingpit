@@ -424,7 +424,7 @@
 <script src="<?php print base_url() ?>js/jquery.js"></script>
 
 <script>
-	
+	/*
 	$("#TER").click( function () {
 					$(".hide").hide();
 					$(".TER").show(); 
@@ -450,6 +450,8 @@
 					$("#TER").removeClass('green');
 					$("#HAT").removeClass('green');
 				});	
+	*/
+	
 </script>			
 
 </html>
