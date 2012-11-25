@@ -186,5 +186,86 @@
 			
 		}
 		
+		public function get_users_fx_positions ( $user_id ) {
+	
+			$what = array() ; 
+			
+			$what[] = "users_fx_positions.amount as position_amount" ;
+			$what[] = "rate as position_rate" ;
+						
+			$this->db->select($what) ;
+			$this->db->from('users_fx_positions');
+			$this->db->where('users_id',$user_id);
+			$this->db->order_by('ccy_pair');
+			$query = $this->db->get();
+			 
+			return $query->result_array() ;
+		}
+		
+		public function get_banks_balances ( $user_id ) {
+		
+			$what = array() ;
+			$what[] = "banks_balances.amount as banks_ccy_amount";
+			$what[] = "currencies.shortname as ccy_name"; 
+				
+			$this->db->select($what) ;
+			$this->db->from('users'); 
+			$this->db->join('jobs','jobs.id = jobs_id','left');
+			$this->db->join('banks_balances','jobs.banks_id = banks_balances.banks_id','left');
+			$this->db->join('currencies','currencies.id = currencies_id','left');
+			$this->db->where('users.id',$user_id);
+			$this->db->order_by('currencies_id');
+			$query = $this->db->get() ;
+			
+			return $query->result_array();
+		}
+		
+		public function get_banks_info ( $user_id ) {
+			
+			$what = array() ; 
+			$what[] = "currencies_id" ; 
+			$what[] = "capital" ; 
+			
+			$this->db->select($what) ; 
+			$this->db->from('users');
+			$this->db->join('jobs','jobs.id = jobs_id','left');
+			$this->db->join('banks','jobs.banks_id = banks.id','left');
+			$this->db->join('countries','countries.id = banks.countries_id');
+			$this->db->where('users.id',$user_id);
+			$query = $this->db->get() ;
+			
+			
+			return $query->result_array() ;	
+			
+		}
+		
+		public function get_users_fx_pnl ( $user_id ) {
+		
+			$what = array() ;
+			$wha[] = "amount" ;
+			
+			$this->db->select($what) ; 
+			$this->db->from('users_fx_pnl');
+			$this->db->where('users_id',$user_id) ;
+			$this->db->order_by('currencies_id');
+			$query = $this->db->get() ;
+			
+			return $query->result_array() ;
+		}
+		
+		public function get_users_mm_pnl ( $user_id ) {
+		
+			$what = array() ;
+			$wha[] = "amount" ;
+			
+			$this->db->select($what) ; 
+			$this->db->from('users_mm_pnl');
+			$this->db->where('users_id',$user_id) ;
+			$this->db->order_by('currencies_id');
+			$query = $this->db->get() ;
+			
+			return $query->result_array() ;
+		}
+			 	
 	}
 	

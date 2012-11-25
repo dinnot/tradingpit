@@ -73,9 +73,10 @@
           <div class="select-container">
             <select id = "country_filter" class="silver-gradient">
             	<option value="0"> All countries</option>
-						<?php foreach ($news as $news_item): ?>
-								<option value="<?= $news_item['countries_id'] ?>"><?= $news_item['country_name'] ?></option>		
-						<?php endforeach; ?>
+						<option value="2"> Territory </option>		
+						<option value="4"> Rikland </option>		
+						<option value="5"> Hattonia </option>		
+						
               </select>
           </div><!-- end upload-file-container -->
         </section><!-- end top-main -->
@@ -86,7 +87,7 @@
                 <th class="first">Date</th>
                 <th>Time</th>
                 <th>Country</th>
-                <th></th>
+                <th>Headline</th>
               </tr>
             </thead>
 
@@ -97,11 +98,12 @@
 			<tr>
 				<td class="first"> <?php echo date("M-d",$news_item["date"]) ; ?>     </td>  
 				<td class="red-td"> <?php echo date("H:i",$news_item["date"]) ; ?>     </td>
-				<td> <?php echo $news_item["country_name"] ;             ?>     </td>  
+				<td> <?php echo $news_item["country_name"] ;  ?>     </td>  
 				<td>	
 					<div class = "show"> <?php echo $news_item["headline"] ; ?> </div>
 					<div class = "hide" hidden = "hidden"> <?php echo $news_item["body"] ?> </div> 
-				</td> 
+				</td>
+				
 			</tr>
 		
 		<?php endforeach ?>

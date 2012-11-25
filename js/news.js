@@ -12,7 +12,7 @@ $("#country_filter").change (
 
 function get_news () {
 	
-	var url = base_url+"index.php/news/news/get_news";
+	var url = base_url+"index.php/news/get_news";
 	data_in = new Object ();
 	
 	var body_filter = $("#body_filter").val() ;
@@ -64,6 +64,20 @@ function display_news (news) {
 		$('#news_table tr:last').append("</td>");
 		$("#news_table").append ("</tr>");
 	}
+	
+	
+	$(".show").click( function() {
+			$(".hide").hide();
+			$(".show").show();
+			$(this).hide();
+			$(this).next().show();
+		 });
+
+	$(".hide").click( function() {  
+			$(this).hide();
+			$(".show").show();
+		});
+
 }
 
 
