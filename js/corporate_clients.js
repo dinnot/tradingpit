@@ -41,7 +41,6 @@ function send (id) {
 	
 	url = base_url+'trading/clients/set_quote';
 	dataIn = {
-		user_id: user_id,
 		offer_id : id,
 		quote : $('#input_quote_'+id).val ()
 	}
@@ -114,7 +113,6 @@ function get_clients_offers () {
 	
 	url = base_url+'trading/clients/get_corporate_offers';
 	dataIn = {
-		user_id: user_id,
 		time: new Date().getTime ()
 	}
 
@@ -137,6 +135,16 @@ function get_clients_offers () {
         console.log(textStatus, errorThrown);
       },      
 		});
+}
+
+function next_corporate_clients () {
+	url = base_url+'trading/clients/next_corporate_clients';
+	$.ajax ({
+		url: url,
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+        console.log(textStatus, errorThrown);
+    }
+	});
 }
 
 var seconds = 60;
@@ -162,6 +170,6 @@ function timer () {
 	}
 }
 
-
 setInterval (timer , 1000);
 setInterval (get_clients_offers, 4000);
+setInterval (next_corporate_clients, 4000);
