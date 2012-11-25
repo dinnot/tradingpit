@@ -1,8 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Clients extends CI_Controller {
-
-	var $user;
 		
 	public function __construct () {
 		
@@ -32,6 +30,7 @@ class Clients extends CI_Controller {
 		$this->load->model('clients/corporate_clients_model');		
 		$this->load->model('clients/retail_clients_model');
 		$this->load->model('clients/clients_trading_model');
+		$this->load->model('econ_model');
 	}
 	
 	public function index () {		
@@ -52,18 +51,21 @@ class Clients extends CI_Controller {
 
 	 // corporate	
 	 function get_corporate_offers () {		
-		$user_id = $this->input->get_post ("user_id");
-		if (rand () % 30 == 0)
-			$this->generate_corporate_client ();	
-	
+		$user_id = $this->user->id;
 		$offers = $this->corporate_clients_model->get_corporate_offers ($user_id);
+//		$this->corporate_clients_model->generate_for_all_users (); /////// // / // / / /
 		$this->output->set_content_type('application/jsonp');
 		$this->output->set_output ( json_encode ( $offers ) );
   }
+
+	function next_corporate_clients () {
+		$user_id = $this->user->id;
+		$this->corporate_clients_model->next_corporate_clients ($user_id);
+	}
   
   function set_quote () {  
   	$offer_id = $this->input->get_post ("offer_id");
-  	$user_id = $this->input->get_post ("user_id");
+		$user_id = $this->user->id;
   	$quote = $this->input->get_post ("quote");  	
   	$this->clients_trading_model->set_quote ($offer_id, $user_id, $quote);
   }
@@ -73,13 +75,9 @@ class Clients extends CI_Controller {
   	$this->clients_trading->set_result_corporate ($offer_id);
   }
 	
-  function generate_corporate_client () {		  	
-		$this->corporate_clients_model->generate_coporate_client ();
-  }
-
 	// retail
 	function set_exchange_rate () {
-		$rate['user_id'] = $this->input->get_post ('user_id');
+		$user_id = $this->user->id;
 		$rate['pair_id'] = $this->input->get_post ('pair_id');
 		$rate['sell'] = $this->input->get_post ('sell');
 		$rate['buy'] = $this->input->get_post ('buy');
@@ -89,7 +87,7 @@ class Clients extends CI_Controller {
 	
 	function check_next_client () {
 		
-		$user_id = $this->input->get_post ('user_id');
+		$user_id = $this->user->id;
 		$response = $this->retail_clients_model->check_next_client ($user_id);
 		$response['amount'] = $this->clients_trading_model->get_user_amount ($user_id);
 		$this->output->set_content_type('application/json');
@@ -97,11 +95,14 @@ class Clients extends CI_Controller {
 	}
 	
 	function get_user_deals () {
-		$user_id = $this->input->get_post ('user_id');	
+		$user_id = $this->user->id;
 		$deals = $this->clients_trading_model->get_user_deals ($user_id);
 		$this->output->set_content_type('application/json');
 		$this->output->set_output ( json_encode ( $deals ) );
 	}
 	
+	function generate_for_all_users () {
+		$this->corporate_clients_model->generate_for_all_users ();
+	}	
 };
 

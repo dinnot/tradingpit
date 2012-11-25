@@ -113,7 +113,7 @@
 			$results = $query->result_array ();
 
 			$best_offer = $this->corporate_clients_model->get_best_offer ($offer);			
-			$offer['amount'] = $offer['amount'] / $best_offer['num'];
+			if ($best_offer['num'] != 0) $offer['amount'] = $offer['amount'] / $best_offer['num'];
 			foreach ($results as $item) {
 				$item['amount'] = $offer['amount'];
 				if ($item['quote'] == $best_offer['quote'] && $best_offer['quote'] != 0) {

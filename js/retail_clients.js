@@ -3,7 +3,6 @@ function get_price (bf, pips) {
 	while (pips.length < 3)
 	 pips = "0" + pips;
 	 
-	console.log (bf+pips);
 	return bf + pips;
 }
 
@@ -13,13 +12,11 @@ function set_exchange_rate (pair_id) {
 	sell = get_price ( $('#bf_sell_'+pair_id).val(),  $('#pips_sell_'+pair_id).val());
 	buy = get_price ( $('#bf_buy_'+pair_id).val(),  $('#pips_buy_'+pair_id).val ());
 	data_in = {
-		'user_id' : user_id,
 		'pair_id' : pair_id,
 		'sell' : sell,
 		'buy' : buy 
 	}	
 
-	console.log (data_in);
 
 	$.ajax({
 		type: 'POST',
@@ -39,14 +36,8 @@ function set_exchange_rate (pair_id) {
 function check_next_client () {
 
 	url = base_url+"trading/clients/check_next_client";
-	data_in = {
-		'user_id' : user_id
-	}
-	
 	$.ajax({
-      type: 'POST',
       url: url,
-      data: data_in,
       async: true,
       dataType: 'json',
       success: function (data, textStatus, jqXHR) {                    
@@ -89,14 +80,9 @@ function display_deals (deals) {
 function get_user_deals () {
 
 	url = base_url+"trading/clients/get_user_deals";
-	data_in = {
-		'user_id' : user_id
-	}
 	
 	$.ajax({
-      type: 'POST',
       url: url,
-      data: data_in,
       async: true,
       dataType: 'json',
       success: function (data, textStatus, jqXHR) {                    
