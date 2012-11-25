@@ -27,8 +27,35 @@
 				
 			$query = $this->db->get ();			
 			$econforcasts = $query->result_array ();		
-//			$this->get_prior ($econforcasts);	
+
 			return $econforcasts;
+		}
+
+		// precalculata din ora in ora
+		function get_last_ratio () {
+			$current_time = time ();
+			$this->db->from ("econforcasts");
+			$this->db->where ("date <=", $current_time);
+			$this->db->order_by ("date", "desc");
+			$this->db->limit (1);
+			$row = $this->db->get()->row();
+			
+			return array ('date' => $row->date, 'ratio' => $row->ratio);
+		}
+
+		function compute_econindicators_ratio () {
+			$this->db->select (array ("*", "econforcasts.id as econforcasts_id"));
+			$this->db->from ("econforcasts");
+			$this->db->join ("econindicators", "econindicators.id = econforcasts.econindicators_id", "left");
+			$query = $this->db->get ();
+									
+			$results = $query->result_array ();
+			foreach ($results as $item) {
+
+				$impact = (($item['actual'] - $item['survey']) / abs ($item['survey']) ) * $item['impact_power'];
+				$this->db->where ('id', $item['econforcasts_id']);
+				$this->db->update ("econforcasts", array ('ratio' => $impact));
+			}			 			
 		}
 		
 		// mai bine calculam si o tinem in baza de date cand introducem un nou forecast
