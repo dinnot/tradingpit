@@ -46,5 +46,11 @@ class Econ extends CI_Controller {
 		$this->output->set_content_type('application/jsonp');
 		$this->output->set_output ( json_encode ( $econforcasts ) );
 	}
+	
+	public function compute_econindicators_ratio () {
+		
+		$this->Econ_model->compute_econindicators_ratio ();		
+	}
+	
 };
 
