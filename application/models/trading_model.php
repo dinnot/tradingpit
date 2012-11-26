@@ -153,7 +153,7 @@
         }
         
         public function getCurrenciesByPair($pair) {
-            $query = $this->db->where("id", $pair)->get();
+            $query = $this->db->where("id", $pair)->get("currency_pairs");
             return $query->row();
         }
         

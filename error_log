@@ -3181,3 +3181,9 @@
 [20-Nov-2012 22:32:43 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
 [20-Nov-2012 22:32:46 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
 [20-Nov-2012 22:32:49 UTC] PHP Fatal error:  Call to undefined method Retail_clients_model::get_user_amount() in /home/tpit/public_html/application/controllers/trading/retail_clients.php on line 31
+[26-Nov-2012 23:07:04 UTC] PHP Parse error:  syntax error, unexpected T_IF in /home/tpit/public_html/application/controllers/trading/blotters.php on line 194
+[26-Nov-2012 23:07:06 UTC] PHP Parse error:  syntax error, unexpected T_IF in /home/tpit/public_html/application/controllers/trading/blotters.php on line 194
+[26-Nov-2012 23:07:09 UTC] PHP Parse error:  syntax error, unexpected T_IF in /home/tpit/public_html/application/controllers/trading/blotters.php on line 194
+[26-Nov-2012 23:07:13 UTC] PHP Parse error:  syntax error, unexpected T_IF in /home/tpit/public_html/application/controllers/trading/blotters.php on line 194
+[26-Nov-2012 23:07:14 UTC] PHP Parse error:  syntax error, unexpected T_IF in /home/tpit/public_html/application/controllers/trading/blotters.php on line 194
+[26-Nov-2012 23:07:16 UTC] PHP Parse error:  syntax error, unexpected T_IF in /home/tpit/public_html/application/controllers/trading/blotters.php on line 194

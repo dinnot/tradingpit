@@ -38,7 +38,9 @@ class Trading extends CI_Controller {
     
     public function index () {	
         $pairs = $this->Trading_model->getPairs();
-        $this->load->view("trading/index", array("pairs"=>$pairs, "amounts"=>array(1,2,3,4,5), "user"=>$this->user->id));
+        $data = array("pairs"=>$pairs, "amounts"=>array(1,2,3,4,5), "user"=>$this->user->id);
+        $this->compute_spot_positions($data);
+        $this->load->view("trading/index", $data);
     }
     
     public function add() {
