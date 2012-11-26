@@ -5,7 +5,7 @@
             $pair = $this->getCurrenciesByPair($currency_pair); 
             $sumrate = $amount * $rate;
             $amount *= 1000000;
-            $this->db->set("amount", "amount + {$amount}", false)->set("sumrate", "sumrate + {$sumrate}", false)->where(array("users_id"=>$user, "currencies_id"=>$currency_pair))->update("users_fx_positions");
+            $this->db->set("amount", "amount + {$amount}", false)->set("sumrate", "sumrate + {$sumrate}", false)->where(array("users_id"=>$user, "ccy_pair"=>$currency_pair))->update("users_fx_positions");
             
             //TODO: update PNL when passing 0
             
