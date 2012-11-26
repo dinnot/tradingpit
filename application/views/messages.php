@@ -34,9 +34,13 @@
 				
 				<div id="chat_box" >					
 				</div>
-				
+				<hr />
+				New conversation
 				<div id="new_conversation">
-					
+					User : <input type="text" id="username" />	<br />
+					Subject : <input type="text" id="subject" /> <br />
+					Message : <textarea id="message"></textarea> <br />
+					<button onclick=add_conversation()>Send</button>
 				</div>
 				
 	    </article><!-- end container -->

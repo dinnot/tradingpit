@@ -8,17 +8,22 @@
 		}
 		
 		public function make_new_conversation (&$message, $users) {
-			if (isset($message['title']) && $message['title'] != '') 
-				$title = $message['title'];
+			if (isset($message['subject']) && $message['subject'] != '') {
+				$title = $message['subject'];
+				unset ($message['subject']);
+			}
 			else
 				$title = substr($message['message'], 0, 20);
 				
-			$this->insert ("conversations", array ('last_activity'=>time(), 'title'=>$title));
-			$conversation_id = $this->db->last_id ();
+			$this->db->insert ("conversations", array ('last_activity'=>time(), 'title'=>$title));
+			$conversation_id = $this->db->insert_id ();
 
 			foreach ($users as $user)
-				$this->insert ("users_has_conversations", array ('user_id'=>$user));
+				$this->db->insert ("users_has_conversations", array ('user_id'=>$user, 'conversations_id'=>$conversation_id));
 			
+			$message['user_id'] = $users[1];
+			$message['conversations_id'] = $conversation_id;
+			$this->add_message ($message);
 			return $conversation_id;
 		}
 		
@@ -52,6 +57,13 @@
 			$conversations = $this->db->get()->result_array ();
 			
 			return $conversations;
+		}
+		
+		public function get_user_id ($username) {
+			$query = $this->db->from ("users")->where ('username', $username)->get ();
+			if ($query->num_rows () == 0)
+				return 0;
+			return $query->row()->id;
 		}
 		
 		public function send_system_message ($user_id) {
