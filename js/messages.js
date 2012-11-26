@@ -1,5 +1,27 @@
 var current_conv = '';
 
+function add_conversation () {
+	
+	url = base_url + "messages/add_conversation";
+	data_in = {
+		'message' : $('#message').val (),
+		'username' : $('#username').val (),
+		'subject': $('#subject').val()
+	};
+	
+	$.ajax ({
+		url: url,
+    dataType: 'json',
+    data: data_in,
+    success: function (data, textStatus, jqXHR) {                    
+    	display_current_conv (data['conv_id']);
+  	}, 
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+      console.log(textStatus, errorThrown);
+    }
+ 	});
+}
+
 function get_new_messages () {
 	
 	url = base_url+"messages/get_new_messages";
@@ -32,11 +54,11 @@ function add_message (message, conv_id) {
 	});
 }
 
-function send_replay_message () {
-	message = $('#replay_message').val ();
+function send_reply_message () {
+	message = $('#reply_message').val ();
 	add_message (message, current_conv);	
 	display_message (message);
-	$('#replay_message').attr ('value', ' ');
+	$('#reply_message').attr ('value', ' ');
 }
 
 function display_message (message) {
@@ -72,9 +94,9 @@ function display_current_conv (conv_id) {
       dataType: 'json',
       data: data_in,
       success: function (data, textStatus, jqXHR) {                    
-    	
+    		console.log (data);
 				$("#chat_box").text ('  ');
-				$("#chat_box").append ('<ul id="current_messages"></ul>	<textarea id="replay_message"></textarea>	<button onclick=send_replay_message()>replay</button>');
+				$("#chat_box").append ('<ul id="current_messages"></ul>	<textarea id="reply_message"></textarea>	<button onclick=send_reply_message()>reply</button>');
 	
       	display_messages (data);
       	
@@ -89,7 +111,7 @@ function display_current_conv (conv_id) {
 function display_conversations (convs) {
 	
 	for (i = 0; i < convs.length; i++) {
-		console.log (convs[i]);
+		
 		$('#conversations').append (
 			'<li id="conversation_'+convs[i]['conversations_id']+'">'+
 			convs[i]['title'] +
@@ -107,7 +129,7 @@ function get_conversations () {
       url: url,
       dataType: 'json',
       success: function (data, textStatus, jqXHR) {                    
-      	console.log (data);
+      	
       	display_conversations (data);
     	}, 
 			error: function(XMLHttpRequest, textStatus, errorThrown) {

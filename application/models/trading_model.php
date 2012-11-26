@@ -1,10 +1,15 @@
 <?php
     class Trading_model extends CI_Model {
         
-        public function updateBalances($user, $bank, $amount, $currency) {
+        public function updateBalances($user, $bank, $amount, $currency_pair, $rate) {
+            $pair = $this->getCurrenciesByPair($currency_pair); 
+            $sumrate = $amount * $rate;
             $amount *= 1000000;
-            $this->db->set("amount", "amount + {$amount}", false)->where(array("users_id"=>$user, "currencies_id"=>$currency))->update("users_fx_positions");
-            $this->db->set("amount", "amount + {$amount}", false)->where(array("banks_id"=>$bank, "currencies_id"=>$currency))->update("banks_balances");
+            $this->db->set("amount", "amount + {$amount}", false)->set("sumrate", "sumrate + {$sumrate}", false)->where(array("users_id"=>$user, "currencies_id"=>$currency_pair))->update("users_fx_positions");
+            
+            //update bank's balance
+            $this->db->set("amount", "amount + {$amount}", false)->where(array("banks_id"=>$bank, "currencies_id"=>$pair->currency0))->update("banks_balances");
+            $this->db->set("amount", "amount - ".($amount * $rate), false)->where(array("banks_id"=>$bank, "currencies_id"=>$pair->currency1))->update("banks_balances");
         }
         
         public function createEnquiries($user, $bank, $number, $pair, $amount, $game_settings) {
@@ -82,14 +87,8 @@
                     "trade_date"=>$now,
                     "user_id"=>$user
                 ))->insert("fx_deals");
-                $pair = $this->db->where("id", $deal->currency_pair)->get("currency_pairs");
-                $pair = $pair->row();
-                $curr1 = $pair->currency0;
-                $curr2 = $pair->currency1;
-                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount, $curr1);
-                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount * $deal->price_sell * -1, $curr2);
-                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount * $deal->price_sell, $curr2);
-                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount * -1, $curr1);
+                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount, $deal->currency_pair, $deal->price_sell);
+                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount * -1, $deal->currency_pair, $deal->price_sell);
                 return 3;
             } else {
                 return false;
@@ -115,10 +114,8 @@
                 $pair = $pair->row();
                 $curr1 = $pair->currency0;
                 $curr2 = $pair->currency1;
-                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount * -1, $curr1);
-                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount * $deal->price_buy, $curr2);
-                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount * $deal->price_buy * -1, $curr2);
-                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount, $curr1);
+                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount * -1, $deal->currency_pair, $deal->price_buy);
+                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount, $deal->currency_pair, $deal->price_buy);
                 return 4;
             } else {
                 return false;
@@ -152,6 +149,11 @@
                     $return[] = $row;
             }
             return $return;
+        }
+        
+        public function getCurrenciesByPair($pair) {
+            $query = $this->db->where("id", $pair)->get();
+            return $query->row();
         }
         
         public function getPairs() {

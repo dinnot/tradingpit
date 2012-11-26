@@ -62,6 +62,21 @@ class Messages extends CI_Controller {
 		$this->messages_model->add_message ($message);
 	}	
 	
+	public function add_conversation () {
+		$message['message']	= $this->input->get_post ('message');
+		$message['subject']	= $this->input->get_post ('subject');
+		$users = array ();
+
+		$users[] = $this->messages_model->get_user_id($this->input->get_post ('username'));		
+		if ($users[0] == 0) return;
+		$users[] = $this->user->id;
+		
+		$data = array ();
+		$data['conv_id'] = $this->messages_model->make_new_conversation ($message, $users);
+		$this->output->set_content_type('application/json');
+		$this->output->set_output ( json_encode ( $data ) );			
+	}
+	
 	public function get_new_messages () {
 		$conv_id = $this->input->get_post ('conv_id');		
 		$messages = $this->messages_model->get_messages (array('conversations_id'=>$conv_id, 'seen'=>0));
