@@ -7,6 +7,8 @@
             $amount *= 1000000;
             $this->db->set("amount", "amount + {$amount}", false)->set("sumrate", "sumrate + {$sumrate}", false)->where(array("users_id"=>$user, "currencies_id"=>$currency_pair))->update("users_fx_positions");
             
+            //TODO: update PNL when passing 0
+            
             //update bank's balance
             $this->db->set("amount", "amount + {$amount}", false)->where(array("banks_id"=>$bank, "currencies_id"=>$pair->currency0))->update("banks_balances");
             $this->db->set("amount", "amount - ".($amount * $rate), false)->where(array("banks_id"=>$bank, "currencies_id"=>$pair->currency1))->update("banks_balances");

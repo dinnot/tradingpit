@@ -132,6 +132,9 @@
                 }
                 $this->db->insert_batch("users_balances", $data);
                 $this->db->insert_batch("users_fx_positions", $data);
+                $this->db->insert_batch("users_mm_positions", $data);
+                $this->db->insert_batch("users_fx_pnl", $data);
+                $this->db->insert_batch("users_mm_pnl", $data);
                 
                 //login
                 return $this->getLogin($email, $password);
