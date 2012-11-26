@@ -27,6 +27,15 @@ class Trading extends CI_Controller {
         $this->Users_model->updateTrading($this->user->id);
     }
 
+    public function compute_spot_positions ( &$data ) { 
+
+        $user_id = $this->user->id ;
+        //$user_id = 15;
+        $this->load->model("Blotters_model");
+        $data['spot_positions']= $this->Blotters_model->get_users_fx_positions($user_id);
+
+    }
+    
     public function index () {	
         $pairs = $this->Trading_model->getPairs();
         $this->load->view("trading/index", array("pairs"=>$pairs, "amounts"=>array(1,2,3,4,5), "user"=>$this->user->id));

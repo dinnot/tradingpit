@@ -4,7 +4,6 @@
         public function updateBalances($user, $bank, $amount, $currency_pair, $rate) {
             $pair = $this->getCurrenciesByPair($currency_pair); 
             $sumrate = $amount * $rate;
-            $amount *= 1000000;
             $this->db->set("amount", "amount + {$amount}", false)->set("sumrate", "sumrate + {$sumrate}", false)->where(array("users_id"=>$user, "ccy_pair"=>$currency_pair))->update("users_fx_positions");
             
             //TODO: update PNL when passing 0
@@ -89,8 +88,8 @@
                     "trade_date"=>$now,
                     "user_id"=>$user
                 ))->insert("fx_deals");
-                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount, $deal->currency_pair, $deal->price_sell);
-                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount * -1, $deal->currency_pair, $deal->price_sell);
+                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount * 1000000, $deal->currency_pair, $deal->price_sell);
+                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount * -1000000, $deal->currency_pair, $deal->price_sell);
                 return 3;
             } else {
                 return false;
@@ -116,8 +115,8 @@
                 $pair = $pair->row();
                 $curr1 = $pair->currency0;
                 $curr2 = $pair->currency1;
-                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount * -1, $deal->currency_pair, $deal->price_buy);
-                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount, $deal->currency_pair, $deal->price_buy);
+                $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount * -1000000, $deal->currency_pair, $deal->price_buy);
+                $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount * 1000000, $deal->currency_pair, $deal->price_buy);
                 return 4;
             } else {
                 return false;
