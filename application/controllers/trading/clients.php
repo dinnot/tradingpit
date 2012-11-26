@@ -30,6 +30,7 @@ class Clients extends CI_Controller {
 		$this->load->model('clients/corporate_clients_model');		
 		$this->load->model('clients/retail_clients_model');
 		$this->load->model('clients/clients_trading_model');
+		$this->load->model('trading_model');
 		$this->load->model('econ_model');
 	}
 	
