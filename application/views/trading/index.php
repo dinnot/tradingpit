@@ -96,15 +96,15 @@
               <li class="second">
               	<span class="light-green">TER/RIK</span> 
               	<?php echo $spot_positions[0]['position_amount'] ?> 
-              	<span class="gray">@<?php echo $spot_positions[0]['position_rate'] ?> </span></li>
+              	<span class="gray"><?php echo (isset($spot_positions[0]['position_rate']))?$spot_positions[0]['position_rate']:"0"; ?> </span></li>
               
               <li><span class="green">HAT/RIK</span> 
               <?php echo $spot_positions[1]['position_amount'] ?>
-              <span class="gray">@<?php echo $spot_positions[1]['position_rate'] ?> </span></li>
+              <span class="gray">@<?php echo (isset($spot_positions[1]['position_rate']))?$spot_positions[1]['position_rate']:"0" ?> </span></li>
               
               <li class="last"><span class="green">HAT/TER</span>
               <?php echo $spot_positions[2]['position_amount'] ?>
-              <span class="gray">@<?php echo $spot_positions[2]['position_rate'] ?> </span></li>
+              <span class="gray">@<?php echo (isset($spot_positions[2]['position_rate']))?$spot_positions[2]['position_rate']:"0" ?> </span></li>
             </ul>
           </div><!-- end spot-positions -->
         
