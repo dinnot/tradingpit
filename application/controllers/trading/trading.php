@@ -10,7 +10,7 @@ class Trading extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('session');
         $this->load->model("Users_model");
-        $this->module_name = "dashboard";
+        $this->module_name = "trading";
         $valid = false;
         if($this->session->userdata("key")) {
             $key = $this->session->userdata("key");

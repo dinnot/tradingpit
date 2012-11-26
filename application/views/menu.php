@@ -1,16 +1,15 @@
 <nav>
   <ul>
-
     <li class="level-one">
-      <a href="<?php print base_url(); ?>trading/trading" class="first-level light-blue">Traderion dealing</a>      
+      <a href="<?php print base_url(); ?>trading/trading" class="first-level light-blue <?php if ($this->module_name == 'trading') print 'current'; ?>">Traderion dealing</a>      
     </li>
 
      <li class="level-one">
-      <a href="<?php print base_url(); ?>trading/clients" class="first-level light-blue current">Clients</a>
+      <a href="<?php print base_url(); ?>trading/clients" class="first-level light-blue <?php if ($this->module_name == 'clients') print 'current'; ?>">Clients</a>
     </li>
 
      <li class="level-one">
-      <a href="<?php print base_url(); ?>trading/blotters" class="first-level light-blue">Blotters</a>
+      <a href="<?php print base_url(); ?>trading/blotters" class="first-level light-blue <?php if ($this->module_name == 'blotters') print 'current'; ?>">Blotters</a>
     </li>
   </ul>
   <div class="date-time-info trading-page">
