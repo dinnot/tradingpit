@@ -191,7 +191,7 @@
 			$what = array() ; 
 			
 			$what[] = "users_fx_positions.amount as position_amount" ;
-			$what[] = "rate as position_rate" ;
+			$what[] = "sumrate" ;
 						
 			$this->db->select($what) ;
 			$this->db->from('users_fx_positions');

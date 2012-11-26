@@ -37,41 +37,8 @@
       <article class="top-section container">
         <section class="top-header">
         </section><!-- end top-header -->
-        <section class="navigation-bar">
-          <nav>
-            <ul>
-
-              <li class="level-one">
-                <a href="#" class="first-level light-blue">Traderion dealing</a>
-                <ul>
-                  <li><a href="#">Auction calendar</a></li>
-                  <li><a href="#">Economic calendar</a></li>
-                </ul>
-              </li>
-
-               <li class="level-one">
-                <a href="#" class="first-level light-blue">Clients</a>
-              </li>
-
-               <li class="level-one">
-                <a href="#" class="first-level light-blue current">Blotters</a>
-              </li>
-
-               <li class="level-one last">
-                <a href="#" class="first-level light-blue">Cash flow</a>
-              </li>
-
-            </ul>
-            <div class="date-time-info trading-page">
-              <ul>
-                <li class="first light-blue"><a href="#">PnL</a></li>
-                <li class="current"><a href="#">TER</a></li>
-                <li><a href="#">HAT</a></li>
-                <li><a href="#">RIK</a></li>
-                <li class="last"><a href="#">+753,999</a></li>
-              </ul>
-            </div><!-- end date-time-info -->
-          </nav>
+        <section class="navigation-bar">        	
+					<?php include_once ($_SERVER['DOCUMENT_ROOT']."/application/views/menu.php"); ?>
           <span class="nav-bar-bottom-bg"></span>
         </section><!-- end navigation-bar -->
 
@@ -450,8 +417,8 @@
 					$("#TER").removeClass('green');
 					$("#HAT").removeClass('green');
 				});	
-	*/
 	
+	*/
 </script>			
 
 </html>
