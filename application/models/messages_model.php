@@ -21,7 +21,7 @@
 			foreach ($users as $user)
 				$this->db->insert ("users_has_conversations", array ('user_id'=>$user, 'conversations_id'=>$conversation_id));
 			
-			$message['user_id'] = $users[0];
+			$message['user_id'] = $users[1];
 			$message['conversations_id'] = $conversation_id;
 			$this->add_message ($message);
 			return $conversation_id;
