@@ -54,11 +54,11 @@ function add_message (message, conv_id) {
 	});
 }
 
-function send_replay_message () {
-	message = $('#replay_message').val ();
+function send_reply_message () {
+	message = $('#reply_message').val ();
 	add_message (message, current_conv);	
 	display_message (message);
-	$('#replay_message').attr ('value', ' ');
+	$('#reply_message').attr ('value', ' ');
 }
 
 function display_message (message) {
@@ -96,7 +96,7 @@ function display_current_conv (conv_id) {
       success: function (data, textStatus, jqXHR) {                    
     		console.log (data);
 				$("#chat_box").text ('  ');
-				$("#chat_box").append ('<ul id="current_messages"></ul>	<textarea id="replay_message"></textarea>	<button onclick=send_replay_message()>replay</button>');
+				$("#chat_box").append ('<ul id="current_messages"></ul>	<textarea id="reply_message"></textarea>	<button onclick=send_reply_message()>reply</button>');
 	
       	display_messages (data);
       	
