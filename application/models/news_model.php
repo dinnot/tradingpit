@@ -31,6 +31,7 @@
 			$this->apply_country_filter() ;
 			
 			$this->db->where("date >=",$date) ;
+			$this->db->where("date <=",time()) ;
 			$this->db->order_by("date","desc");
 			$query = $this->db->get() ; 
 			return $query->result_array();
