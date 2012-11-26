@@ -191,9 +191,9 @@
 				for( $j = 0 ; $j < 3 ; $j++ ) {
 					
 @					$data['fx_positions'][$i]['rep_ccy'][$j] = round( $data['fx_positions'][$i]['rep_ccy'][$j], 4 ) ;
-@					if( abs($data['fx_positions'][$i]['rep_ccy'][$j]) > abs($data['fx_positions'][$i]['amount']) )
+					if( abs($data['fx_positions'][$i]['rep_ccy'][$j]) > abs($data['fx_positions'][$i]['amount']) )
 @						$data['fx_positions'][$i]['rate'][$j] = round($data['fx_positions'][$i]['rep_ccy'][$j] / $data['fx_positions'][$i]['amount'],4) ;  
-@					else
+					else
 @						$data['fx_positions'][$i]['rate'][$j] = round($data['fx_positions'][$i]['amount'] / $data['fx_positions'][$i]['rep_ccy'][$j],4) ; 
 						 				
 					$data['fx_positions'][$i]['limit'][$j] = $percentage * $data['funds'][$j] ; 
