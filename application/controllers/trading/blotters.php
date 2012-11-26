@@ -48,7 +48,9 @@
 			$data['spot_positions']= $this->Blotters_model->get_users_fx_positions($user_id);
 			
 			for( $i = 0 ; $i < 3 ; $i++ ) 
-				$data['spot_positions'][$i]['position_rate'] = $data['spot_positions'][$i]['sumrate'] / $data['spot_positions'][$i]['position_amount'] ; 	
+				$data['spot_positions'][$i]['position_rate'] = $data['spot_positions'][$i]['sumrate'] ;
+				if( $data['spot_positions'][$i]['position_rate'] )
+					$data['spot_positions'][$i]['position_rate'] /= $data['spot_positions'][$i]['position_amount'] ; 		
 					
 		}
 		
