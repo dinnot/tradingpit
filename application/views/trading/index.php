@@ -44,40 +44,7 @@
         <section class="top-header">
         </section><!-- end top-header -->
         <section class="navigation-bar">
-          <nav>
-            <ul>
-
-              <li class="level-one">
-                <a href="#" class="first-level current">Traderion dealing</a>
-                <ul>
-                  <li><a href="#">Auction calendar</a></li>
-                  <li><a href="#">Economic calendar</a></li>
-                </ul>
-              </li>
-
-               <li class="level-one">
-                <a href="#" class="first-level light-blue">Clients</a>
-              </li>
-
-               <li class="level-one">
-                <a href="#" class="first-level light-blue">Blotters</a>
-              </li>
-
-               <li class="level-one last">
-                <a href="#" class="first-level light-blue">Cash flow</a>
-              </li>
-
-            </ul>
-            <div class="date-time-info trading-page">
-              <ul>
-                <li class="first light-blue"><a href="#">PnL</a></li>
-                <li class="current"><a href="#">TER</a></li>
-                <li><a href="#">HAT</a></li>
-                <li><a href="#">RIK</a></li>
-                <li class="last"><a href="#">+753,999</a></li>
-              </ul>
-            </div><!-- end date-time-info -->
-          </nav>
+					<?php include_once ($_SERVER['DOCUMENT_ROOT']."/application/views/menu.php"); ?>
           <span class="nav-bar-bottom-bg"></span>
         </section><!-- end navigation-bar -->
 
@@ -93,18 +60,9 @@
           <div class="spot-positions">
             <ul>
               <li class="first green-gradient"><span>SPOT POSITIONS</span></li>
-              <li class="second">
-              	<span class="light-green">TER/RIK</span> 
-              	<?php echo $spot_positions[0]['position_amount'] ?> 
-              	<span class="gray"><?php echo (isset($spot_positions[0]['position_rate']))?$spot_positions[0]['position_rate']:"0"; ?> </span></li>
-              
-              <li><span class="green">HAT/RIK</span> 
-              <?php echo $spot_positions[1]['position_amount'] ?>
-              <span class="gray">@<?php echo (isset($spot_positions[1]['position_rate']))?$spot_positions[1]['position_rate']:"0" ?> </span></li>
-              
-              <li class="last"><span class="green">HAT/TER</span>
-              <?php echo $spot_positions[2]['position_amount'] ?>
-              <span class="gray">@<?php echo (isset($spot_positions[2]['position_rate']))?$spot_positions[2]['position_rate']:"0" ?> </span></li>
+              <li class="second"><span class="light-green">TER/RIK</span> 7.000.000<span class="gray">@3.9210 </span></li>
+              <li><span class="green">HAT/RIK</span> -5.000.000<span class="gray">@4.1180 </span></li>
+              <li class="last"><span class="green">HAT/TER</span>0<span class="gray">@1.0490 </span></li>
             </ul>
           </div><!-- end spot-positions -->
         
