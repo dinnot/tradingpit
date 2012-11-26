@@ -77,7 +77,7 @@ class Clients extends CI_Controller {
 	
 	// retail
 	function set_exchange_rate () {
-		$user_id = $this->user->id;
+		$rate['user_id'] = $this->user->id;
 		$rate['pair_id'] = $this->input->get_post ('pair_id');
 		$rate['sell'] = $this->input->get_post ('sell');
 		$rate['buy'] = $this->input->get_post ('buy');
