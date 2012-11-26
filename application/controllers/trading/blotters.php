@@ -47,6 +47,11 @@
 			
 			$data['spot_positions']= $this->Blotters_model->get_users_fx_positions($user_id);
 			
+			for( $i = 0 ; $i < 3 ; $i++ ) {
+				$data['spot_positions'][$i]['position_rate'] = $data['spot_positions'][$i]['sumrate'] ;
+				if( $data['spot_positions'][$i]['position_rate'] )
+@					$data['spot_positions'][$i]['position_rate'] /= $data['spot_positions'][$i]['position_amount'] ; 		
+			}		
 		}
 		
 		public function compute_banks_capital ( &$data ) { 
@@ -63,18 +68,18 @@
 			
 			if( $currency == 0 ) {
 				$data['capital'][0] =  $capital ; 
-				$data['capital'][1] =  round( $capital / $this->Game_model->getSettingValue('bot_sprice1'), 4 ) ;
-				$data['capital'][2] =  round( $capital / $this->Game_model->getSettingValue('bot_sprice2'), 4 ) ;
+@				$data['capital'][1] =  round( $capital * $this->Game_model->getSettingValue('bot_bprice1'), 4 ) ;
+@				$data['capital'][2] =  round( $capital / $this->Game_model->getSettingValue('bot_sprice3'), 4 ) ;
 			}
 			elseif ( $currency == 1 ) {
-				$data['capital'][0] =  round( $capital * $this->Game_model->getSettingValue('bot_bprice1'), 4 ) ; 
-				$data['capital'][1] =  $capital ;
-				$data['capital'][2] =  round( $capital / $this->Game_model->getSettingValue('bot_sprice3'), 4 ) ;
+@				$data['capital'][0] =  round( $capital / $this->Game_model->getSettingValue('bot_sprice1'), 4 ) ; 
+@				$data['capital'][1] =  $capital ;
+@				$data['capital'][2] =  round( $capital / $this->Game_model->getSettingValue('bot_sprice2'), 4 ) ;
 			}
 			else {
-				$data['capital'][0] =  round( $capital * $this->Game_model->getSettingValue('bot_bprice2'), 4 ) ; 
-				$data['capital'][1] =  round( $capital * $this->Game_model->getSettingValue('bot_bprice3'), 4 ) ; 
-				$data['capital'][2] =  $capital ;
+@				$data['capital'][0] =  round( $capital * $this->Game_model->getSettingValue('bot_bprice3'), 4 ) ; 
+@				$data['capital'][1] =  round( $capital * $this->Game_model->getSettingValue('bot_bprice2'), 4 ) ; 
+@				$data['capital'][2] =  $capital ;
 			}
 		}
 		
@@ -85,8 +90,33 @@
 				
 			$fx_pnl = $this->Blotters_model->get_users_fx_pnl($user_id) ;
 			$mm_pnl = $this->Blotters_model->get_users_mm_pnl($user_id) ;
+			
+			
+@			$pnl[0] = $fx_pnl[0]['amount'] + 
+@				  $fx_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
+@				  $fx_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice3') + 
+@				  $mm_pnl[0]['amount'] + 
+@				  $mm_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
+@				  $mm_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice3') + 
+				  
+@			$pnl[1] = $fx_pnl[0]['amount'] / $this->Game_model->getSettingValue('bot_sprice1') +  
+@				  $fx_pnl[1]['amount'] +
+@				  $fx_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice2') + 
+@				  $mm_pnl[0]['amount'] / $this->Game_model->getSettingValue('bot_sprice1') +  
+@				  $mm_pnl[1]['amount'] +
+@				  $mm_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice2') + 
+			
+			
+@			$pnl[2] = $fx_pnl[0]['amount'] * $this->Game_model->getSettingValue('bot_bprice3') + 
+@				  $fx_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice2') +
+@				  $fx_pnl[2]['amount'] + 
+@				  $mm_pnl[0]['amount'] * $this->Game_model->getSettingValue('bot_bprice3') +  
+@				  $mm_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice2') +
+@				  $mm_pnl[2]['amount'] ; 
+			
+				  
 			for( $i = 0 ; $i < 3 ; $i++ )
-				$data['funds'][$i] = $data['capital'][$i] + $fx_pnl[$i]['amount'] + $mm_pnl[$i]['amount'] ; 
+				$data['funds'][$i] = $data['capital'][$i] + $pnl[$i] ; 
 		}
 		
 		public function compute_fx_positions( &$data ) {
@@ -105,50 +135,54 @@
 									
 		////////////////////////////////////////////////////////////////////////////////////////
 			
-			$data['fx_positions'][0]['amount'] =  $data['spot_positions'][0]['position_amount'] - 
-							      $data['spot_positions'][2]['position_amount'] * 
-							      $data['spot_positions'][2]['position_rate'] ; 
+@			$data['fx_positions'][0]['amount'] =  $data['spot_positions'][0]['position_amount'] - 
+@							      $data['spot_positions'][2]['position_amount'] * 
+@							      $data['spot_positions'][2]['position_rate'] ; 
 			
-			$data['fx_positions'][1]['amount'] = -$data['spot_positions'][0]['position_amount'] *
-							      $data['spot_positions'][0]['position_rate'] - 
-							      $data['spot_positions'][1]['position_amount'] * 
-							      $data['spot_positions'][1]['position_rate'] ; 
+@			$data['fx_positions'][1]['amount'] = -$data['spot_positions'][0]['position_amount'] *
+@							      $data['spot_positions'][0]['position_rate'] - 
+@							      $data['spot_positions'][1]['position_amount'] * 
+@							      $data['spot_positions'][1]['position_rate'] ; 
 			
-			$data['fx_positions'][2]['amount'] = $data['spot_positions'][1]['position_amount'] + 
-							     $data['spot_positions'][2]['position_amount'] ; 
+@			$data['fx_positions'][2]['amount'] = $data['spot_positions'][1]['position_amount'] + 
+@							     $data['spot_positions'][2]['position_amount'] ; 
 							     
 		/////////////////////////////////////////////////////////////////////////////////////////////
 		
-			$data['fx_positions'][0]['rep_ccy'][0] =   $data['fx_positions'][0]['amount']   ; 
-			$data['fx_positions'][0]['rep_ccy'][1] = - $data['spot_positions'][0]['position_amount'] * 
-								   $data['spot_positions'][0]['position_rate']   +   
-							     	   $data['spot_positions'][2]['position_amount'] * 
-							           $data['spot_positions'][2]['position_rate']   *
-							           $this->Game_model->getSettingValue('bot_bprice1') ; 
-			$data['fx_positions'][0]['rep_ccy'][2] =   $data['spot_positions'][0]['position_amount'] /
-								   $this->Game_model->getSettingValue('bot_sprice3') +
-								   $data['spot_positions'][2]['position_amount'] ;
+@			$data['fx_positions'][0]['rep_ccy'][0] =   $data['fx_positions'][0]['amount']   ; 
+@			$data['fx_positions'][0]['rep_ccy'][1] =   $data['spot_positions'][0]['position_amount'] * 
+@								   $data['spot_positions'][0]['position_rate']   -   
+@							     	   $data['spot_positions'][2]['position_amount'] * 
+@							           $data['spot_positions'][2]['position_rate']   *
+@							           $this->Game_model->getSettingValue('bot_bprice1') ; 
+@			$data['fx_positions'][0]['rep_ccy'][2] =   $data['spot_positions'][0]['position_amount'] /
+@								   $data['spot_positions'][2]['position_rate']   -  
+@								   $data['spot_positions'][2]['position_amount'] ;
+								   
 	
-	
-			$data['fx_positions'][1]['rep_ccy'][0] =   $data['spot_positions'][0]['position_amount'] +
-								  -$data['spot_positions'][1]['position_amount'] *
-								   $data['spot_positions'][1]['position_rate']   /
-								   $this->Game_model->getSettingValue('bot_sprice1') ;
-			$data['fx_positions'][1]['rep_ccy'][1] =   $data['fx_positions'][1]['amount']   ;
-			$data['fx_positions'][1]['rep_ccy'][2] =  -$data['spot_positions'][0]['position_amount'] *
-							           $data['spot_positions'][0]['position_rate']   /
-							           $this->Game_model->getSettingValue('bot_sprice2') + 
-							           $data['spot_positions'][1]['position_amount'] ;
+@			$data['fx_positions'][1]['rep_ccy'][0] =  -$data['spot_positions'][0]['position_amount'] *
+@								   $data['spot_positions'][0]['position_rate']   /
+@								   $this->Game_model->getSettingValue('bot_sprice1') -
+@								   $data['spot_positions'][1]['position_amount'] *
+@								   $data['spot_positions'][1]['position_rate']   /
+@								   $this->Game_model->getSettingValue('bot_sprice1') ;
+@			$data['fx_positions'][1]['rep_ccy'][1] =   $data['fx_positions'][1]['amount']   ;
+@			$data['fx_positions'][1]['rep_ccy'][2] =  -$data['spot_positions'][0]['position_amount'] *
+@							           $data['spot_positions'][0]['position_rate']   /
+@							           $data['spot_positions'][1]['position_rate']   -
+@							           $data['spot_positions'][1]['position_amount'] ;
 			
-			$data['fx_positions'][2]['rep_ccy'][0] =  -$data['spot_positions'][1]['position_amount'] * 
-								   $this->Game_model->getSettingValue('bot_bprice3') -
-								   $data['spot_positions'][2]['position_amount'] *
-								   $data['spot_positions'][2]['position_rate'] ; 
-			$data['fx_positions'][2]['rep_ccy'][1] =  -$data['spot_positions'][1]['position_amount'] *
-								   $data['spot_positions'][1]['position_rate']   -  
-								   $data['spot_positions'][2]['position_amount'] *
-								   $this->Game_model->getSettingValue('bot_bprice2') ; 
-			$data['fx_positions'][2]['rep_ccy'][2] =   $data['fx_positions'][2]['amount']   ; 
+@			$data['fx_positions'][2]['rep_ccy'][0] =   $data['spot_positions'][1]['position_amount'] * 
+@								   $data['spot_positions'][1]['position_rate'] /
+@								   $this->Game_model->getSettingValue('bot_sprice1') + 
+@								   $data['spot_positions'][2]['position_amount'] *
+@								   $data['spot_positions'][2]['position_rate'] ; 
+@			$data['fx_positions'][2]['rep_ccy'][1] =   $data['spot_positions'][1]['position_amount'] *
+@								   $data['spot_positions'][1]['position_rate']   +  
+@								   $data['spot_positions'][2]['position_amount'] *
+@								   $data['spot_positions'][2]['position_rate'] *			   
+@								   $this->Game_model->getSettingValue('bot_bprice1') ; 
+@			$data['fx_positions'][2]['rep_ccy'][2] =   $data['fx_positions'][2]['amount']   ; 
             		
             		/////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -156,7 +190,12 @@
 				
 				for( $j = 0 ; $j < 3 ; $j++ ) {
 					
-					$data['fx_positions'][$i]['rate'][$j] = round($data['fx_positions'][$i]['rep_ccy'][$j] / $data['fx_positions'][$i]['amount'],4) ;  
+@					$data['fx_positions'][$i]['rep_ccy'][$j] = round( $data['fx_positions'][$i]['rep_ccy'][$j], 4 ) ;
+@					if( abs($data['fx_positions'][$i]['rep_ccy'][$j]) > abs($data['fx_positions'][$i]['amount']) )
+@						$data['fx_positions'][$i]['rate'][$j] = round($data['fx_positions'][$i]['rep_ccy'][$j] / $data['fx_positions'][$i]['amount'],4) ;  
+@					else
+@						$data['fx_positions'][$i]['rate'][$j] = round($data['fx_positions'][$i]['amount'] / $data['fx_positions'][$i]['rep_ccy'][$j],4) ; 
+						 				
 					$data['fx_positions'][$i]['limit'][$j] = $percentage * $data['funds'][$j] ; 
 					$data['fx_positions'][$i]['risk'][$j] = "IN LIMIT" ;
 				

@@ -129,9 +129,13 @@
                 foreach($currencies->result() as $currency) {
                     $amount = 0;
                     $data[] = array("users_id"=>$id, "currencies_id"=>$currency->id, "amount"=>$amount);
+                    $data2[] = array("users_id"=>$id, "ccy_pair"=>$currency->id, "amount"=>$amount);
                 }
                 $this->db->insert_batch("users_balances", $data);
-                $this->db->insert_batch("users_fx_positions", $data);
+                $this->db->insert_batch("users_fx_positions", $data2);
+                $this->db->insert_batch("users_mm_positions", $data);
+                $this->db->insert_batch("users_fx_pnl", $data);
+                $this->db->insert_batch("users_mm_pnl", $data);
                 
                 //login
                 return $this->getLogin($email, $password);
