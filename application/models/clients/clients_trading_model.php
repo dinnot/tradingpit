@@ -50,7 +50,7 @@
 		
 		// inseram in fx_deals | apelam din make_deal
 		function insert_fx_deal ($deal) {
-			$deals['type'] = 1;
+			$deal['type'] = 1;
 			$this->db->insert ("deals", $deal);
 		}
 		
