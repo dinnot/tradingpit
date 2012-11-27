@@ -19,6 +19,16 @@
         $('.table-container tbody tr').removeClass('active');
         $(this).addClass('active');
       })
+	  $('#body_filter').focus(function() {
+		if($("#body_filter").val() == "SEARCH") {
+			$("#body_filter").val("");
+		} 
+	  });
+	  $("#body_filter").focusout(function() {
+		if($("#body_filter").val() == "") {
+			$("#body_filter").val("SEARCH");
+		}
+	  });
     })
   </script>
  
