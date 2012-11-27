@@ -47,10 +47,17 @@
 			
 			$data['spot_positions']= $this->Blotters_model->get_users_fx_positions($user_id);
 			
+<<<<<<< HEAD
 			for( $i = 0 ; $i < 3 ; $i++ ) {  
 				$data['spot_positions'][$i]['position_rate'] = $data['spot_positions'][$i]['sumrate'] ;
 				if( $data['spot_positions'][$i]['position_rate'] )
 					$data['spot_positions'][$i]['position_rate'] /= $data['spot_positions'][$i]['position_amount'] ; 	
+=======
+			for( $i = 0 ; $i < 3 ; $i++ ) {
+				$data['spot_positions'][$i]['position_rate'] = $data['spot_positions'][$i]['sumrate'] ;
+				if( $data['spot_positions'][$i]['position_rate'] )
+@					$data['spot_positions'][$i]['position_rate'] /= $data['spot_positions'][$i]['position_amount'] ; 		
+>>>>>>> 738d50d5cae25203423c91fda551dbdfb6bc786c
 			}		
 		}
 		
@@ -67,7 +74,11 @@
 			$data['currency'] = $currency ;
 			
 			if( $currency == 0 ) {
+<<<<<<< HEAD
 @				$data['capital'][0] =  $capital ; 
+=======
+				$data['capital'][0] =  $capital ; 
+>>>>>>> 738d50d5cae25203423c91fda551dbdfb6bc786c
 @				$data['capital'][1] =  round( $capital * $this->Game_model->getSettingValue('bot_bprice1'), 4 ) ;
 @				$data['capital'][2] =  round( $capital / $this->Game_model->getSettingValue('bot_sprice3'), 4 ) ;
 			}
@@ -93,6 +104,10 @@
 			
 			
 @			$pnl[0] = $fx_pnl[0]['amount'] + 
+<<<<<<< HEAD
+=======
+@				  $fx_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
+>>>>>>> 738d50d5cae25203423c91fda551dbdfb6bc786c
 @				  $fx_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice3') + 
 @				  $mm_pnl[0]['amount'] + 
 @				  $mm_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
@@ -137,15 +152,16 @@
 		
 		//////////////////////////////////        AMOUNT       ///////////////////////////////////////
 			
-			$data['fx_positions'][0]['amount'] =  $data['spot_positions'][0]['position_amount'] - 
-							      $data['spot_positions'][2]['position_amount'] * 
-							      $data['spot_positions'][2]['position_rate'] ; 
+@			$data['fx_positions'][0]['amount'] =  $data['spot_positions'][0]['position_amount'] - 
+@							      $data['spot_positions'][2]['position_amount'] * 
+@							      $data['spot_positions'][2]['position_rate'] ; 
 			
-			$data['fx_positions'][1]['amount'] = -$data['spot_positions'][0]['position_amount'] *
-							      $data['spot_positions'][0]['position_rate'] - 
-							      $data['spot_positions'][1]['position_amount'] * 
-							      $data['spot_positions'][1]['position_rate'] ; 
+@			$data['fx_positions'][1]['amount'] = -$data['spot_positions'][0]['position_amount'] *
+@							      $data['spot_positions'][0]['position_rate'] - 
+@							      $data['spot_positions'][1]['position_amount'] * 
+@							      $data['spot_positions'][1]['position_rate'] ; 
 			
+<<<<<<< HEAD
 			$data['fx_positions'][2]['amount'] =  $data['spot_positions'][1]['position_amount'] + 
 							      $data['spot_positions'][2]['position_amount'] ; 
 		
@@ -153,6 +169,12 @@
 		
 							     
 		/////////////////////////////////////////   REPORTING CURRENCY       //////////////////////////////////////////////
+=======
+@			$data['fx_positions'][2]['amount'] = $data['spot_positions'][1]['position_amount'] + 
+@							     $data['spot_positions'][2]['position_amount'] ; 
+							     
+		/////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> 738d50d5cae25203423c91fda551dbdfb6bc786c
 		
 @			$data['fx_positions'][0]['rep_ccy'][0] =   $data['fx_positions'][0]['amount']   ; 
 @			$data['fx_positions'][0]['rep_ccy'][1] =   $data['spot_positions'][0]['position_amount'] * 
@@ -163,6 +185,7 @@
 @			$data['fx_positions'][0]['rep_ccy'][2] =   $data['spot_positions'][0]['position_amount'] /
 @								   $data['spot_positions'][2]['position_rate']   -  
 @								   $data['spot_positions'][2]['position_amount'] ;
+<<<<<<< HEAD
 @								   
 @	
 @			$data['fx_positions'][1]['rep_ccy'][0] =  -$data['spot_positions'][0]['position_amount'] *
@@ -194,6 +217,35 @@
             		////////////////////////////////////// POSITION LIMIT /  RATE /   RISK    /////////////////////////////////////
 	
 	
+=======
+								   
+	
+@			$data['fx_positions'][1]['rep_ccy'][0] =  -$data['spot_positions'][0]['position_amount'] *
+@								   $data['spot_positions'][0]['position_rate']   /
+@								   $this->Game_model->getSettingValue('bot_sprice1') -
+@								   $data['spot_positions'][1]['position_amount'] *
+@								   $data['spot_positions'][1]['position_rate']   /
+@								   $this->Game_model->getSettingValue('bot_sprice1') ;
+@			$data['fx_positions'][1]['rep_ccy'][1] =   $data['fx_positions'][1]['amount']   ;
+@			$data['fx_positions'][1]['rep_ccy'][2] =  -$data['spot_positions'][0]['position_amount'] *
+@							           $data['spot_positions'][0]['position_rate']   /
+@							           $data['spot_positions'][1]['position_rate']   -
+@							           $data['spot_positions'][1]['position_amount'] ;
+			
+@			$data['fx_positions'][2]['rep_ccy'][0] =   $data['spot_positions'][1]['position_amount'] * 
+@								   $data['spot_positions'][1]['position_rate'] /
+@								   $this->Game_model->getSettingValue('bot_sprice1') + 
+@								   $data['spot_positions'][2]['position_amount'] *
+@								   $data['spot_positions'][2]['position_rate'] ; 
+@			$data['fx_positions'][2]['rep_ccy'][1] =   $data['spot_positions'][1]['position_amount'] *
+@								   $data['spot_positions'][1]['position_rate']   +  
+@								   $data['spot_positions'][2]['position_amount'] *
+@								   $data['spot_positions'][2]['position_rate'] *			   
+@								   $this->Game_model->getSettingValue('bot_bprice1') ; 
+@			$data['fx_positions'][2]['rep_ccy'][2] =   $data['fx_positions'][2]['amount']   ; 
+            		
+            		/////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> 738d50d5cae25203423c91fda551dbdfb6bc786c
 	
 			for( $i = 0 ; $i < 3 ; $i++ ) {
 				

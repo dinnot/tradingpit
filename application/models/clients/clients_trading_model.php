@@ -69,7 +69,7 @@
 			$deal['trade_date'] = time ();
 		
 			if ($offer['market'] == "FX") {
-				$this->update_balances ($offer['user_id'], $bank, $offer['amount'], $offer['currency']);				
+				$this->trading_model->updateBalances ($offer['user_id'], $bank, $offer['amount'], $offer['currency'],$offer['quote']);				
 				$this->insert_fx_deal ($deal);
 			}
 		}
@@ -94,9 +94,8 @@
 			$deal['trade_date'] = $offer->date;
 			
 			$bank = $this->get_user_bank ($offer->user_id);		
-			$this->update_balances ($offer->user_id, $bank, $offer->amount, $offer->pair_id);				
-			$this->insert_fx_deal ($deal);
-		
+			$this->trading_model->updateBalances ($offer->user_id, $bank, $offer->amount, $offer->pair_id, $price);				
+			$this->insert_fx_deal ($deal);		
 		}
 
 		// stabilim userii castigatori pentru corporate-offer

@@ -30,6 +30,7 @@ class Clients extends CI_Controller {
 		$this->load->model('clients/corporate_clients_model');		
 		$this->load->model('clients/retail_clients_model');
 		$this->load->model('clients/clients_trading_model');
+		$this->load->model('trading_model');
 		$this->load->model('econ_model');
 	}
 	
@@ -77,7 +78,7 @@ class Clients extends CI_Controller {
 	
 	// retail
 	function set_exchange_rate () {
-		$user_id = $this->user->id;
+		$rate['user_id'] = $this->user->id;
 		$rate['pair_id'] = $this->input->get_post ('pair_id');
 		$rate['sell'] = $this->input->get_post ('sell');
 		$rate['buy'] = $this->input->get_post ('buy');
