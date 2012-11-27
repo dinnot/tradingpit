@@ -26,7 +26,7 @@
       <li class="current"><a href="#">TER</a></li>
       <li><a href="#">HAT</a></li>
       <li><a href="#">RIK</a></li>
-      <li class="last"><a href="#">+753,999</a></li>
+      <li class="last"><a href="#">0</a></li>
     </ul>
   </div><!-- end date-time-info -->
 </nav>
