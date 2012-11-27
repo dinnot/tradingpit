@@ -50,7 +50,8 @@
 		
 		// inseram in fx_deals | apelam din make_deal
 		function insert_fx_deal ($deal) {
-			$this->db->insert ("fx_deals", $deal);
+			$deals['type'] = 1;
+			$this->db->insert ("deals", $deal);
 		}
 		
 		// oferta acceptata, actualizam si inseram unde este nevoie
@@ -183,7 +184,7 @@
 		}
 		
 		function get_user_deals ($user_id) {
-			$this->db->from ("fx_deals");
+			$this->db->from ("deals");
 			$this->db->where ('user_id', $user_id);
 			$this->db->order_by ("trade_date", "desc");
 			$this->db->limit (10);
