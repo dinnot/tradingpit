@@ -3,7 +3,7 @@
 	class News extends CI_Controller {
 
 		public function __construct() {
-		
+			
 			parent::__construct();
 			$this->load->model("News_model");
 			
@@ -11,7 +11,7 @@
 						
 			$this->load->library('session');
 			$this->load->model("Users_model");
-			$this->module_name = "dashboard";
+			$this->module_name = "news";
 			$valid = false;
 			
 			if($this->session->userdata("key")) {

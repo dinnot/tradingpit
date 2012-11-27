@@ -12,9 +12,10 @@
 	
 		public function get_news() {
 			
-			$date = time() - 24*3600*3 ; 
-			
-			
+			$day = 24*3600 ;
+			$current_date = time() ;
+			$last_date = $current_date - 3*$day ; 
+									
 			$what = array() ;
 			 
 			$what[] = "date" ; 
@@ -30,8 +31,8 @@
 			$this->apply_body_filter() ;
 			$this->apply_country_filter() ;
 			
-			$this->db->where("date >=",$date) ;
-			$this->db->where("date <=",time()) ;
+			$this->db->where("date >=",$last_date) ;
+			$this->db->where("date <=",$current_date) ;
 			$this->db->order_by("date","desc");
 			$query = $this->db->get() ; 
 			return $query->result_array();
@@ -54,10 +55,10 @@
 		public function insert_news() {
 		
 			$day = 24 * 3600 ;
-			$start_date = time() - 5*$day ; 
+			$start_date = 1353369600 ;  // 20.11.2012  00 : 00 : 00  
 	
 		
-			$myFile = "/var/www/news_feed/news_feed.txt" ;
+			$myFile = "application/controllers/news/news_feed.txt" ;
 			$fh = fopen($myFile,'r') ;
 			$content = fread($fh,filesize($myFile)) ;
 			fclose($fh) ;
@@ -85,9 +86,12 @@
 		public function update_news() {
 		
 			$day = 24 * 3600 ;
-			$start_date = time() - 5*$day ; 
-	
-			$this->db->set('date', 'date + 3 * 24 * 3600 ' , FALSE);
+			$start_date = 1353369600 ;  // 20.11.2012  00 : 00 : 00 
+			$days = 3 ; 
+			
+			$add = $days * $day ;
+			
+			$this->db->set('date', "date + '$add' " , FALSE);
 			$this->db->update('news');
 		}
 	}

@@ -11,6 +11,14 @@
      <li class="level-one">
       <a href="<?php print base_url(); ?>trading/blotters" class="first-level light-blue <?php if ($this->module_name == 'blotters') print 'current'; ?>">Blotters</a>
     </li>
+    
+    <li class="level-one">
+      <a href="<?php print base_url(); ?>econ" class="first-level light-blue <?php if ($this->module_name == 'econ') print 'current'; ?>">Econ</a>
+    </li>
+    
+    <li class="level-one">
+      <a href="<?php print base_url(); ?>news" class="first-level light-blue <?php if ($this->module_name == 'news') print 'current'; ?>">News</a>
+    </li>
   </ul>
   <div class="date-time-info trading-page">
     <ul>

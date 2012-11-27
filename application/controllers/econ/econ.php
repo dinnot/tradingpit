@@ -10,7 +10,7 @@ class Econ extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->library('session');
 		$this->load->model("Users_model");
-		$this->module_name = "clients";
+		$this->module_name = "econ";
 		$valid = false;
 		if($this->session->userdata("key")) {
 			$key = $this->session->userdata("key");
