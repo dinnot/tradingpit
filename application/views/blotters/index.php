@@ -38,7 +38,7 @@
         <section class="top-header">
         </section><!-- end top-header -->
         <section class="navigation-bar">        	
-					<?php include_once ($_SERVER['DOCUMENT_ROOT']."/application/views/menu.php"); ?>
+					<?php include_once ($_SERVER['DOCUMENT_ROOT']."/tradingpit/application/views/menu.php"); ?>
           <span class="nav-bar-bottom-bg"></span>
         </section><!-- end navigation-bar -->
 
