@@ -51,6 +51,7 @@
 				$data['spot_positions'][$i]['position_rate'] = $data['spot_positions'][$i]['sumrate'] ;
 				if( $data['spot_positions'][$i]['position_rate'] )
 					$data['spot_positions'][$i]['position_rate'] /= $data['spot_positions'][$i]['position_amount'] ; 		
+				$data['spot_positions'][$i]['position_rate'] = round( $data['spot_positions'][$i]['position_rate'], 4)	;
 			}		
 		}
 		
