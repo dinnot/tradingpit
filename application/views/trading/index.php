@@ -667,7 +667,7 @@ function trnEnq(idv) {
     $.ajax({
         type: "POST",
         data: {id: idv, buy: pbuy, sell: psell},
-        url: "/trading/trading/respond/",
+        url: "<?php print base_url () ?>trading/trading/respond/",
         cache: false
     }).done(function(data) {
         data = jQuery.parseJSON(data);
@@ -700,7 +700,7 @@ function buyEnq(idv) {
     $.ajax({
         type: "POST",
         data: {id: idv},
-        url: "/trading/trading/buy/",
+        url: "<?php print base_url () ?>trading/trading/buy/",
         cache: false
     }).done(function(data) {
         data = jQuery.parseJSON(data);
@@ -729,7 +729,7 @@ function sellEnq(idv) {
     $.ajax({
         type: "POST",
         data: {id: idv},
-        url: "/trading/trading/sell/",
+        url: "<?php print base_url () ?>trading/trading/sell/",
         cache: false
     }).done(function(data) {
         data = jQuery.parseJSON(data);
@@ -758,7 +758,7 @@ function cancelEnq(idv) {
     $.ajax({
         type: "POST",
         data: {id: idv},
-        url: "/trading/trading/cancel/",
+        url: "<?php print base_url () ?>trading/trading/cancel/",
         cache: false
     }).done(function(data) {
         data = jQuery.parseJSON(data);
@@ -917,7 +917,7 @@ function submitform() {
     $.ajax({
         type: "POST",
         data: {pair: p, amount: a},
-        url: "/trading/trading/add/",
+        url: "<?php print base_url () ?>trading/trading/add/",
         cache: false
     }).done(function(data) {
         data = jQuery.parseJSON(data);
@@ -944,7 +944,7 @@ function check_existing() {
     $.ajax({
         type: "POST",
         data: {"ids": l, "sts": s},
-        url: "/trading/trading/status/",
+        url: "<?php print base_url () ?>trading/trading/status/",
         cache: false
     }).done(function(data) {
         data = jQuery.parseJSON(data);
@@ -976,7 +976,7 @@ function check_new() {
     $.ajax({
         type: "POST",
         data: {"ids": l},
-        url: "/trading/trading/newen/",
+        url: "<?php print base_url () ?>trading/trading/newen/",
         cache: false
     }).done(function(data) {
         data = jQuery.parseJSON(data);

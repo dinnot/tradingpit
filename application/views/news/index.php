@@ -19,6 +19,16 @@
         $('.table-container tbody tr').removeClass('active');
         $(this).addClass('active');
       })
+	  $('#body_filter').focus(function() {
+		if($("#body_filter").val() == "SEARCH") {
+			$("#body_filter").val("");
+		} 
+	  });
+	  $("#body_filter").focusout(function() {
+		if($("#body_filter").val() == "") {
+			$("#body_filter").val("SEARCH");
+		}
+	  });
     })
   </script>
  
@@ -29,30 +39,8 @@
       <article class="top-section container">
         <section class="top-header">
         </section><!-- end top-header -->
-        <section class="navigation-bar">
-          <nav>
-            <ul>
-
-              <li class="level-one">
-                <a href="#" class="first-level current">News</a>
-                <ul>
-                  <li><a href="#">Auction calendar</a></li>
-                  <li><a href="#">Economic calendar</a></li>
-                </ul>
-              </li>
-
-              <li class="level-one">
-                <a href="#" class="first-level">Alerts</a>
-              </li>
-
-            </ul>
-            <div class="date-time-info">
-              <ul>
-                <li class="first" id="time"></li>
-                <li id="date"></li>
-              </ul>
-            </div><!-- end date-time-info -->
-          </nav>
+        <section class="navigation-bar">       
+					<?php include_once ($_SERVER['DOCUMENT_ROOT']."/tradingpit/application/views/menu.php"); ?>
           <span class="nav-bar-bottom-bg"></span>
         </section><!-- end navigation-bar -->
 

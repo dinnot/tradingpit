@@ -86,8 +86,9 @@
                     "counter_party"=>$deal->second_user,
                     "value_date"=>$now,
                     "trade_date"=>$now,
-                    "user_id"=>$user
-                ))->insert("fx_deals");
+                    "user_id"=>$user,
+					"type"=>1
+                ))->insert("deals");
                 $this->updateBalances($deal->first_user, $deal->first_bank, $deal->amount * 1000000, $deal->currency_pair, $deal->price_sell);
                 $this->updateBalances($deal->second_user, $deal->second_bank, $deal->amount * -1000000, $deal->currency_pair, $deal->price_sell);
                 return 3;
@@ -109,8 +110,9 @@
                     "counter_party"=>$deal->second_user,
                     "value_date"=>$now,
                     "trade_date"=>$now,
-                    "user_id"=>$user
-                ))->insert("fx_deals");
+                    "user_id"=>$user,
+					"type"=>1
+                ))->insert("deals");
                 $pair = $this->db->where("id", $deal->currency_pair)->get("currency_pairs");
                 $pair = $pair->row();
                 $curr1 = $pair->currency0;
