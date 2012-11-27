@@ -52,7 +52,7 @@
                 <p>NET POSITION<span>FROM CLIENTS</span></p>
                 <p class="value" id="net_position_1"><?php print -$amount[1]['sell'] + $amount[1]['buy']; ?></p>
                 <p>Pnl</p>
-                <p class="value">10.000</p>
+                <p class="value">-</p>
               </div><!-- end widget-content -->
 
             </div><!-- end widget tier1 -->
@@ -114,7 +114,7 @@
                 <p>NET POSITION<span>FROM CLIENTS</span></p>
                 <p class="value" id="net_position_2"><?php print -$amount[2]['sell'] + $amount[2]['buy']; ?></p>
                 <p>Pnl</p>
-                <p class="value">10.000</p>
+                <p class="value">-</p>
               </div><!-- end widget-content -->
 
             </div><!-- end widget tier1 -->
