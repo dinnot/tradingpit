@@ -47,7 +47,6 @@
 			
 			$data['spot_positions']= $this->Blotters_model->get_users_fx_positions($user_id);
 			
-<<<<<<< HEAD
 
 			for( $i = 0 ; $i < 3 ; $i++ ) {  
 				$data['spot_positions'][$i]['position_rate'] = $data['spot_positions'][$i]['sumrate'] ;
@@ -55,13 +54,6 @@
 					$data['spot_positions'][$i]['position_rate'] /= $data['spot_positions'][$i]['position_amount'] ; 	
 					
 				$data['spot_positions'][$i]['position_rate'] = round($data['spot_positions'][$i]['position_rate'], 4); 	
-=======
-			for( $i = 0 ; $i < 3 ; $i++ ) {
-				$data['spot_positions'][$i]['position_rate'] = $data['spot_positions'][$i]['sumrate'] ;
-				if( $data['spot_positions'][$i]['position_rate'] )
-					$data['spot_positions'][$i]['position_rate'] /= $data['spot_positions'][$i]['position_amount'] ; 		
-				$data['spot_positions'][$i]['position_rate'] = round( $data['spot_positions'][$i]['position_rate'], 4)	;
->>>>>>> 5d14250e8aa3ce6ac82ffa2792fe19fd65af12ba
 			}		
 		}
 		
@@ -159,23 +151,12 @@
 @							      $data['spot_positions'][1]['position_amount'] * 
 @							      $data['spot_positions'][1]['position_rate'] ; 
 			
-<<<<<<< HEAD
 
 @			$data['fx_positions'][2]['amount'] =  $data['spot_positions'][1]['position_amount'] + 
 @							      $data['spot_positions'][2]['position_amount'] ; 
-=======
-			$data['fx_positions'][2]['amount'] =  $data['spot_positions'][1]['position_amount'] + 
-							      $data['spot_positions'][2]['position_amount'] ; 
->>>>>>> 5d14250e8aa3ce6ac82ffa2792fe19fd65af12ba
-		
-		
 		
 							     
 		/////////////////////////////////////////   REPORTING CURRENCY       //////////////////////////////////////////////
-<<<<<<< HEAD
-=======
-
->>>>>>> 5d14250e8aa3ce6ac82ffa2792fe19fd65af12ba
 		
 @			$data['fx_positions'][0]['rep_ccy'][0] =   $data['fx_positions'][0]['amount']   ; 
 @			$data['fx_positions'][0]['rep_ccy'][1] =   $data['spot_positions'][0]['position_amount'] * 
@@ -216,11 +197,6 @@
             
             		////////////////////////////////////// POSITION LIMIT /  RATE /   RISK    /////////////////////////////////////
 	
-	
-<<<<<<< HEAD
-
-=======
->>>>>>> 5d14250e8aa3ce6ac82ffa2792fe19fd65af12ba
 			for( $i = 0 ; $i < 3 ; $i++ ) {
 				
 				for( $j = 0 ; $j < 3 ; $j++ ) {
