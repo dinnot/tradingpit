@@ -185,7 +185,8 @@
 		
 		function get_user_deals ($user_id) {
 			$this->db->from ("deals");
-			$this->db->where ('user_id', $user_id);
+			$this->db->where ('user_id', $user_id);			
+			$this->db->where ('counter_party <=', 0);
 			$this->db->order_by ("trade_date", "desc");
 			$this->db->limit (10);
 			$query = $this->db->get ();
