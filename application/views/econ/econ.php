@@ -39,45 +39,8 @@
         <section class="top-header">
         </section><!-- end top-header -->
         <section class="navigation-bar">
-          <nav>
-            <ul>
-
-              <li class="level-one">
-                <a href="#" class="first-level current">Calendars</a>
-                <ul>
-                  <li><a href="#">Auction calendar</a></li>
-                  <li><a href="#">Economic calendar</a></li>
-                </ul>
-              </li>
-
-              <li class="level-one">
-                <a href="#" class="first-level">Settings</a>
-              </li>
-
-               <li class="level-one">
-                <a href="#" class="first-level">Alerts</a>
-              </li>
-
-               <li class="level-one">
-                <a href="#" class="first-level">Export</a>
-              </li>
-
-               <li class="level-one">
-                <a href="#" class="first-level light-blue">Your forecast</a>
-              </li>
-
-               <li class="level-one last">
-                <a href="#" class="first-level light-blue">Economic Calendars</a>
-              </li>
-
-            </ul>
-            <div class="date-time-info">
-              <ul>
-                 <li class="first" id="time"></li>
-                <li id="date"></li>
-              </ul>
-            </div><!-- end date-time-info -->
-          </nav>
+          
+					<?php include_once ($_SERVER['DOCUMENT_ROOT']."/tradingpit/application/views/menu.php"); ?>
           <span class="nav-bar-bottom-bg"></span>
         </section><!-- end navigation-bar -->
 
