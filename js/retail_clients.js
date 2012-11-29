@@ -94,8 +94,8 @@ function get_user_deals () {
 		});
 }
 
-setInterval (get_user_deals, 4000);
-setInterval (check_next_client, 4000);
+//setInterval (get_user_deals, 4000);
+//setInterval (check_next_client, 4000);
 
 function swap (pair) {
 	pair2 = 1;

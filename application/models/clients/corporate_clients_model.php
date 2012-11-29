@@ -94,8 +94,7 @@
 				return ;
 				
 			$row = $query->row ();
-			print_r ($row);
-			print 'dasd as';
+		
 			if ($row->available > time ()) 
 				return ;
 				
@@ -106,7 +105,7 @@
 			$this->db->limit (rand () % 5 + 3);
 			$users = $this->db->get ()->result_array ();
 			$num = count ($users);
-			print_r ($users);
+		
 			if ($num < 1)
 				return ;
 						

@@ -9,6 +9,7 @@
   <link href="<?php print base_url () ?>css/jquery-ui-1.9.1.custom.css" rel="stylesheet">
   <script src="<?php print base_url () ?>js/jquery-1.8.2.min.js"></script>
   <script src="<?php print base_url () ?>js/jquery-ui-1.9.1.custom.js"></script>
+    <script src="<?php print base_url() ?>js/observable.js"></script>
 	<script src="<?php print base_url () ?>js/corporate_clients.js"></script>
 	<script src="<?php print base_url () ?>js/retail_clients.js"></script>
   <script src="<?php print base_url() ?>js/date.js"></script>
@@ -173,9 +174,10 @@
 	var base_url = "<?= base_url() ?>";
 
 	set_time_difference ();
-	get_clients_offers ();
-	get_user_deals ();
-	check_next_client ();
+	Observable.pull ();	
+//	corporate_cget_clients_offers ();
+	//get_user_deals ();
+	//check_next_client ();
 </script>
 
 
