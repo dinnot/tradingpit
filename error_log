@@ -3187,3 +3187,7 @@
 [26-Nov-2012 23:07:13 UTC] PHP Parse error:  syntax error, unexpected T_IF in /home/tpit/public_html/application/controllers/trading/blotters.php on line 194
 [26-Nov-2012 23:07:14 UTC] PHP Parse error:  syntax error, unexpected T_IF in /home/tpit/public_html/application/controllers/trading/blotters.php on line 194
 [26-Nov-2012 23:07:16 UTC] PHP Parse error:  syntax error, unexpected T_IF in /home/tpit/public_html/application/controllers/trading/blotters.php on line 194
+[27-Nov-2012 00:13:13 UTC] PHP Parse error:  syntax error, unexpected T_SL in /home/tpit/public_html/tradingpit/application/controllers/trading/blotters.php on line 50
+[27-Nov-2012 00:13:16 UTC] PHP Parse error:  syntax error, unexpected T_SL in /home/tpit/public_html/tradingpit/application/controllers/trading/blotters.php on line 50
+[27-Nov-2012 00:13:44 UTC] PHP Parse error:  syntax error, unexpected T_SL in /home/tpit/public_html/tradingpit/application/controllers/trading/blotters.php on line 50
+[27-Nov-2012 00:19:20 UTC] PHP Parse error:  syntax error, unexpected T_SL in /home/tpit/public_html/tradingpit/application/controllers/trading/blotters.php on line 50

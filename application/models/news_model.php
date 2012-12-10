@@ -14,7 +14,7 @@
 			
 			$day = 24*3600 ;
 			$current_date = time() ;
-			$last_date = $current_date - 3*$day ; 
+			$last_date = $current_date - 7*$day ; 
 									
 			$what = array() ;
 			 

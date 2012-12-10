@@ -47,10 +47,13 @@
 			
 			$data['spot_positions']= $this->Blotters_model->get_users_fx_positions($user_id);
 			
-			for( $i = 0 ; $i < 3 ; $i++ ) {
+
+			for( $i = 0 ; $i < 3 ; $i++ ) {  
 				$data['spot_positions'][$i]['position_rate'] = $data['spot_positions'][$i]['sumrate'] ;
 				if( $data['spot_positions'][$i]['position_rate'] )
-					$data['spot_positions'][$i]['position_rate'] /= $data['spot_positions'][$i]['position_amount'] ; 		
+					$data['spot_positions'][$i]['position_rate'] /= $data['spot_positions'][$i]['position_amount'] ; 	
+					
+				$data['spot_positions'][$i]['position_rate'] = round($data['spot_positions'][$i]['position_rate'], 4); 	
 			}		
 		}
 		
@@ -148,14 +151,12 @@
 @							      $data['spot_positions'][1]['position_amount'] * 
 @							      $data['spot_positions'][1]['position_rate'] ; 
 			
-			$data['fx_positions'][2]['amount'] =  $data['spot_positions'][1]['position_amount'] + 
-							      $data['spot_positions'][2]['position_amount'] ; 
-		
-		
+
+@			$data['fx_positions'][2]['amount'] =  $data['spot_positions'][1]['position_amount'] + 
+@							      $data['spot_positions'][2]['position_amount'] ; 
 		
 							     
 		/////////////////////////////////////////   REPORTING CURRENCY       //////////////////////////////////////////////
-
 		
 @			$data['fx_positions'][0]['rep_ccy'][0] =   $data['fx_positions'][0]['amount']   ; 
 @			$data['fx_positions'][0]['rep_ccy'][1] =   $data['spot_positions'][0]['position_amount'] * 
@@ -196,7 +197,6 @@
             
             		////////////////////////////////////// POSITION LIMIT /  RATE /   RISK    /////////////////////////////////////
 	
-	
 			for( $i = 0 ; $i < 3 ; $i++ ) {
 				
 				for( $j = 0 ; $j < 3 ; $j++ ) {
@@ -215,8 +215,6 @@
 				}	
 			}					 			
 		}
-
-
 
 		
 		public function compute_agg ( &$data ) {

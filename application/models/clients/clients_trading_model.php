@@ -50,7 +50,7 @@
 		
 		// inseram in fx_deals | apelam din make_deal
 		function insert_fx_deal ($deal) {
-			$deals['type'] = 1;
+			$deal['type'] = 1;
 			$this->db->insert ("deals", $deal);
 		}
 		
@@ -185,7 +185,7 @@
 		
 		function get_user_deals ($user_id) {
 			$this->db->from ("deals");
-			$this->db->where ('user_id', $user_id);
+			$this->db->where ('user_id', $user_id);			
 			$this->db->where ('counter_party <=', 0);
 			$this->db->order_by ("trade_date", "desc");
 			$this->db->limit (10);
