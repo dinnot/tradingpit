@@ -174,7 +174,7 @@
 	var base_url = "<?= base_url() ?>";
 
 	set_time_difference ();
-	Observable.pull ();	
+	Observable.check ();	
 //	corporate_cget_clients_offers ();
 	//get_user_deals ();
 	//check_next_client ();

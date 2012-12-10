@@ -13,6 +13,9 @@ function set_time_difference () {
 var corporate_clients_class = function () {
 
 	this.name = "corporate_clients";
+	this.delay = 1000;
+	this.timeout = 1000;
+	
 	this.pull = [];
 	this.pull.push ("get_corporate_offers");
 	this.pull.push ("next_corporate_clients");
@@ -164,11 +167,10 @@ function timer () {
 	}
 }
 
-
 var corporate_clients = new corporate_clients_class ();
 Observable.subscribe (corporate_clients);
 
 var that = Observable;
-setInterval ( function () {return that.pull()}, 3000 );
+setInterval ( function () {return that.check()}, 100 );
 
 setInterval (timer , 1000);

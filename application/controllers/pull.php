@@ -50,6 +50,7 @@ class Pull extends CI_Controller {
 		$this->output->set_output ( json_encode ( $response ) );		
   }
   
+  // corporate
 	function get_corporate_offers () {		
 		$user_id = $this->user->id;
 		$offers = $this->corporate_clients_model->get_corporate_offers ($user_id);
@@ -60,5 +61,16 @@ class Pull extends CI_Controller {
 		$user_id = $this->user->id;
 		$this->corporate_clients_model->next_corporate_clients ($user_id);
 	}
+
+	// retail
+	function check_next_client () {
+		
+		$user_id = $this->user->id;
+		$response = $this->retail_clients_model->check_next_client ($user_id);
+		$response['amount'] = $this->clients_trading_model->get_user_amount ($user_id);
+
+		return $response;		
+	}
+
 
 };

@@ -1,12 +1,22 @@
+var retail_client_class = function () {
+	
+	this.name = 'retail_client';
 
-function get_price (bf, pips) {
+	this.delay = 1000;
+	this.timeout = 2000;
+	
+	this.pull = [];
+	this.pull.push ('check_next_client');
+}
+
+get_price = function (bf, pips) {
 	while (pips.length < 3)
 	 pips = "0" + pips;
 	 
 	return bf + pips;
 }
 
-function set_exchange_rate (pair_id) {
+retail_client_class.prototype.set_exchange_rate = function (pair_id) {
 
 	url = base_url+"trading/clients/set_exchange_rate";
 	sell = get_price ( $('#bf_sell_'+pair_id).val(),  $('#pips_sell_'+pair_id).val());
@@ -16,7 +26,6 @@ function set_exchange_rate (pair_id) {
 		'sell' : sell,
 		'buy' : buy 
 	}	
-
 
 	$.ajax({
 		type: 'POST',
@@ -32,70 +41,17 @@ function set_exchange_rate (pair_id) {
 
 }
 
-// pool
-function check_next_client () {
-
-	url = base_url+"trading/clients/check_next_client";
-	$.ajax({
-      url: url,
-      async: true,
-      dataType: 'json',
-      success: function (data, textStatus, jqXHR) {                    
-    		$('#retail_sell_1').text (data['amount'][1]['sell']);
-    		$('#retail_buy_1').text (data['amount'][1]['buy']);
-    		$('#retail_sell_2').text (data['amount'][2]['sell']);
-    		$('#retail_buy_2').text (data['amount'][2]['buy']);
-    		$('#total_volume_1').text ( parseFloat (data['amount'][1]['sell']) + parseFloat (data['amount'][1]['buy']));
-    		$('#net_position_1').text ( parseFloat (-data['amount'][1]['sell']) +  parseFloat ( data['amount'][1]['buy']));
-    		$('#total_volume_2').text ( parseFloat (data['amount'][2]['sell']) +  parseFloat ( data['amount'][2]['buy']));
-    		$('#net_position_2').text ( parseFloat (-data['amount'][2]['sell']) +  parseFloat ( data['amount'][2]['buy']));
-    	}, 
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-        console.log(textStatus, errorThrown);
-      },      
-		});
+retail_client_class.prototype.update = function (data) {
+	data = data['check_next_client'];
+	$('#retail_sell_1').text (data['amount'][1]['sell']);
+	$('#retail_buy_1').text (data['amount'][1]['buy']);
+	$('#retail_sell_2').text (data['amount'][2]['sell']);
+	$('#retail_buy_2').text (data['amount'][2]['buy']);
+	$('#total_volume_1').text ( parseFloat (data['amount'][1]['sell']) + parseFloat (data['amount'][1]['buy']));
+	$('#net_position_1').text ( parseFloat (-data['amount'][1]['sell']) +  parseFloat ( data['amount'][1]['buy']));
+	$('#total_volume_2').text ( parseFloat (data['amount'][2]['sell']) +  parseFloat ( data['amount'][2]['buy']));
+	$('#net_position_2').text ( parseFloat (-data['amount'][2]['sell']) +  parseFloat ( data['amount'][2]['buy']));
 }
-
-function display_deals (deals) {
-	
-	$("#deals").text ("");
-	for (i = 0; i < deals.length; i++) {
-		code = 'CLNT';
-		if (deals[i]['counter_party'] == 0) code = "RTL";
-		Time = new Date ( deals[i]['trade_date'] * 1000 );
-		time = Time.toString("h:mm:ss");	
-		data = Time.toString("dd/MM");
-		$("#deals").append (
-			'<tr>'+
-			'<td>'+code+'</td>'+
-			'<td>'+data+'</td>'+
-			'<td>'+time+'</td>'+		
-			'<td>'+deals[i]['price']+'</td>'+
-			'<td>'+deals[i]['amount_base_ccy']+'</td>'+
-			'</tr>'
-		);
-	}
-}
-
-function get_user_deals () {
-
-	url = base_url+"trading/clients/get_user_deals";
-	
-	$.ajax({
-      url: url,
-      async: true,
-      dataType: 'json',
-      success: function (data, textStatus, jqXHR) {                    
-      	display_deals (data);
-    	}, 
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-        console.log(textStatus, errorThrown);
-      },      
-		});
-}
-
-//setInterval (get_user_deals, 4000);
-//setInterval (check_next_client, 4000);
 
 function swap (pair) {
 	pair2 = 1;
@@ -104,3 +60,7 @@ function swap (pair) {
 	$('#pair_'+pair2).hide ();	
 	$('#pair_'+pair).show ();
 }
+
+
+var retail_client = new retail_client_class ();
+Observable.subscribe (retail_client);

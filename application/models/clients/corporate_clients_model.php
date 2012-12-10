@@ -115,7 +115,7 @@
 				$updates = array ();
 				$updates['available'] = 50 + time() + 10 * ($user['num_clients'] + 1) + $user['penalty'] + rand () % 10 - 5;
 				$updates['num_clients'] = $user['num_clients'] + 1;
-				print_r ($updates);
+		
 				$this->db->where ('user_id', $user['user_id'])->update('users_corporate_limits', $updates);						
 			}
 			
