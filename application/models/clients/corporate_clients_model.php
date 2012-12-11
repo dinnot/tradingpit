@@ -94,8 +94,7 @@
 				return ;
 				
 			$row = $query->row ();
-			print_r ($row);
-			print 'dasd as';
+		
 			if ($row->available > time ()) 
 				return ;
 				
@@ -106,7 +105,7 @@
 			$this->db->limit (rand () % 5 + 3);
 			$users = $this->db->get ()->result_array ();
 			$num = count ($users);
-			print_r ($users);
+		
 			if ($num < 1)
 				return ;
 						
@@ -116,7 +115,7 @@
 				$updates = array ();
 				$updates['available'] = 50 + time() + 10 * ($user['num_clients'] + 1) + $user['penalty'] + rand () % 10 - 5;
 				$updates['num_clients'] = $user['num_clients'] + 1;
-				print_r ($updates);
+		
 				$this->db->where ('user_id', $user['user_id'])->update('users_corporate_limits', $updates);						
 			}
 			

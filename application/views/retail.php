@@ -25,7 +25,7 @@
                   <span class="middle-value left"><input type="text" value="<?php print $retail_rate[1]['sell_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_sell_1"/></span>
                   <span class="middle-value right"><input type="text" value="<?php print $retail_rate[1]['buy_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_buy_1" /></span>
                 </div><!-- end middle-values -->
-                <button onClick=set_exchange_rate(1)>Send</button>
+                <button onClick=retail_client.set_exchange_rate(1)>Send</button>
               </div><!-- end retail-box-white-zone -->
 
             </div><!-- end retail-box -->
@@ -87,7 +87,7 @@
                   <span class="middle-value left"><input type="text" value="<?php print $retail_rate[2]['sell_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_sell_2"/></span>
                   <span class="middle-value right"><input type="text" value="<?php print $retail_rate[2]['buy_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_buy_2" /></span>
                 </div><!-- end middle-values -->
-                <button onClick=set_exchange_rate(2)>Send</button>
+                <button onClick=retail_client.set_exchange_rate(2)>Send</button>
               </div><!-- end retail-box-white-zone -->
 
             </div><!-- end retail-box -->
