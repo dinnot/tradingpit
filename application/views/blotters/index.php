@@ -51,6 +51,7 @@
       <article class="main-content">
 
         <section class="top-main">
+	
           <div class="spot-positions">
             <ul>
               <li class="first green-gradient"><span>SPOT POSITIONS</span></li>
@@ -391,11 +392,7 @@
 <script src="<?php print base_url() ?>js/jquery.js"></script>
 
 <script>
-<<<<<<< HEAD
-	/*
-=======
 /*	
->>>>>>> 5d14250e8aa3ce6ac82ffa2792fe19fd65af12ba
 	$("#TER").click( function () {
 					$(".hide").hide();
 					$(".TER").show(); 
@@ -420,13 +417,9 @@
 					$(this).addClass('green');
 					$("#TER").removeClass('green');
 					$("#HAT").removeClass('green');
-<<<<<<< HEAD
-				});	
-	*/
-=======
 				});
 */				
->>>>>>> 5d14250e8aa3ce6ac82ffa2792fe19fd65af12ba
+
 </script>			
 
 </html>

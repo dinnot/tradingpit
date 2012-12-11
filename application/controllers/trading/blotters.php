@@ -25,15 +25,15 @@
 			}
         
 			if(!$valid) {
-				redirect("/errors/404");
+				 redirect("/general/index");
 			}
-						
+							
 		}
 		
 		public function compute_banks_balances( &$data ) {
 			
 			$user_id = $this->user->id ;
-			//$user_id = 15;
+			//$user_id = 6;
 			
 			$data['banks_balances']= $this->Blotters_model->get_banks_balances($user_id);
 			
@@ -43,11 +43,10 @@
 		public function compute_spot_positions ( &$data ) { 
 			
 			$user_id = $this->user->id ;
-			//$user_id = 15;
+			//$user_id = 6;
 			
 			$data['spot_positions']= $this->Blotters_model->get_users_fx_positions($user_id);
 			
-<<<<<<< HEAD
 
 			for( $i = 0 ; $i < 3 ; $i++ ) {  
 				$data['spot_positions'][$i]['position_rate'] = $data['spot_positions'][$i]['sumrate'] ;
@@ -55,25 +54,18 @@
 					$data['spot_positions'][$i]['position_rate'] /= $data['spot_positions'][$i]['position_amount'] ; 	
 					
 				$data['spot_positions'][$i]['position_rate'] = round($data['spot_positions'][$i]['position_rate'], 4); 	
-=======
-			for( $i = 0 ; $i < 3 ; $i++ ) {
-				$data['spot_positions'][$i]['position_rate'] = $data['spot_positions'][$i]['sumrate'] ;
-				if( $data['spot_positions'][$i]['position_rate'] )
-					$data['spot_positions'][$i]['position_rate'] /= $data['spot_positions'][$i]['position_amount'] ; 		
-				$data['spot_positions'][$i]['position_rate'] = round( $data['spot_positions'][$i]['position_rate'], 4)	;
->>>>>>> 5d14250e8aa3ce6ac82ffa2792fe19fd65af12ba
 			}		
 		}
 		
 		public function compute_banks_capital ( &$data ) { 
 			
 			$user_id = $this->user->id ;
-			//$user_id = 15;
+			//$user_id = 6;
 			
 			
 			$banks_info = $this->Blotters_model->get_banks_info($user_id) ;
 			$currency = $banks_info[0]['currencies_id'] - 1 ;
-			$capital = $banks_info[0]['capital'] ;
+			$capital  = $banks_info[0]['capital'] ;
 			
 			$data['currency'] = $currency ;
 			
@@ -98,7 +90,7 @@
 		public function compute_banks_funds ( &$data ) {
 
 			$user_id = $this->user->id ;		
-			//$user_id = 15;
+			//$user_id = 6;
 				
 			$fx_pnl = $this->Blotters_model->get_users_fx_pnl($user_id) ;
 			$mm_pnl = $this->Blotters_model->get_users_mm_pnl($user_id) ;
@@ -135,7 +127,7 @@
 		public function compute_fx_positions( &$data ) {
 			
 			$user_id = $this->user->id ;
-			//$user_id = 15;
+			//$user_id = 6;
 			
 			
 			///////////////////// hardcodat ///////////////////////////
@@ -159,23 +151,14 @@
 @							      $data['spot_positions'][1]['position_amount'] * 
 @							      $data['spot_positions'][1]['position_rate'] ; 
 			
-<<<<<<< HEAD
 
 @			$data['fx_positions'][2]['amount'] =  $data['spot_positions'][1]['position_amount'] + 
 @							      $data['spot_positions'][2]['position_amount'] ; 
-=======
-			$data['fx_positions'][2]['amount'] =  $data['spot_positions'][1]['position_amount'] + 
-							      $data['spot_positions'][2]['position_amount'] ; 
->>>>>>> 5d14250e8aa3ce6ac82ffa2792fe19fd65af12ba
 		
 		
 		
 							     
 		/////////////////////////////////////////   REPORTING CURRENCY       //////////////////////////////////////////////
-<<<<<<< HEAD
-=======
-
->>>>>>> 5d14250e8aa3ce6ac82ffa2792fe19fd65af12ba
 		
 @			$data['fx_positions'][0]['rep_ccy'][0] =   $data['fx_positions'][0]['amount']   ; 
 @			$data['fx_positions'][0]['rep_ccy'][1] =   $data['spot_positions'][0]['position_amount'] * 
@@ -217,10 +200,6 @@
             		////////////////////////////////////// POSITION LIMIT /  RATE /   RISK    /////////////////////////////////////
 	
 	
-<<<<<<< HEAD
-
-=======
->>>>>>> 5d14250e8aa3ce6ac82ffa2792fe19fd65af12ba
 			for( $i = 0 ; $i < 3 ; $i++ ) {
 				
 				for( $j = 0 ; $j < 3 ; $j++ ) {
@@ -271,7 +250,7 @@
 			
 			
 			$user_id = $this->user->id ;
-			//$user_id = 15;
+			//$user_id = 6;
 			
 			$data["fx_deals"] = $this->Blotters_model->get_fx_deals($user_id);
 			$data["mm_deals"] = $this->Blotters_model->get_mm_deals($user_id);
@@ -284,7 +263,7 @@
 			$this->compute_agg($data);
 			
 			
-			//      TER     : 0       RI  : 1   HAT     : 2 
+			//      TER     : 0       RIK : 1   HAT     : 2 
 			//      TER/RIK : 0   HAT/RIK : 1   HAT/TER : 2 
 					
 			$this->load->view('blotters/index', $data);
