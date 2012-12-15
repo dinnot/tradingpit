@@ -16,9 +16,9 @@ var corporate_clients_class = function () {
 	this.delay = 1000;
 	this.timeout = 1000;
 	
-	this.pull = [];
-	this.pull.push ("get_corporate_offers");
-	this.pull.push ("next_corporate_clients");
+	this.pull = new Object ();
+	this.pull["get_corporate_offers"] = 0; // nu trimitem nimic la server pentru pull
+	this.pull["next_corporate_clients"] = 0; // 
 	
 	this.timer_queue = [];
 	this.current_offers = {};
@@ -169,8 +169,5 @@ function timer () {
 
 var corporate_clients = new corporate_clients_class ();
 Observable.subscribe (corporate_clients);
-
-var that = Observable;
-setInterval ( function () {return that.check()}, 100 );
 
 setInterval (timer , 1000);

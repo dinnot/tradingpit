@@ -38,7 +38,9 @@ class Messages extends CI_Controller {
 
 	public function get_conversations () {
 		$user_id = $this->user->id;
-		$conversations = $this->messages_model->get_conversations ($user_id);
+		$last_conv = $this->input->get_post ('last_conv');			
+			
+		$conversations = $this->messages_model->get_conversations ($user_id, $last_conv);
 
 		$this->output->set_content_type('application/json');
 		$this->output->set_output ( json_encode ( $conversations ) );			
@@ -59,6 +61,7 @@ class Messages extends CI_Controller {
 		$conv_id = $this->input->get_post ('conv_id');
 		$text = $this->input->get_post ('message');
 		$message = array ('user_id'=>$user_id, 'message'=>$text, 'conversations_id'=>$conv_id);
+
 		$this->messages_model->add_message ($message);
 	}	
 	
