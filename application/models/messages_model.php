@@ -29,7 +29,10 @@
 		
 		public function add_message ($message) {
 			$message['date'] = time ();
-			$this->db->insert ('messages', $message);			
+			$this->db->insert ('messages', $message);	
+			$current_time = time ();
+			$this->db->where ('id', $message['conversations_id']);
+			$this->db->update ('conversations', array ('last_activity' => $message['date']));		
 		}
 		
 		public function get_messages ($where) {			
@@ -50,9 +53,13 @@
 			return $messages;
 		}
 				
-		public function get_conversations ($user_id) {
+		public function get_conversations ($user_id, $last_activity) {
 			$this->db->from ("users_has_conversations");
 			$this->db->where ('user_id', $user_id);
+			if ($last_activity != 0) 
+				$this->db->where ('last_activity >=', $last_activity);
+			
+			$this->db->order_by ('last_activity', 'asc');
 			$this->db->join ("conversations", "conversations.id = conversations_id", "left");
 			$conversations = $this->db->get()->result_array ();
 			

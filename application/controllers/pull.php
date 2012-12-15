@@ -32,6 +32,7 @@ class Pull extends CI_Controller {
 		$this->load->model('clients/clients_trading_model');
 		$this->load->model('trading_model');
 		$this->load->model('econ_model');
+		$this->load->model ("messages_model");				
 	}
 	
 	public function index () {		
@@ -42,8 +43,12 @@ class Pull extends CI_Controller {
 		$response = array ();
 		foreach ($data as $type => $what) {
 			$response[$type] = array ();
-			foreach ($what as $item) 
-				$response[$type][$item] = $this->$item ();
+			foreach ($what as $func => $data_in) {
+				if ($data_in) 	
+					$response[$type][$func] = $this->$func ($data_in);
+				else
+					$response[$type][$func] = $this->$func ();					
+			}
 		}
 
 		$this->output->set_content_type('application/jsonp');
@@ -72,5 +77,13 @@ class Pull extends CI_Controller {
 		return $response;		
 	}
 
+	// messages 
+	public function get_conversations ($data) {
+		$user_id = $this->user->id;
+		$last_conv = $data['last_conv'];			
+			
+		$conversations = $this->messages_model->get_conversations ($user_id, $last_conv);
 
+		return $conversations;			
+	}	
 };

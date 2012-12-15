@@ -5,8 +5,8 @@ var retail_client_class = function () {
 	this.delay = 1000;
 	this.timeout = 2000;
 	
-	this.pull = [];
-	this.pull.push ('check_next_client');
+	this.pull = new Object ();
+	this.pull['check_next_client'] = 0; // nu trimitem nimic la server pentru pull
 }
 
 get_price = function (bf, pips) {

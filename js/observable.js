@@ -69,3 +69,6 @@ Observable_class.prototype = {
 };
 
 Observable = new Observable_class ();
+
+var that = Observable;
+setInterval ( function () {return that.check()}, 100 );
