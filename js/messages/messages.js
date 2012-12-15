@@ -94,7 +94,7 @@ function display_current_conv (conv_id) {
       dataType: 'json',
       data: data_in,
       success: function (data, textStatus, jqXHR) {                    
-    		console.log (data);
+    		
 				$("#chat_box").text ('  ');
 				$("#chat_box").append ('<ul id="current_messages"></ul>	<textarea id="reply_message"></textarea>	<button onclick=send_reply_message()>reply</button>');
 	
@@ -125,7 +125,7 @@ function get_conversations () {
 
 	url = base_url+"messages/get_conversations";
 
-	$.ajax({
+/*	$.ajax({
       url: url,
       dataType: 'json',
       success: function (data, textStatus, jqXHR) {                    
@@ -136,6 +136,7 @@ function get_conversations () {
         console.log(textStatus, errorThrown);
       },      
 		});
+*/
 }
 
 setInterval (get_new_messages, 2000);

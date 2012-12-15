@@ -7,13 +7,19 @@
    <meta name="description" content="" />
   <link rel="stylesheet" href="<?php print base_url () ?>css/style.css" />
   <link href="<?php print base_url () ?>css/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+
+	<script>var base_url = "<?= base_url() ?>";</script>
+	
   <script src="<?php print base_url () ?>js/jquery-1.8.2.min.js"></script>
   <script src="<?php print base_url () ?>js/jquery-ui-1.9.1.custom.js"></script>
-    <script src="<?php print base_url() ?>js/observable.js"></script>
+  <script src="<?php print base_url () ?>js/date.js"></script>
+
+  <script src="<?php print base_url () ?>js/observable.js"></script>
+	
+	<script src="<?php print base_url () ?>js/messages/conversations.js"></script>
 	<script src="<?php print base_url () ?>js/corporate_clients.js"></script>
 	<script src="<?php print base_url () ?>js/retail_clients.js"></script>
-  <script src="<?php print base_url() ?>js/date.js"></script>
-
+	
 
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -170,14 +176,8 @@
 
 
 <script>
-	var user_id = <?= $user_id ?>;
-	var base_url = "<?= base_url() ?>";
-
 	set_time_difference ();
 	Observable.check ();	
-//	corporate_cget_clients_offers ();
-	//get_user_deals ();
-	//check_next_client ();
 </script>
 
 
