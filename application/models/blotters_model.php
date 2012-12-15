@@ -206,7 +206,7 @@
 		
 			$what = array() ;
 			$what[] = "banks_balances.amount as banks_ccy_amount";
-			$what[] = "currencies.shortname as ccy_name"; 
+			//$what[] = "currencies.shortname as ccy_name"; 
 				
 			$this->db->select($what) ;
 			$this->db->from('users'); 

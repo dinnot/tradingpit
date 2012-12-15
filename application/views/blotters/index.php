@@ -12,6 +12,8 @@
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  
+  <!--
   <script>
   $(function() {
     $( "#datepickerStart, #datepickerEnd" ).datepicker({
@@ -21,6 +23,7 @@
     });
   });
   </script>
+  -->
   <script>
     $(document).ready(function() {
       $('.table-container tbody tr').click(function() {
@@ -57,16 +60,18 @@
               <li class="first green-gradient"><span>SPOT POSITIONS</span></li>
               <li class="second">
               	<span class="light-green">TER/RIK</span> 
-              	<?php echo $spot_positions[0]['position_amount'] ?> 
-              	<span class="gray">@<?php echo $spot_positions[0]['position_rate'] ?> </span></li>
+            	<span id = "TRPA"> <?php echo $spot_positions[0]['position_amount'] ?> </span>
+              	<span id = "TRPR" class="gray">@<?php echo $spot_positions[0]['position_rate'] ?> </span></li>
               
-              <li><span class="green">HAT/RIK</span> 
-              <?php echo $spot_positions[1]['position_amount'] ?>
-              <span class="gray">@<?php echo $spot_positions[1]['position_rate'] ?> </span></li>
+              <li>
+              	<span class="green">HAT/RIK</span> 
+              	<span id = "HRPA"> <?php echo $spot_positions[1]['position_amount'] ?> </span>
+                <span id = "HRPR" class="gray">@<?php echo $spot_positions[1]['position_rate'] ?> </span></li>
               
-              <li class="last"><span class="green">HAT/TER</span>
-              <?php echo $spot_positions[2]['position_amount'] ?>
-              <span class="gray">@<?php echo $spot_positions[2]['position_rate'] ?> </span></li>
+              <li class="last">
+              	<span class="green">HAT/TER</span>
+              	<span id = "HTPA"> <?php echo $spot_positions[2]['position_amount'] ?> </span>
+                <span id = "HTPR" class="gray">@<?php echo $spot_positions[2]['position_rate'] ?> </span></li>
             </ul>
           </div><!-- end spot-positions -->
         
@@ -106,41 +111,41 @@
              		<?php 
              			$i = 0 ; 
              			foreach ( $fx_positions as $row ) : 
-             			$i ^= 1 ; 
+             			$i++ ; 
              		?>
              		
 				<script>
 					var par = "<?=$i?>" ; 
 					
-					if( par == 0 ) 
+					if( par % 2 == 0 ) 
 						document.write("<tr class ='odd' > ") ;
 					else
 						document.write("<tr class = 'even' > ") ;
 				</script>
 				
 				
-					<td> <?php echo $row['ccy_name'] ?> </td> 
-					<td class="dark-bg"> <?php echo $row['amount'] ?> </td> 
+					<td id = "PCN<?=$i?>"> <?php echo $row['ccy_name'] ?> </td> 
+					<td id = "PAM<?=$i?>" class="dark-bg"> <?php echo $row['amount'] ?> </td> 
 					<td>
-						<div class = "hide TER"> <?php echo $row['rep_ccy'][0] ?> </div>
-						<div class = "hide RIK" hidden = "hidden"> <?php echo $row['rep_ccy'][1] ?> </div>
-						<div class = "hide HAT" hidden = "hidden"> <?php echo $row['rep_ccy'][2] ?> </div>
+						<div id = "PRC<?=$i?>0" class = "hide TER"> <?php echo $row['rep_ccy'][0] ?> </div>
+						<div id = "PRC<?=$i?>1" class = "hide RIK" hidden = "hidden"> <?php echo $row['rep_ccy'][1] ?> </div>
+						<div id = "PRC<?=$i?>2" class = "hide HAT" hidden = "hidden"> <?php echo $row['rep_ccy'][2] ?> </div>
 					</td>
 					<td class="dark-bg"> 
-						<div class = "hide TER"> <?php echo $row['limit'][0] ?> </div> 
-						<div class = "hide RIK" hidden = "hidden"> <?php echo $row['limit'][1] ?> </div>
-						<div class = "hide HAT" hidden = "hidden"> <?php echo $row['limit'][2] ?> </div>
+						<div id = "PL<?=$i?>0" class = "hide TER"> <?php echo $row['limit'][0] ?> </div> 
+						<div id = "PL<?=$i?>1" class = "hide RIK" hidden = "hidden"> <?php echo $row['limit'][1] ?> </div>
+						<div id = "PL<?=$i?>2" class = "hide HAT" hidden = "hidden"> <?php echo $row['limit'][2] ?> </div>
 					</td> 
 			
 					<td> 
-						<div class = "hide TER"> <?php echo $row['rate'][0] ?> </div>
-						<div class = "hide RIK" hidden = "hidden"> <?php echo $row['rate'][1] ?> </div>
-						<div class = "hide HAT" hidden = "hidden"> <?php echo $row['rate'][2] ?> </div>
+						<div id = "PRT<?=$i?>0" class = "hide TER"> <?php echo $row['rate'][0] ?> </div>
+						<div id = "PRT<?=$i?>1" class = "hide RIK" hidden = "hidden"> <?php echo $row['rate'][1] ?> </div>
+						<div id = "PRT<?=$i?>2" class = "hide HAT" hidden = "hidden"> <?php echo $row['rate'][2] ?> </div>
 					</td>
-					<td> 
-						<div class = "hide TER"> <?php echo $row['risk'][0] ?> </div>
-						<div class = "hide RIK" hidden = "hidden"> <?php echo $row['risk'][1] ?> </div>
-						<div class = "hide HAT" hidden = "hidden"> <?php echo $row['risk'][2] ?> </div>
+					<td class="dark-bg"> 
+						<div id = "PRK<?=$i?>0" class = "hide TER"> <?php echo $row['risk'][0] ?> </div>
+						<div id = "PRK<?=$i?>1" class = "hide RIK" hidden = "hidden"> <?php echo $row['risk'][1] ?> </div>
+						<div id = "PRK<?=$i?>2" class = "hide HAT" hidden = "hidden"> <?php echo $row['risk'][2] ?> </div>
 					</td> 
 				</tr>
 			<?php endforeach ?> 
@@ -149,20 +154,20 @@
 				<td> AGG </td>
 				<td class="dark-bg"></td>
 				<td> 
-					<div class = "hide TER"> <?php echo $agg['rep_ccy'][0] ?> </div>
-					<div class = "hide RIK" hidden = "hidden"> <?php echo $agg['rep_ccy'][1] ?> </div>
-					<div class = "hide HAT" hidden = "hidden"> <?php echo $agg['rep_ccy'][2] ?> </div>
+					<div id = "ARC0" class = "hide TER"> <?php echo $agg['rep_ccy'][0] ?> </div>
+					<div id = "ARC1" class = "hide RIK" hidden = "hidden"> <?php echo $agg['rep_ccy'][1] ?> </div>
+					<div id = "ARC2" class = "hide HAT" hidden = "hidden"> <?php echo $agg['rep_ccy'][2] ?> </div>
 				</td>
 				<td class="dark-bg"> 
-					<div class = "hide TER"> <?php echo $agg['limit'][0] ?> </div>
-					<div class = "hide RIK" hidden = "hidden"> <?php echo $agg['limit'][1] ?> </div>
-					<div class = "hide HAT" hidden = "hidden"> <?php echo $agg['limit'][2] ?> </div>
+					<div id = "AL0" class = "hide TER"> <?php echo $agg['limit'][0] ?> </div>
+					<div id = "AL1" class = "hide RIK" hidden = "hidden"> <?php echo $agg['limit'][1] ?> </div>
+					<div id = "AL2" class = "hide HAT" hidden = "hidden"> <?php echo $agg['limit'][2] ?> </div>
 				</td>
 				<td> N/A </td>
 				<td class="dark-bg"> 
-					<div class = "hide TER"> <?php echo $agg['risk'][0] ?> </div>
-					<div class = "hide RIK" hidden = "hidden"> <?php echo $agg['risk'][1] ?> </div>
-					<div class = "hide HAT" hidden = "hidden"> <?php echo $agg['risk'][2] ?> </div>
+					<div id = "ARK0" class = "hide TER"> <?php echo $agg['risk'][0] ?> </div>
+					<div id = "ARK1" class = "hide RIK" hidden = "hidden"> <?php echo $agg['risk'][1] ?> </div>
+					<div id = "ARK2" class = "hide HAT" hidden = "hidden"> <?php echo $agg['risk'][2] ?> </div>
 				</td>	
 			</tr>
                   
@@ -186,28 +191,29 @@
                       <tr>
                       	<td>OWN CAPITAL</td>
                         <td>  
-                        	<div class = "hide TER"> <?php echo $fx_positions[0]['ccy_name'] ?> </div>
-				<div class = "hide RIK" hidden = "hidden"> <?php echo $fx_positions[1]['ccy_name'] ?> </div>
-				<div class = "hide HAT" hidden = "hidden"> <?php echo $fx_positions[2]['ccy_name'] ?> </div>
+                        	<div class = "hide TER"> TER </div>
+				<div class = "hide RIK" hidden = "hidden"> RIK </div>
+				<div class = "hide HAT" hidden = "hidden"> HAT </div>
                         </td>
                         <td class="last"> 
-                        	<div class = "hide TER"> <?php echo $capital[0] ?> </div>
-				<div class = "hide RIK" hidden = "hidden"> <?php echo $capital[1] ?> </div>
-				<div class = "hide HAT" hidden = "hidden"> <?php echo $capital[2] ?> </div>
+                        	<div id = "TERCAP" class = "hide TER"> <?php echo $capital[0] ?> </div>
+				<div id = "RIKCAP" class = "hide RIK" hidden = "hidden"> <?php echo $capital[1] ?> </div>
+				<div id = "HATCAP" class = "hide HAT" hidden = "hidden"> <?php echo $capital[2] ?> </div>
 			</td>
                       </tr>
                       
                       <tr class="last">
                         <td>OWN FUNDS</td>
                         <td>
-                                <div class = "hide TER"> <?php echo $fx_positions[0]['ccy_name'] ?> </div>
-				<div class = "hide RIK" hidden = "hidden"> <?php echo $fx_positions[1]['ccy_name'] ?> </div>
-				<div class = "hide HAT" hidden = "hidden"> <?php echo $fx_positions[2]['ccy_name'] ?> </div>
+                                <div class = "hide TER"> TER </div>
+				<div class = "hide RIK" hidden = "hidden"> RIK </div>
+				<div class = "hide HAT" hidden = "hidden"> HAT </div>
 
                         </td>
-                        <td class="last"> <div class = "hide TER"> <?php echo $funds[0] ?> </div>
-				<div class = "hide RIK" hidden = "hidden"> <?php echo $funds[1] ?> </div>
-				<div class = "hide HAT" hidden = "hidden"> <?php echo $funds[2] ?> </div>
+                        <td class="last"> 
+                        	<div id = "TERFUND" class = "hide TER"> <?php echo $funds[0] ?> </div>
+				<div id = "RIKFUND" class = "hide RIK" hidden = "hidden"> <?php echo $funds[1] ?> </div>
+				<div id = "HATFUND" class = "hide HAT" hidden = "hidden"> <?php echo $funds[2] ?> </div>
 			 </td>
                       </tr>
                     </tbody>
@@ -231,37 +237,24 @@
                   <table>
                     <tbody>
                     
-                      
-                      <?php for( $i = 0 ; $i < 3 ; $i++ ) { ?>
-                                          
-                      	<script> 
-                      		var idx = <?=$i?> ; 
-                      		
-                      		if( idx % 2 == 0 ) 
-                      			document.write( "<tr class = 'odd' >") ;
-                      		else
-                      			document.write( "<tr class = 'even' > ") ;
-                      			
-                      		var amount = <?=$banks_balances[$i]['banks_ccy_amount']?> ; 
-                      		
-                      		if( amount < 0 ) 
-                      			document.write( "<td class = 'green-td' > <?php echo $banks_balances[$i]['ccy_name'] ?> </td> ") ; 
-                      		else
-                      			document.write( "<td> <?php echo $banks_balances[$i]['ccy_name'] ?> </td>" ) ;
-                      			
-                      		document.write( "<td class='second'> <?php echo $banks_balances[$i]['banks_ccy_amount'] ?> </td>" ) ;
-                      		
-                      		if( amount < 0 ) 
-                      			document.write( "<td class = 'overdraft'> OVERDRAFT </td>" ) ;
-                      		else
-                      			document.write( "<td> </td>") ;
-                      		
-                      		document.write("</tr>");
-                      	</script> 
-                      
-                      <?php } ?> 
-                      
+                      <tr class = "odd">
+                      	<td id = "TERGR"> TER </td>
+                      	<td id = "TERACB" class='second'> <?php echo $banks_balances[0]['banks_ccy_amount'] ?> </td>
+                      	<td id = "TEROVD"> </td>
                       </tr>
+
+		     <tr class = "even">
+                      	<td id = "RIKGR"> RIK </td>
+                      	<td id = "RIKACB" class ='second'> <?php echo $banks_balances[1]['banks_ccy_amount'] ?> </td>
+                      	<td id = "RIKOVD"> </td>
+                      </tr>
+                      
+		      <tr class = "odd">
+                      	<td id = "HATGR"> HAT </td>
+                      	<td id = "HATACB" class='second'> <?php echo $banks_balances[2]['banks_ccy_amount'] ?> </td>
+                      	<td id = "HATOVD"> </td>
+                      </tr>
+                                            
                     </tbody>
                   </table>
                 </div><!-- end widget-acc-central-bank-table -->
@@ -305,19 +298,23 @@
 
                 <tbody>
 
- 			<?php foreach ( $fx_deals as $deal ) : ?> 
+ 			<?php 
+ 				$i = -1 ; 
+ 				foreach ( $fx_deals as $deal ) : 
+ 				$i++;
+ 			?> 
 		
 				<tr>
-					<td> <?php echo $deal['period_name'] ?> </td>
-					<td> <?php echo $deal['first_currency'].'/'.$deal['second_currency'] ?> </td>
-					<td> <?php echo $deal['amount_base_ccy'] ?> </td>
-					<td> <?php echo $deal['price'] ?> </td>
-					<td> <?php echo abs( $deal['amount_base_ccy'] * $deal['price'] ) ?> </td>
-					<td> <?php echo $deal['counter_party_name'] ?> </td>
-					<td> <?php echo date('d.m.y',$deal['value_date']) ?> </td>
-					<td> <?php echo date('d.m.y',$deal['trade_date']) ?> </td>
-					<td> <?php echo $deal['deal_id'] ?> </td>
-					<td> <?php echo $deal['user_name'] ?> </td>
+					<td id = "FX<?=$i?>0"> <?php echo $deal['period_name'] ?> </td>
+					<td id = "FX<?=$i?>1"> <?php echo $deal['first_currency'].'/'.$deal['second_currency'] ?> </td>
+					<td id = "FX<?=$i?>2"> <?php echo $deal['amount_base_ccy'] ?> </td>
+					<td id = "FX<?=$i?>3"> <?php echo $deal['price'] ?> </td>
+					<td id = "FX<?=$i?>4"> <?php echo abs( $deal['amount_base_ccy'] * $deal['price'] ) ?> </td>
+					<td id = "FX<?=$i?>5"> <?php echo $deal['counter_party_name'] ?> </td>
+					<td id = "FX<?=$i?>6"> <?php echo date('d.m.y',$deal['value_date']) ?> </td>
+					<td id = "FX<?=$i?>7"> <?php echo date('d.m.y',$deal['trade_date']) ?> </td>
+					<td id = "FX<?=$i?>8"> <?php echo $deal['deal_id'] ?> </td>
+					<td id = "FX<?=$i?>9"> <?php echo $deal['user_name'] ?> </td>
 				</tr>
 		
 			<?php endforeach ?>
@@ -359,19 +356,23 @@
 
                 <tbody>
 
-                	<?php foreach ( $mm_deals as $deal ) : ?> 
+                	<?php 
+                		$i = -1 ; 
+                		foreach ( $mm_deals as $deal ) : 
+                		$i++;
+                	?> 
 		
 				<tr>
-					<td> <?php echo $deal['period_name'] ?> </td>
-					<td> <?php echo $deal['ccy_name'] ?> </td>
-					<td> <?php echo $deal['amount_base_ccy'] ?> </td>
-					<td> <?php echo $deal['price'] ?> </td>
-					<td> <?php echo abs( $deal['amount_base_ccy'] * $deal['price'] ) ?> </td>
-					<td> <?php echo $deal['counter_party_name'] ?> </td>
-					<td> <?php echo date('d.m.y',$deal['value_date']) ?> </td>
-					<td> <?php echo date('d.m.y',$deal['trade_date']) ?> </td>
-					<td> <?php echo $deal['deal_id'] ?> </td>
-					<td> <?php echo $deal['user_name'] ?> </td>
+					<td id = "MM<?=$i?>0"> <?php echo $deal['period_name'] ?> </td>
+					<td id = "MM<?=$i?>1"> <?php echo $deal['ccy_name'] ?> </td>
+					<td id = "MM<?=$i?>2"> <?php echo $deal['amount_base_ccy'] ?> </td>
+					<td id = "MM<?=$i?>3"> <?php echo $deal['price'] ?> </td>
+					<td id = "MM<?=$i?>4"> <?php echo abs( $deal['amount_base_ccy'] * $deal['price'] ) ?> </td>
+					<td id = "MM<?=$i?>5"> <?php echo $deal['counter_party_name'] ?> </td>
+					<td id = "MM<?=$i?>6"> <?php echo date('d.m.y',$deal['value_date']) ?> </td>
+					<td id = "MM<?=$i?>7"> <?php echo date('d.m.y',$deal['trade_date']) ?> </td>
+					<td id = "MM<?=$i?>8"> <?php echo $deal['deal_id'] ?> </td>
+					<td id = "MM<?=$i?>9"> <?php echo $deal['user_name'] ?> </td>
 				</tr>
 			
 			<?php endforeach ?>
@@ -389,37 +390,13 @@
 
 </body>
 
-<script src="<?php print base_url() ?>js/jquery.js"></script>
 
 <script>
-/*	
-	$("#TER").click( function () {
-					$(".hide").hide();
-					$(".TER").show(); 
-					$(this).addClass('green');
-					$("#RIK").removeClass('green');
-					$("#HAT").removeClass('green');
-				});
-	
+	var base_url = "<?= base_url() ?>";
+</script>
+
+<script src="<?php print base_url() ?>js/jquery.js"></script>
+<script src="<?php print base_url() ?>js/blotters.js"></script>
 			
-	$("#HAT").click( function () {
-					$(".hide").hide();
-					$(".HAT").show(); 
-					$(this).addClass('green');
-					$("#TER").removeClass('green');
-					$("#RIK").removeClass('green');
-				});
-	
-
-	$("#RIK").click( function () {
-					$(".hide").hide();
-					$(".RIK").show(); 
-					$(this).addClass('green');
-					$("#TER").removeClass('green');
-					$("#HAT").removeClass('green');
-				});
-*/				
-
-</script>			
 
 </html>

@@ -81,7 +81,11 @@
 
             <tbody id = "news_table">
             
-           	 <?php foreach ($news as $news_item): ?>
+           	 <?php 
+           	 	$i = -1 ; 
+           	 	foreach ($news as $news_item): 
+           	 	$i++ ;
+           	 ?>
 
 			<tr>
 				<td class="first"> <?php echo date("M-d",$news_item["date"]) ; ?>     </td>  
@@ -106,6 +110,7 @@
     </article><!-- end container -->
 
 </body>
+
 
 <script>
 	var base_url = "<?= base_url() ?>";

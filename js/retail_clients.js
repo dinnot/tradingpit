@@ -12,15 +12,20 @@ var retail_client_class = function () {
 get_price = function (bf, pips) {
 	while (pips.length < 3)
 	 pips = "0" + pips;
-	 
+
 	return bf + pips;
 }
-
+.
 retail_client_class.prototype.set_exchange_rate = function (pair_id) {
 
 	url = base_url+"trading/clients/set_exchange_rate";
 	sell = get_price ( $('#bf_sell_'+pair_id).val(),  $('#pips_sell_'+pair_id).val());
 	buy = get_price ( $('#bf_buy_'+pair_id).val(),  $('#pips_buy_'+pair_id).val ());
+	
+	if( !validate_price(sell) || !validate_price(buy) || !validate(pair_id) ) {
+		return ;
+	}
+	
 	data_in = {
 		'pair_id' : pair_id,
 		'sell' : sell,

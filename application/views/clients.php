@@ -12,6 +12,7 @@
     <script src="<?php print base_url() ?>js/observable.js"></script>
 	<script src="<?php print base_url () ?>js/corporate_clients.js"></script>
 	<script src="<?php print base_url () ?>js/retail_clients.js"></script>
+	<script src="<?php print base_url () ?>js/validate.js"></script>
   <script src="<?php print base_url() ?>js/date.js"></script>
 
 

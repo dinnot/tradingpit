@@ -50,6 +50,11 @@ corporate_clients_class.prototype.get_status = function (status, id) {
 corporate_clients_class.prototype.send_quote = function (id) {
 	
 	url = base_url+'trading/clients/set_quote';
+	
+	if( !validate_price( $('#input_quote_'+id).val () ) ) {
+		return ;
+	} 
+	
 	dataIn = {
 		offer_id : id,
 		quote : $('#input_quote_'+id).val ()

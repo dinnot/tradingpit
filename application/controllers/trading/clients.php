@@ -32,6 +32,7 @@ class Clients extends CI_Controller {
 		$this->load->model('clients/clients_trading_model');
 		$this->load->model('trading_model');
 		$this->load->model('econ_model');
+		$this->load->model('Validate_model');
 	}
 	
 	public function index () {		
@@ -68,7 +69,10 @@ class Clients extends CI_Controller {
   	$offer_id = $this->input->get_post ("offer_id");
 		$user_id = $this->user->id;
   	$quote = $this->input->get_post ("quote");  	
-  	$this->clients_trading_model->set_quote ($offer_id, $user_id, $quote);
+  	$v = $this->clients_trading_model->set_quote ($offer_id, $user_id, $quote);
+  	
+  	if( !$v || !$this->Validate_model->validate_price($quote) ) 
+  		 $this->load->view("ajax", array("error"=>true));
   }
   
   function set_result () {
@@ -82,6 +86,13 @@ class Clients extends CI_Controller {
 		$rate['pair_id'] = $this->input->get_post ('pair_id');
 		$rate['sell'] = $this->input->get_post ('sell');
 		$rate['buy'] = $this->input->get_post ('buy');
+		
+		
+		if( !$this->Validate_model->Validate_price($rate['sell']) || !$this->Validate_model->Validate_price($rate['buy']) || !$this->Validate_model->Validate_pair_id($rate['pair_id']) ) {
+		
+  		 	$this->load->view("ajax", array("error"=>true));		
+		        return ; 
+		 }
 		
 		$this->clients_trading_model->set_exchange_rate ($rate);
 	}

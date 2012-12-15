@@ -67,7 +67,7 @@
 			$currency = $banks_info[0]['currencies_id'] - 1 ;
 			$capital  = $banks_info[0]['capital'] ;
 			
-			$data['currency'] = $currency ;
+			$data['banks_currency'] = $currency ;
 			
 			if( $currency == 0 ) {
 
@@ -212,7 +212,7 @@
 					$data['fx_positions'][$i]['limit'][$j] = $percentage * $data['funds'][$j] ; 
 					$data['fx_positions'][$i]['risk'][$j] = "IN LIMIT" ;
 				
-					if( $j != $data['currency'] && abs($data['fx_positions'][$i]['rep_ccy'][$j]) > $data['fx_positions'][$i]['limit'][$j] )
+					if( $j != $data['banks_currency'] && abs($data['fx_positions'][$i]['rep_ccy'][$j]) > $data['fx_positions'][$i]['limit'][$j] )
 						$data['fx_positions'][$i]['risk'][$j] = "BREAK" ;
 				}	
 			}					 			
@@ -233,12 +233,16 @@
 				
 				for( $i = 0 ; $i < 3 ; $i++ ) {
 				
-					if( abs($data['fx_positions'][$i]['rep_ccy'][$j]) > abs($data['agg']['rep_ccy'][$j]) )  						$data['agg']['rep_ccy'][$j] = $data['fx_positions'][$i]['rep_ccy'][$j] ;
+					if( abs($data['fx_positions'][$i]['rep_ccy'][$j]) > abs($data['agg']['rep_ccy'][$j]) ) {
+						$data['agg']['rep_ccy'][$j] = $data['fx_positions'][$i]['rep_ccy'][$j] ;
+						$data['agg']['risk'][$j] = $data['fx_positions'][$i]['risk'][$j] ; 
+					}
 				}
-				
+				/*
 				$data['agg']['risk'][$j] = "IN LIMIT" ;
 				if( abs($data['agg']['rep_ccy'][$j])  > $data['agg']['limit'][$j] )
 					$data['agg']['risk'][$j] = "BREAK" ;
+				*/
 			} 	
 			
 		}
@@ -268,5 +272,25 @@
 			$this->load->view('blotters/index', $data);
 			
 		}
+		
+   	        public function get_blotters() {			
+	     
+		        $user_id = $this->user->id ;
+			//$user_id = 6;
+			
+			$data["fx_deals"] = $this->Blotters_model->get_fx_deals($user_id);
+			$data["mm_deals"] = $this->Blotters_model->get_mm_deals($user_id);
+			
+			$this->compute_banks_capital($data) ;
+			$this->compute_banks_funds($data) ;
+			$this->compute_banks_balances($data);
+			$this->compute_spot_positions($data);
+			$this->compute_fx_positions($data) ;
+			$this->compute_agg($data);
+			
+
+	   		$this->output->set_content_type('application/jsonp');
+			$this->output->set_output ( json_encode ( $data ) );
+	       }
 	}
 ?>

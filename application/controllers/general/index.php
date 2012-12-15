@@ -21,6 +21,7 @@ class Index extends CI_Controller {
     }
     
     public function register() {
+    
         $this->load->model("Users_model");
         $this->load->model("Game_model");
         $this->load->library('session');

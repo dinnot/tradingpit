@@ -15,6 +15,7 @@
   </style>
   <script src="<?php print base_url () ?>/js/jquery-1.8.2.min.js"></script>
   <script src="<?php print base_url () ?>/js/jquery-ui-1.9.1.custom.js"></script>
+  <script src="<?php print base_url () ?>/js/validate.js"></script>
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -663,6 +664,9 @@ function trnEnq(idv) {
     }
     
     pbuy = bf + pbuy / 10000;
+    
+    if( !validate_price(pbuy) || !validate_price(psell) ) 
+    	return ;
     
     $.ajax({
         type: "POST",

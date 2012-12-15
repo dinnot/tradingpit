@@ -24,6 +24,7 @@ class Trading extends CI_Controller {
             redirect("/errors/404");
         }
         $this->load->model("Trading_model");
+        $this->load->model("Validate_model");
         $this->Users_model->updateTrading($this->user->id);
     }
 
@@ -54,6 +55,10 @@ class Trading extends CI_Controller {
     public function respond() {
         $data = $_POST;
         $ret = $this->Trading_model->respondEnquiry($data['id'], $this->user->id, $data['buy'], $data['sell']);
+        
+        if( !$this->Validate_model->Validate_price($data['buy']) || !$this->Validate_model->Validate_price($data['sell']) ) 
+        	$ret = false ; 
+        
         if($ret !== false) {
             $this->load->view("ajax", array("error"=>false, "data"=>$ret));
         } else {
