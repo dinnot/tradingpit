@@ -146,6 +146,20 @@
 			}
 			
 			
+			$N = count($db) ;
+						
+			
+			for( $i = 0 ; $i < $N ; $i++ ) 
+				if ( $user_id != $db[$i]['user_id'] ) {
+				
+					$aux = $db[$i]['counter_party_name'] ;
+					$db[$i]['counter_party_name'] = $db[$i]['user_name'] ;
+					$db[$i]['user_name'] = $db[$i]['counter_party_name'];
+					
+					$db[$i]['amount_base_ccy'] *= (-1) ;
+				}
+			
+			
 			return $db ;			
 		}
 
@@ -180,7 +194,18 @@
 				$u++;
 			}
 			
-
+			$N = count($db) ;
+						
+			
+			for( $i = 0 ; $i < $N ; $i++ ) 
+				if ( $user_id != $db[$i]['user_id'] ) {
+				
+					$aux = $db[$i]['counter_party_name'] ;
+					$db[$i]['counter_party_name'] = $db[$i]['user_name'] ;
+					$db[$i]['user_name'] = $db[$i]['counter_party_name'];
+					
+					$db[$i]['amount_base_ccy'] *= (-1) ;
+				}
 			
 			return $db ;			
 		

@@ -51,8 +51,8 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = 'albalbastru';
-$db['default']['database'] = 'tpit_beta';
+$db['default']['password'] = 'apaplata';
+$db['default']['database'] = 'php';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
