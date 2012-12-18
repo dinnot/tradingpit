@@ -14,12 +14,12 @@
   <script src="<?php print base_url () ?>js/jquery-ui-1.9.1.custom.js"></script>
   <script src="<?php print base_url () ?>js/date.js"></script>
 
+	<script src="<?php print base_url () ?>js/validate.js"></script>
   <script src="<?php print base_url () ?>js/observable.js"></script>
 	
 	<script src="<?php print base_url () ?>js/messages/conversations.js"></script>
 	<script src="<?php print base_url () ?>js/corporate_clients.js"></script>
 	<script src="<?php print base_url () ?>js/retail_clients.js"></script>
-	<script src="<?php print base_url () ?>js/validate.js"></script>
 
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>

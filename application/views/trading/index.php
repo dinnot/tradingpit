@@ -17,6 +17,7 @@
 	
   <script src="<?php print base_url () ?>js/jquery-1.8.2.min.js"></script>
   <script src="<?php print base_url () ?>js/jquery-ui-1.9.1.custom.js"></script>
+	<script src="<?php print base_url () ?>js/validate.js"></script>
   <script src="<?php print base_url () ?>js/observable.js"></script>
   <script src="<?php print base_url () ?>js/corporate_clients.js"></script>
   <script src="<?php print base_url () ?>js/retail_clients.js"></script>
