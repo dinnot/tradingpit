@@ -47,7 +47,7 @@ class ebroker extends CI_Controller {
 	
 	function get_best_prices () {
 		$users_id = $this->user->id;
-		$prices = $this->ebroker_model->get_best_prices ();
+		$prices = $this->ebroker_model->get_best_prices ($users_id);
 
 		$this->output->set_content_type('application/jsonp');
 		$this->output->set_output ( json_encode ( $prices ) );		
@@ -60,7 +60,7 @@ class ebroker extends CI_Controller {
 		$deal['price'] = $this->input->get_post ('price');
 		$deal['amount'] = $this->input->get_post ('amount');
 		
-		$this->ebroker_model->make_deal ($deal);
+		$this->ebroker_model->make_deal ($deal, $users_id);
 	}
 	
 	function get_user_prices () {
@@ -79,7 +79,8 @@ class ebroker extends CI_Controller {
 	
 	function cancel_user_prices () {
 		$users_id = $this->user->id;
-		$this->ebroker_model->cancel_user_price ($users_id);
+		$pairs_id = $this->input->get_post ('pairs_id');
+		$this->ebroker_model->cancel_user_prices ($users_id, $pairs_id);
 	}
 	
 	function hold_user_prices () {

@@ -99,33 +99,34 @@
 				return ;
 				
 			$this->db->from ("users_corporate_limits");
-			$this->db->where ("available <=", time () + 15);
+			$this->db->where ("available <=", time () + 20);
 			$this->db->where ("last_activity >=", time () - 10);
 			$this->db->order_by ('user_id', 'random');
 			$this->db->limit (rand () % 5 + 3);
 			$users = $this->db->get ()->result_array ();
 			$num = count ($users);
 		
-			if ($num < 1)
+			if ($num < 2)
 				return ;
 						
 			$group = array ();
 			foreach ($users as $user)	{
 				array_push ($group, $user['user_id']);
 				$updates = array ();
-				$updates['available'] = 50 + time() + 10 * ($user['num_clients'] + 1) + $user['penalty'] + rand () % 10 - 5;
+				$updates['available'] = 60 + time() + 10 * ($user['num_clients'] + 1) + $user['penalty'] + rand () % 10 - 5;
 				$updates['num_clients'] = $user['num_clients'] + 1;
 		
 				$this->db->where ('user_id', $user['user_id'])->update('users_corporate_limits', $updates);						
 			}
 			
 			$client = $this->generate_corporate_client ($group);				
-			if (rand () % 10 == 0) // grupuri de clienti
+			if (rand () % 20 == 0) { // grupuri de clienti
 				$client = $this->generate_corporate_client ($group);				
-				if (rand () % 8 == 0)
+				if (rand () % 20 == 0)
 					$client = $this->generate_corporate_client ($group);			
+			}
 		}
-		
+		/*
 		function generate_for_all_users () { // o sa o folosesc la indicatori
 			$last_check = $this->db->from ("variables")->where('name', 'last_check')->get()->row()->value;
 			if (time () - $last_check < 15) return ;
@@ -163,6 +164,7 @@
 					$updates['buy_amount'] = $users[$i]['buy_amount'];
 					if ($client['deal'] == 1) $updates['sell_amount'] = $users[$i]['sell_amount'] + $client['amount'];
 					if ($client['deal'] == 2) $updates['buy_amount'] = $users[$i]['buy_amount'] + $client['amount'];
+					
 					if ($updates['buy_amount'] != 0) 
 						$updates['ratio'] = $updates['sell_amount'] / $updates['buy_amount'];
 					else 
@@ -174,7 +176,7 @@
 				$i = $last + 1;
 			}
 			
-		}
+		}*/
 
 		function get_random_client () {
 			$this->db->select ('id');			
@@ -190,7 +192,7 @@
 			$offer['market'] = "FX";
 			$offer['currency'] = rand () % 2 + 1;
 			$offer['client_id'] = $this->get_random_client ();
-			$offer['amount'] = rand () % 4900000 + 100000;
+			$offer['amount'] = (rand () % 49 + 1) * 100000;
 			$offer['deal'] = rand () % 2 + 1;
 			$offer['period_id'] = 1;
 			$offer['date'] = time () + 1;

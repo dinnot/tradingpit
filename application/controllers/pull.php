@@ -33,6 +33,7 @@ class Pull extends CI_Controller {
 		$this->load->model('trading_model');
 		$this->load->model('econ_model');
 		$this->load->model ("messages_model");				
+		$this->load->model ("ebroker_model");				
 	}
 	
 	public function index () {		
@@ -86,4 +87,20 @@ class Pull extends CI_Controller {
 
 		return $conversations;			
 	}	
+	
+	// ebroker_class
+	function get_best_prices () {
+		$users_id = $this->user->id;
+		$prices = $this->ebroker_model->get_best_prices ($users_id);
+		
+		return $prices;
+	}
+	
+	function get_user_prices () {
+		$users_id = $this->user->id;
+		$prices = $this->ebroker_model->get_user_prices ($users_id);
+
+		return $prices;			
+	}
+
 };

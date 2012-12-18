@@ -9,6 +9,8 @@ class Ebroker_model extends CI_Model {
 	}
 	
 	function add_price ($users_id, $price) {
+		if ($price <= 0)
+			return 0;
 		$this->db->where ('users_id', $users_id);
 		$price['users_id'] = $users_id;
 		$this->db->insert ('eb_prices', $price);
@@ -19,8 +21,9 @@ class Ebroker_model extends CI_Model {
 		$this->db->delete ('eb_prices');
 	}
 	
-	function cancel_user_prices ($users_id) {
-		$this->db->where ('users_id',$users_id);
+	function cancel_user_prices ($users_id, $pairs_id) {
+		$this->db->where ('users_id', $users_id);
+		$this->db->where ('pairs_id', $pairs_id);
 		$this->db->delete ('eb_prices');
 	}
 	
@@ -29,9 +32,10 @@ class Ebroker_model extends CI_Model {
 		$this->db->update ('eb_prices', array ('hold'=>1));
 	}
 	
-	function get_best_price ($order, $pairs_id, $deal) {
+	function get_best_price ($order, $pairs_id, $deal, $users_id) {
 		$this->db->from ('eb_prices');
 		$this->db->where (array('pairs_id' => $pairs_id, 'deal'=>$deal));
+		$this->db->where ('users_id !=', $users_id);
 		$this->db->order_by ('price', $order);
 		$this->db->limit (1);
 		$query = $this->db->get ();
@@ -41,8 +45,9 @@ class Ebroker_model extends CI_Model {
 		return $row->price;
 	}
 	
-	function get_best_amount ($price, $pairs_id, $deal) {
+	function get_best_amount ($price, $pairs_id, $deal, $users_id) {
 		$this->db->select ('amount');
+		$this->db->where ('users_id !=', $users_id);
 		$this->db->from ('eb_prices')->where (array ('pairs_id'=>$pairs_id, 'deal'=>$deal, 'price'=>$price));
 		$results = $this->db->get ()->result_array ();
 		
@@ -64,18 +69,18 @@ class Ebroker_model extends CI_Model {
 		return $price;
 	}
 	
-	function get_best_prices () {
+	function get_best_prices ($users_id) {
 		$best = array ();
 		for ($pairs_id = 1; $pairs_id <= 2; $pairs_id++) {
-			$price = $this->get_best_price ('asc', $pairs_id, 'buy');
+			$price = $this->get_best_price ('desc', $pairs_id, 'buy', $users_id);
 			$best[$pairs_id]['buy']['bf'] = $this->get_bf ($price);			
 			$best[$pairs_id]['buy']['pips'] = $this->get_pips ($price);			
-			$best[$pairs_id]['buy']['amount'] = $this->get_best_amount ($price, $pairs_id, 'buy');
+			$best[$pairs_id]['buy']['amount'] = $this->get_best_amount ($price, $pairs_id, 'buy', $users_id);
 
-			$price = $this->get_best_price ('desc', $pairs_id, 'sell');									
+			$price = $this->get_best_price ('asc', $pairs_id, 'sell', $users_id);									
 			$best[$pairs_id]['sell']['bf'] = $this->get_bf ($price);				
 			$best[$pairs_id]['sell']['pips'] = $this->get_pips ($price);
-			$best[$pairs_id]['sell']['amount'] = $this->get_best_amount ($price, $pairs_id, 'sell');
+			$best[$pairs_id]['sell']['amount'] = $this->get_best_amount ($price, $pairs_id, 'sell', $users_id);
 		}
 		
 		return $best;
@@ -86,11 +91,12 @@ class Ebroker_model extends CI_Model {
 		return $this->db->get ()->result_array ();
 	}
 	
-	function make_deal ($deal) {
+	function make_deal ($deal ,$users_id) {
 		
 		$this->db->from ('eb_prices');
 		$this->db->where (array ('deal'=>$deal['deal'], 'price'=>$deal['price'], 'pairs_id'=>$deal['pairs_id'] ));
 		$this->db->where ('used', 0);
+		$this->db->where ('users_id !=', $users_id);
 		$results = $this->db->get ()->result_array ();
 		
 		foreach ($results as $row) {			

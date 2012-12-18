@@ -1,9 +1,10 @@
 var ebroker_class = function () {
 	this.name = "ebroker";
 	this.delay = 500;
-	this.timeout = 8000;
+	this.timeout = 1000;
 	
 	this.pull = new Object ();
+	this.pull['get_best_prices'] = 0;
 	this.hold = 0;
 }
 
@@ -52,6 +53,24 @@ ebroker_class.prototype.display_best_prices = function (prices) {
 	}
 }
 
+ebroker_class.prototype.update  = function (data) {
+	this.display_best_prices (data['get_best_prices']);
+}
+
+ebroker_class.prototype.cancel_users_prices  = function (pairs_id) {
+	$.ajax ({
+		_this: this,
+		url: base_url+'trading/ebroker/cancel_user_prices',
+		data : {'pairs_id':pairs_id},
+		success : function (data, textStatus, jqXHR) {
+			// !!
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(textStatus, errorThrown);
+		}
+	});	
+}
+
 ebroker_class.prototype.get_best_prices = function () {
 	$.ajax ({
 		type: 'POST',
@@ -76,6 +95,4 @@ function display_form (pairs_id, deal) {
 }
 
 ebroker.get_best_prices ();
-
-var that_eb = ebroker;
-setInterval ( function () {return that_eb.get_best_prices()}, 2000 );
+Observable.subscribe (ebroker);

@@ -1,9 +1,10 @@
 var matching_class = function () {
 	this.name = "matching";
 	this.delay = 500;
-	this.timeout = 2000;
+	this.timeout = 1000;
 	
 	this.pull = new Object ();
+	this.pull['get_user_prices'] = 0;
 
 	this.prices_hash = new Object ();
 	this.prices = [];
@@ -79,11 +80,12 @@ matching_class.prototype = {
 				console.log(textStatus, errorThrown);
 			}  
 		});	
+	},
+	update : function (data) {
+		this.update_user_prices (data['get_user_prices']);
 	}
 }
 
 var matching = new matching_class ();
 matching.get_user_prices ();
-
-var that_match = matching;
-setInterval ( function () {return that_match.get_user_prices()}, 2000 );
+Observable.subscribe (matching);

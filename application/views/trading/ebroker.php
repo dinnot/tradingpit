@@ -32,7 +32,7 @@
                <div class="box-actions">
                 <ul>
                   <li class="first"><a href="#">hold</a></li>
-                  <li><a href="#">cancel</a></li>
+                  <li><a href="#" onclick=ebroker.cancel_users_prices(1)>cancel</a></li>
                 </ul>
                </div><!-- end box-actions -->
 
@@ -76,7 +76,7 @@
                <div class="box-actions">
                 <ul>
                   <li class="first"><a href="#">hold</a></li>
-                  <li><a href="#">cancel</a></li>
+                  <li><a href="#" onclick=ebroker.cancel_users_prices(2)>cancel</a></li>
                 </ul>
                </div><!-- end box-actions -->
 
