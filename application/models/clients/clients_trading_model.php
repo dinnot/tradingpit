@@ -18,6 +18,7 @@
 				
 		// actualizam in baza de date cand un user stabileste pretul pentru o oferta de corporate
 		function set_quote ($offer_id, $user_id, $quote) {
+		
 			$this->db->from ("clients_offers")->where ('id', $offer_id);
 			$result = $this->db->get ()->row ();
 

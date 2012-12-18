@@ -5,6 +5,7 @@
 		public function __construct () {
 			
 			$this->load->database() ;  
+			$this->load->model("Game_model");
 		}
 		
 		
@@ -206,13 +207,13 @@
 		
 			$what = array() ;
 			$what[] = "banks_balances.amount as banks_ccy_amount";
-			$what[] = "currencies.shortname as ccy_name"; 
+			//$what[] = "currencies.shortname as ccy_name"; 
 				
 			$this->db->select($what) ;
 			$this->db->from('users'); 
 			$this->db->join('jobs','jobs.id = jobs_id','left');
 			$this->db->join('banks_balances','jobs.banks_id = banks_balances.banks_id','left');
-			$this->db->join('currencies','currencies.id = currencies_id','left');
+			//$this->db->join('currencies','currencies.id = currencies_id','left');
 			$this->db->where('users.id',$user_id);
 			$this->db->order_by('currencies_id');
 			$query = $this->db->get() ;
@@ -266,6 +267,234 @@
 			
 			return $query->result_array() ;
 		}
+		
+		
+		public function compute_spot_positions( $user_id ) {
+		
+			$spot_positions = $this->get_users_fx_positions($user_id);
+			
+
+			for( $i = 0 ; $i < 3 ; $i++ ) {  
+				$spot_positions[$i]['position_rate'] = $spot_positions[$i]['sumrate'] ;
+				if( $spot_positions[$i]['position_rate'] )
+					$spot_positions[$i]['position_rate'] /= $spot_positions[$i]['position_amount'] ; 	
+					
+				$spot_positions[$i]['position_rate'] = round($spot_positions[$i]['position_rate'], 4); 	
+			}	
+		
+			return $spot_positions ;
+		}
 			 	
+			 	
+		public function compute_banks_capital ( $user_id ) { 
+			
+			$banks_info = $this->get_banks_info($user_id) ;
+			
+			$banks_capital  = $banks_info[0]['capital'] ;
+			$banks_currency = $banks_info[0]['currencies_id'] - 1 ; 
+						 
+			if( $banks_currency == 0 ) {
+
+				$capital[0] =  $banks_capital ; 
+				$capital[1] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice1'), 4 ) ;
+				$capital[2] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice3'), 4 ) ;
+			}
+			elseif ( $banks_currency == 1 ) {
+				$capital[0] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice1'), 4 ) ; 
+				$capital[1] =  $banks_capital ;
+				$capital[2] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice2'), 4 ) ;
+			}
+			else {
+				$capital[0] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice3'), 4 ) ; 
+				$capital[1] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice2'), 4 ) ; 
+				$capital[2] =  $banks_capital ;
+			}
+			
+			return $capital ;
+		}
+		
+		
+		public function compute_banks_funds ( $user_id ) {
+
+			$fx_pnl = $this->get_users_fx_pnl($user_id) ;
+			$mm_pnl = $this->get_users_mm_pnl($user_id) ;
+			$capital = $this->compute_banks_capital ($user_id) ; 		
+			
+			$pnl[0] = $fx_pnl[0]['amount'] + 
+				  $fx_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
+				  $fx_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice3') + 
+				  $mm_pnl[0]['amount'] + 
+				  $mm_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
+				  $mm_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice3') + 
+				  
+			$pnl[1] = $fx_pnl[0]['amount'] / $this->Game_model->getSettingValue('bot_sprice1') +  
+				  $fx_pnl[1]['amount'] +
+				  $fx_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice2') + 
+				  $mm_pnl[0]['amount'] / $this->Game_model->getSettingValue('bot_sprice1') +  
+				  $mm_pnl[1]['amount'] +
+				  $mm_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice2') + 
+			
+			
+			$pnl[2] = $fx_pnl[0]['amount'] * $this->Game_model->getSettingValue('bot_bprice3') + 
+				  $fx_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice2') +
+				  $fx_pnl[2]['amount'] + 
+				  $mm_pnl[0]['amount'] * $this->Game_model->getSettingValue('bot_bprice3') +  
+				  $mm_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice2') +
+				  $mm_pnl[2]['amount'] ; 
+			
+				  
+			for( $i = 0 ; $i < 3 ; $i++ )
+				$funds[$i] = $capital[$i] + $pnl[$i] ; 
+				
+			return $funds ;
+		}
+	
+	
+		public function compute_fx_positions( $user_id ) {
+			
+		
+			$spot_positions = $this->compute_spot_positions($user_id) ;
+			$funds = $this->compute_banks_funds($user_id);
+			$banks_info = $this->get_banks_info($user_id) ;
+			
+			$banks_currency = $banks_info[0]['currencies_id'] - 1 ; 
+			
+							
+			///////////////////// hardcodat ///////////////////////////
+			$percentage = (double)8 / 100 ;
+			////////////////////////////////////////////////////////////
+
+			$fx_positions[0]['ccy_name'] = "TER";
+			$fx_positions[1]['ccy_name'] = "RIK";
+			$fx_positions[2]['ccy_name'] = "HAT";
+									
+		
+		
+		//////////////////////////////////        AMOUNT       ///////////////////////////////////////
+			
+			$fx_positions[0]['amount'] =  $spot_positions[0]['position_amount'] - 
+					              $spot_positions[2]['position_amount'] * 
+						      $spot_positions[2]['position_rate'] ; 
+		
+			$fx_positions[1]['amount'] = -$spot_positions[0]['position_amount'] *
+						      $spot_positions[0]['position_rate'] - 
+					              $spot_positions[1]['position_amount'] * 
+						      $spot_positions[1]['position_rate'] ; 
+			
+
+			$fx_positions[2]['amount'] =  $spot_positions[1]['position_amount'] + 
+						      $spot_positions[2]['position_amount'] ; 
+		
+		
+		
+							     
+		/////////////////////////////////////////   REPORTING CURRENCY       //////////////////////////////////////////////
+		
+@			$fx_positions[0]['rep_ccy'][0] =   $fx_positions[0]['amount']   ; 
+@			$fx_positions[0]['rep_ccy'][1] =   $spot_positions[0]['position_amount'] * 
+@							   $spot_positions[0]['position_rate']   -   
+@						     	   $spot_positions[2]['position_amount'] * 
+@						           $spot_positions[2]['position_rate']   *
+@						           $this->Game_model->getSettingValue('bot_bprice1') ; 
+@			$fx_positions[0]['rep_ccy'][2] =   $spot_positions[0]['position_amount'] /
+@							   $spot_positions[2]['position_rate']   -  
+@							   $spot_positions[2]['position_amount'] ;
+@								   
+@	
+@			$fx_positions[1]['rep_ccy'][0] =  -$spot_positions[0]['position_amount'] *
+@							   $spot_positions[0]['position_rate']   /
+@							   $this->Game_model->getSettingValue('bot_sprice1') -
+@							   $spot_positions[1]['position_amount'] *
+@							   $spot_positions[1]['position_rate']   /
+@							   $this->Game_model->getSettingValue('bot_sprice1') ;
+@			$fx_positions[1]['rep_ccy'][1] =   $fx_positions[1]['amount']   ;
+@			$fx_positions[1]['rep_ccy'][2] =  -$spot_positions[0]['position_amount'] *
+@						           $spot_positions[0]['position_rate']   /
+@						           $spot_positions[1]['position_rate']   -
+@						           $spot_positions[1]['position_amount'] ;
+
+@			$fx_positions[2]['rep_ccy'][0] =   $spot_positions[1]['position_amount'] * 
+@							   $spot_positions[1]['position_rate'] /
+@							   $this->Game_model->getSettingValue('bot_sprice1') + 
+@							   $spot_positions[2]['position_amount'] *
+@							   $spot_positions[2]['position_rate'] ; 
+@			$fx_positions[2]['rep_ccy'][1] =   $spot_positions[1]['position_amount'] *
+@							   $spot_positions[1]['position_rate']   +  
+@							   $spot_positions[2]['position_amount'] *
+@							   $spot_positions[2]['position_rate'] *			   
+@							   $this->Game_model->getSettingValue('bot_bprice1') ; 
+@			$fx_positions[2]['rep_ccy'][2] =   $fx_positions[2]['amount']   ; 
+            
+            
+            
+            		////////////////////////////////////// POSITION LIMIT /  RATE /   RISK    /////////////////////////////////////
+	
+			for( $i = 0 ; $i < 3 ; $i++ ) {
+				
+				for( $j = 0 ; $j < 3 ; $j++ ) {
+					
+					$fx_positions[$i]['rep_ccy'][$j] = round( $fx_positions[$i]['rep_ccy'][$j], 4 ) ;
+
+					if( abs($fx_positions[$i]['rep_ccy'][$j]) > abs($fx_positions[$i]['amount']) )
+@						$fx_positions[$i]['rate'][$j] = round($fx_positions[$i]['rep_ccy'][$j] / $fx_positions[$i]['amount'],4) ;  
+					else
+@						$fx_positions[$i]['rate'][$j] = round($fx_positions[$i]['amount'] / $fx_positions[$i]['rep_ccy'][$j],4) ; 
+						 				
+					$fx_positions[$i]['limit'][$j] = round($percentage * $funds[$j],4) ; 
+					$fx_positions[$i]['risk'][$j] = "IN LIMIT" ;
+				
+					if( $j != $banks_currency && abs($fx_positions[$i]['rep_ccy'][$j]) > $fx_positions[$i]['limit'][$j] )
+						$fx_positions[$i]['risk'][$j] = "BREAK" ;
+				}	
+			}	
+			
+			return $fx_positions ;				 			
+		}
+
+		public function compute_agg ( $user_id ) {
+		
+			
+			$fx_positions = $this->compute_fx_positions($user_id) ;
+			
+			
+			for( $j = 0 ; $j < 3 ; $j++ ) {
+				
+				$agg['rep_ccy'][$j] = 0 ;
+				
+				
+				for( $i = 0 ; $i < 3 ; $i++ ) {
+				
+					$agg['limit'][$j] = $fx_positions[$i]['limit'][$j] ;
+				
+					if( abs($fx_positions[$i]['rep_ccy'][$j]) > abs($agg['rep_ccy'][$j]) ) {
+						$agg['rep_ccy'][$j] = $fx_positions[$i]['rep_ccy'][$j] ;
+						$agg['risk'][$j] = $fx_positions[$i]['risk'][$j] ; 
+					}
+				}
+			} 	
+			
+			return $agg ;
+		}
+		
+		
+		public function get_blotters ( $user_id ) {
+			
+			$blotters['spot_positions'] = $this->compute_spot_positions($user_id);
+			
+			$blotters['banks_balances'] = $this->get_banks_balances($user_id);
+			
+			$blotters['capital'] = $this->compute_banks_capital($user_id);
+			$blotters['funds'] = $this->compute_banks_funds($user_id);
+			
+			$blotters['fx_positions'] = $this->compute_fx_positions($user_id);
+			$blotters['agg'] = $this->compute_agg($user_id);
+			
+			$blotters["fx_deals"] = $this->get_fx_deals($user_id);
+			$blotters["mm_deals"] = $this->get_mm_deals($user_id);
+			
+			
+			return $blotters ;
+		
+		}			
 	}
 	

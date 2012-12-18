@@ -3,6 +3,9 @@
         echo $error."<hr />";
     }
     
+    echo validation_errors(); 
+	
+	    
     echo form_open('general/index/login');
     echo "Email: ".form_input('email')."<br />";
     echo "Password: ".form_password('password')."<br />";

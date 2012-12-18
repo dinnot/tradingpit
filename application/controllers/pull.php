@@ -34,6 +34,9 @@ class Pull extends CI_Controller {
 		$this->load->model('econ_model');
 		$this->load->model ("messages_model");				
 		$this->load->model ("ebroker_model");				
+		$this->load->model ("News_model");				
+		$this->load->model ("Game_model");				
+		$this->load->model ("Blotters_model");				
 	}
 	
 	public function index () {		
@@ -102,5 +105,13 @@ class Pull extends CI_Controller {
 
 		return $prices;			
 	}
-
+	
+	public function get_blotters () {
+		
+		$user_id = $this->user->id ;		
+		$blotters = $this->Blotters_model->get_blotters($user_id);		
+		return $blotters ;
+		
+	}
+			
 };

@@ -10,6 +10,7 @@
   <script src="<?php print base_url() ?>js/jquery-1.8.2.min.js"></script>
   <script src="<?php print base_url() ?>js/jquery-ui-1.9.1.custom.js"></script>
   <script src="<?php print base_url() ?>js/date.js"></script>
+  
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -81,7 +82,11 @@
 
             <tbody id = "news_table">
             
-           	 <?php foreach ($news as $news_item): ?>
+           	 <?php 
+           	 	$i = -1 ; 
+           	 	foreach ($news as $news_item): 
+           	 	$i++ ;
+           	 ?>
 
 			<tr>
 				<td class="first"> <?php echo date("M-d",$news_item["date"]) ; ?>     </td>  
@@ -107,11 +112,9 @@
 
 </body>
 
-<script>
-	var base_url = "<?= base_url() ?>";
-</script>
+  <script> var base_url = "<?= base_url() ?>"; </script>
+  <script src="<?php print base_url() ?>js/jquery.js">  </script>
+  <script src="<?php print base_url() ?>js/news.js">  </script>
 
-<script src="<?php print base_url() ?>js/jquery.js">  </script>
-<script src="<?php print base_url() ?>js/news.js">  </script>
 
 </html>

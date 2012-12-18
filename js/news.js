@@ -1,18 +1,18 @@
 $("#body_filter").change (
 	function () {
-		get_news ();
+		get_news() ;
 	}
 );
 
 $("#country_filter").change (
 	function () {
-		get_news ();
+		get_news() ;
 	}
 );
 
 function get_news () {
 	
-	var url = base_url+"index.php/news/get_news";
+	var url = base_url + "news/get_news";
 	data_in = new Object ();
 	
 	var body_filter = $("#body_filter").val() ;
@@ -20,9 +20,8 @@ function get_news () {
 		data_in['body_filter'] = body_filter ; 
 		
 	var country_filter = $("#country_filter").val() ; 
-	if( country_filter != 0 ) 
+	if( country_filter != 0 )  
 		data_in['country_filter'] = country_filter ;
-		
 	
 	$.ajax({
 		action: 'POST',
@@ -51,20 +50,21 @@ function display_news (news) {
 	for (var i = 0; i < news.length; i++) {
 	
 		var timestamp = news[i]['date'] * 1000;
-		data1 = new Date(timestamp).toString('dd/MMM');
-		data2 = new Date(timestamp).toString('HH:mm');
+		date1 = new Date(timestamp).toString('dd/MMM');
+		date2 = new Date(timestamp).toString('HH:mm');
+		
 		
 		$("#news_table").append ("<tr>");
-		$('#news_table tr:last').append($("<td class=\"first\"></td>").text(data1));
-		$('#news_table tr:last').append($("<td class=\"red-td\"></td>").text(data2));
+		$('#news_table tr:last').append($("<td class=\"first\"></td>").text(date1));
+		$('#news_table tr:last').append($("<td class=\"red-td\"></td>").text(date2));
 		$('#news_table tr:last').append($("<td> </td>").text(news[i]['country_name']));
 		$('#news_table tr:last').append("<td>");
 		$('#news_table td:last').append($("<div class=\"show\"></div>").text(news[i]['headline']));
 		$('#news_table td:last').append($("<div class=\"hide\" hidden=\"hidden\"></div>").text(news[i]['body']));
 		$('#news_table tr:last').append("</td>");
 		$("#news_table").append ("</tr>");
+		
 	}
-	
 	
 	$(".show").click( function() {
 			$(".hide").hide();
@@ -102,3 +102,5 @@ function clock () {
 
 clock ();
 setInterval (clock, 1000);
+
+

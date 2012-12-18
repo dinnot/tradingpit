@@ -25,13 +25,13 @@
 			}
 			
 			if(!$valid) {
-				redirect("/errors/404");
+				 redirect("/general/index");
 			}
 			
 		}
 
 		public function index() {
-				
+			
 			$data["news"] = $this->News_model->get_news();
 			
 			$this->load->view('news/index', $data);

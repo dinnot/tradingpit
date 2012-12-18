@@ -23,7 +23,6 @@
   <script src="<?php print base_url () ?>js/trading/ebroker.js"></script>
   <script src="<?php print base_url () ?>js/trading/matching-deals.js"></script>
  
-  
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -339,6 +338,9 @@ function trnEnq(idv) {
     }
     
     pbuy = bf + pbuy / 10000;
+    
+    if( !validate_price(pbuy) || !validate_price(psell) ) 
+    	return ;
     
     $.ajax({
         type: "POST",
