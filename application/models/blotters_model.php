@@ -439,7 +439,7 @@
 					else
 @						$fx_positions[$i]['rate'][$j] = round($fx_positions[$i]['amount'] / $fx_positions[$i]['rep_ccy'][$j],4) ; 
 						 				
-					$fx_positions[$i]['limit'][$j] = $percentage * $funds[$j] ; 
+					$fx_positions[$i]['limit'][$j] = round($percentage * $funds[$j],4) ; 
 					$fx_positions[$i]['risk'][$j] = "IN LIMIT" ;
 				
 					if( $j != $banks_currency && abs($fx_positions[$i]['rep_ccy'][$j]) > $fx_positions[$i]['limit'][$j] )
