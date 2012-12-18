@@ -37,7 +37,8 @@ function validate_pips ( pips ) {
 
 
 function validate_price ( price ) {
-	
+
+	if (!price) price = '0.0000';	
 	if( price.length != 6 ) {
 		alert("Incorect PRICE !") ; 
 		return false ; 
