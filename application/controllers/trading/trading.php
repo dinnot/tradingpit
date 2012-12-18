@@ -47,6 +47,10 @@ class Trading extends CI_Controller {
         $data = $_POST;
         $this->load->model("Game_model");
         $settings = $this->Game_model->getAllSettings();
+        
+        if( !$this->Validate_model->validate_pair_id($data['pair']) ) 
+        	return ;
+        	
         $ret = $this->Trading_model->createEnquiries($this->user->id, $this->user->bid, 7, $data['pair'], $data['amount'], $settings);
         $this->load->view("ajax", array("error"=>false, "data"=>$ret));
     }
@@ -55,9 +59,9 @@ class Trading extends CI_Controller {
         $data = $_POST;
         $ret = $this->Trading_model->respondEnquiry($data['id'], $this->user->id, $data['buy'], $data['sell']);
         
-        if( !$this->Validate_model->Validate_price($data['buy']) || !$this->Validate_model->Validate_price($data['sell']) ) 
-        	$ret = false ; 
-        
+        if( !$this->Validate_model->validate_price($data['buy']) || !$this->Validate_model->validate_price($data['sell']) ) 
+   		return ;     
+                
         if($ret !== false) {
             $this->load->view("ajax", array("error"=>false, "data"=>$ret));
         } else {
@@ -107,6 +111,7 @@ class Trading extends CI_Controller {
         } else {
             $ret = false;
         }
+        
         if($ret !== false) {
             $this->load->view("ajax", array("error"=>false, "data"=>$ret));
         } else {
