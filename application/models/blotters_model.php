@@ -279,7 +279,8 @@
 				if( $spot_positions[$i]['position_rate'] )
 					$spot_positions[$i]['position_rate'] /= $spot_positions[$i]['position_amount'] ; 	
 					
-				$spot_positions[$i]['position_rate'] = round($spot_positions[$i]['position_rate'], 4); 	
+//				$spot_positions[$i]['position_rate'] = round($spot_positions[$i]['position_rate'], 4); 	
+				
 			}	
 		
 			return $spot_positions ;
@@ -370,7 +371,7 @@
 									
 		
 		
-		//////////////////////////////////        AMOUNT       ///////////////////////////////////////
+		//////////////////////////////////      AMOUNT     ///////////////////////////////////////
 			
 			$fx_positions[0]['amount'] =  $spot_positions[0]['position_amount'] - 
 					              $spot_positions[2]['position_amount'] * 
