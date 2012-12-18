@@ -13,8 +13,10 @@ function set_time_difference () {
 var corporate_clients_class = function () {
 
 	this.name = "corporate_clients";
-	this.delay = 1000;
+	this.delay = 300;
 	this.timeout = 1000;
+	
+	//this.page = ;
 	
 	this.pull = new Object ();
 	this.pull["get_corporate_offers"] = 0; // nu trimitem nimic la server pentru pull
@@ -155,11 +157,24 @@ function timer () {
 	if (corporate_clients.timer_queue.length >= 0) {	
 		time = parseInt (new Date ().getTime () / 1000 + time_difference);
 
-		for (i in corporate_clients.timer_queue) {
+		var used = 0;
+		for (i in corporate_clients.timer_queue) {		
 			var id = corporate_clients.timer_queue[i]['id'];
 			var rem = seconds - (time - corporate_clients.timer_queue[i]['date']);
 			if (rem < 0)
 				rem = 0;
+				
+			if (!used) {
+				if (rem % 2 == 0) {
+					var menu_id = $('#clients_menu');
+					menu_id.css ('background-color', '#000');
+				}
+				else {
+					var menu_id = $('#clients_menu');
+					menu_id.css ('background-color', '');
+				}
+			}
+			used = 1;
 				
 			$('#counter_'+id).text ( rem );
 			if (rem  == 0) {			

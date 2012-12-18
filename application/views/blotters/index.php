@@ -6,6 +6,10 @@
   <title>Trading Page - Trading Pit</title>
    <meta name="description" content="" />
   <link rel="stylesheet" href="<?php print base_url() ?>css/style.css" />
+  <script src="<?php print base_url () ?>js/observable.js"></script>
+  <script src="<?php print base_url () ?>js/corporate_clients.js"></script>
+  <script src="<?php print base_url () ?>js/retail_clients.js"></script>
+   <script src="<?php print base_url() ?>js/blotters.js"></script>
   <link href="<?php print base_url() ?>css/jquery-ui-1.9.1.custom.css" rel="stylesheet">
  
   <script> var base_url = "<?= base_url() ?>"; </script>
@@ -393,9 +397,5 @@
     </article><!-- end container -->
 
 </body>
-
- <script src="<?php print base_url() ?>js/observable.js"></script>
- <script src="<?php print base_url() ?>js/blotters.js"></script>
- 
 
 </html>

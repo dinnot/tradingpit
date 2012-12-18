@@ -4,7 +4,7 @@
       <a href="<?php print base_url(); ?>trading/trading" class="first-level light-blue <?php if ($this->module_name == 'trading') print 'current'; ?>">Traderion dealing</a>      
     </li>
 
-     <li class="level-one">
+     <li class="level-one" id="clients_menu">
       <a href="<?php print base_url(); ?>trading/clients" class="first-level light-blue <?php if ($this->module_name == 'clients') print 'current'; ?>">Clients</a>
     </li>
 
