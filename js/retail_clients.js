@@ -15,7 +15,7 @@ get_price = function (bf, pips) {
 
 	return bf + pips;
 }
-.
+
 retail_client_class.prototype.set_exchange_rate = function (pair_id) {
 
 	url = base_url+"trading/clients/set_exchange_rate";

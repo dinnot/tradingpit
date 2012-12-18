@@ -246,5 +246,5 @@ function display_mm_deals( mm_deals ) {
 
 blotters = new blotters_class ();
 
-get_blotters();
+//get_blotters();
 Observable.subscribe (blotters);

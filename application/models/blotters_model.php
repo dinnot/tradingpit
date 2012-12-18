@@ -295,19 +295,19 @@
 						 
 			if( $banks_currency == 0 ) {
 
-@				$capital[0] =  $banks_capital ; 
-@				$capital[1] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice1'), 4 ) ;
-@				$capital[2] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice3'), 4 ) ;
+				$capital[0] =  $banks_capital ; 
+				$capital[1] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice1'), 4 ) ;
+				$capital[2] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice3'), 4 ) ;
 			}
 			elseif ( $banks_currency == 1 ) {
-@				$capital[0] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice1'), 4 ) ; 
-@				$capital[1] =  $banks_capital ;
-@				$capital[2] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice2'), 4 ) ;
+				$capital[0] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice1'), 4 ) ; 
+				$capital[1] =  $banks_capital ;
+				$capital[2] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice2'), 4 ) ;
 			}
 			else {
-@				$capital[0] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice3'), 4 ) ; 
-@				$capital[1] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice2'), 4 ) ; 
-@				$capital[2] =  $banks_capital ;
+				$capital[0] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice3'), 4 ) ; 
+				$capital[1] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice2'), 4 ) ; 
+				$capital[2] =  $banks_capital ;
 			}
 			
 			return $capital ;
@@ -320,27 +320,27 @@
 			$mm_pnl = $this->get_users_mm_pnl($user_id) ;
 			$capital = $this->compute_banks_capital ($user_id) ; 		
 			
-@			$pnl[0] = $fx_pnl[0]['amount'] + 
-@				  $fx_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
-@				  $fx_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice3') + 
-@				  $mm_pnl[0]['amount'] + 
-@				  $mm_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
-@				  $mm_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice3') + 
+			$pnl[0] = $fx_pnl[0]['amount'] + 
+				  $fx_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
+				  $fx_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice3') + 
+				  $mm_pnl[0]['amount'] + 
+				  $mm_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
+				  $mm_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice3') + 
 				  
-@			$pnl[1] = $fx_pnl[0]['amount'] / $this->Game_model->getSettingValue('bot_sprice1') +  
-@				  $fx_pnl[1]['amount'] +
-@				  $fx_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice2') + 
-@				  $mm_pnl[0]['amount'] / $this->Game_model->getSettingValue('bot_sprice1') +  
-@				  $mm_pnl[1]['amount'] +
-@				  $mm_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice2') + 
+			$pnl[1] = $fx_pnl[0]['amount'] / $this->Game_model->getSettingValue('bot_sprice1') +  
+				  $fx_pnl[1]['amount'] +
+				  $fx_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice2') + 
+				  $mm_pnl[0]['amount'] / $this->Game_model->getSettingValue('bot_sprice1') +  
+				  $mm_pnl[1]['amount'] +
+				  $mm_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice2') + 
 			
 			
-@			$pnl[2] = $fx_pnl[0]['amount'] * $this->Game_model->getSettingValue('bot_bprice3') + 
-@				  $fx_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice2') +
-@				  $fx_pnl[2]['amount'] + 
-@				  $mm_pnl[0]['amount'] * $this->Game_model->getSettingValue('bot_bprice3') +  
-@				  $mm_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice2') +
-@				  $mm_pnl[2]['amount'] ; 
+			$pnl[2] = $fx_pnl[0]['amount'] * $this->Game_model->getSettingValue('bot_bprice3') + 
+				  $fx_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice2') +
+				  $fx_pnl[2]['amount'] + 
+				  $mm_pnl[0]['amount'] * $this->Game_model->getSettingValue('bot_bprice3') +  
+				  $mm_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice2') +
+				  $mm_pnl[2]['amount'] ; 
 			
 				  
 			for( $i = 0 ; $i < 3 ; $i++ )
@@ -372,18 +372,18 @@
 		
 		//////////////////////////////////        AMOUNT       ///////////////////////////////////////
 			
-@			$fx_positions[0]['amount'] =  $spot_positions[0]['position_amount'] - 
-@					              $spot_positions[2]['position_amount'] * 
-@						      $spot_positions[2]['position_rate'] ; 
-			
-@			$fx_positions[1]['amount'] = -$spot_positions[0]['position_amount'] *
-@						      $spot_positions[0]['position_rate'] - 
-@					              $spot_positions[1]['position_amount'] * 
-@						      $spot_positions[1]['position_rate'] ; 
+			$fx_positions[0]['amount'] =  $spot_positions[0]['position_amount'] - 
+					              $spot_positions[2]['position_amount'] * 
+						      $spot_positions[2]['position_rate'] ; 
+		
+			$fx_positions[1]['amount'] = -$spot_positions[0]['position_amount'] *
+						      $spot_positions[0]['position_rate'] - 
+					              $spot_positions[1]['position_amount'] * 
+						      $spot_positions[1]['position_rate'] ; 
 			
 
-@			$fx_positions[2]['amount'] =  $spot_positions[1]['position_amount'] + 
-@						      $spot_positions[2]['position_amount'] ; 
+			$fx_positions[2]['amount'] =  $spot_positions[1]['position_amount'] + 
+						      $spot_positions[2]['position_amount'] ; 
 		
 		
 		
@@ -433,7 +433,8 @@
 				
 				for( $j = 0 ; $j < 3 ; $j++ ) {
 					
-@					$fx_positions[$i]['rep_ccy'][$j] = round( $fx_positions[$i]['rep_ccy'][$j], 4 ) ;
+					$fx_positions[$i]['rep_ccy'][$j] = round( $fx_positions[$i]['rep_ccy'][$j], 4 ) ;
+
 					if( abs($fx_positions[$i]['rep_ccy'][$j]) > abs($fx_positions[$i]['amount']) )
 @						$fx_positions[$i]['rate'][$j] = round($fx_positions[$i]['rep_ccy'][$j] / $fx_positions[$i]['amount'],4) ;  
 					else
