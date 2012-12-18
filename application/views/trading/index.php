@@ -13,8 +13,14 @@
           cursor: pointer;
       }
   </style>
-  <script src="<?php print base_url () ?>/js/jquery-1.8.2.min.js"></script>
-  <script src="<?php print base_url () ?>/js/jquery-ui-1.9.1.custom.js"></script>
+	<script>var base_url = "<?= base_url() ?>";</script>
+	
+  <script src="<?php print base_url () ?>js/jquery-1.8.2.min.js"></script>
+  <script src="<?php print base_url () ?>js/jquery-ui-1.9.1.custom.js"></script>
+  <script src="<?php print base_url () ?>js/trading/ebroker.js"></script>
+  <script src="<?php print base_url () ?>js/trading/matching-deals.js"></script>
+ 
+  
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -216,358 +222,25 @@
                   </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="matching">
 
-                  <tr class="first">
-                    <td>BFBZ</td>
-                    <td>BRING FORTH</td>
-                    <td>SELL</td>
-                    <td>TER/RIK</td>
-                    <td>2</td>
-                    <td>SPOT</td>
-                    <td>3.9265</td>
-                    <td></td>
-                    <td>CANCEL</td>
-                  </tr>
-
-                  <tr>
-                    <td>BFBZ</td>
-                    <td>BRING FORTH</td>
-                    <td>SELL</td>
-                    <td>TER/RIK</td>
-                    <td>3</td>
-                    <td>SPOT</td>
-                    <td>3.9260</td>
-                    <td class="light-blue">KART</td>
-                    <td>DONE</td>
-                  </tr>
-                  <tr class="last">
-                    <td>BFBZ</td>
-                    <td>BRING FORTH</td>
-                    <td>SELL</td>
-                    <td>TER/RIK</td>
-                    <td>3</td>
-                    <td>SPOT</td>
-                    <td>3.9260</td>
-                    <td class="light-blue"></td>
-                    <td>DONE</td>
-                  </tr>
+                
 
                 </tbody>
               </table>
-              <div class="on-hold-overlay">
+
+              <div class="on-hold-overlay" id="hold-overlay">
                 <span><strong>ON HOLD</strong></span>
               </div><!-- end on-hold-overlay -->
+
             </div><!-- end table-container black -->
 
           </div><!-- end main-section-content --> 
-
-          <div class="sidebar">
-            <div class="widget rik light-bg">
-
-              <div class="widget-title">
-                <h2>TER/RIK</h2>
-              </div><!-- end widget-title -->
-
-              <div class="widget-content">
-               
-               <div class="info-box">
-                <ul>
-                  <li>3.92</li>
-                  <li><span>35/65</span></li>
-                  <li>3.92</li>
-                </ul>
-                <div class="middle-bar">
-                  <span>30/75</span>
-                  <div class="left-box"></div>
-                  <div class="right-box"></div>
-                </div><!-- end middle-bar -->
-                <div class="second-info-box">
-                  <span>1 (2X2) 2</span>
-                </div><!-- end second-info-box -->
-
-               </div><!-- end info-box -->
-
-               <div class="evolution">
-                 <span>3.9210 P<span class="evolution-arrow green"></span></span>
-               </div><!-- end evolution -->
-
-               <div class="box-actions">
-                <ul>
-                  <li class="first"><a href="#">hold</a></li>
-                  <li><a href="#">cancel</a></li>
-                </ul>
-               </div><!-- end box-actions -->
-
-              </div><!-- end widget-content -->
-
-            </div><!-- end widget rik -->
-
-            <div class="widget-separator">
-            </div><!-- end widget-separator -->
-
-            <div class="widget rik dark-bg">
-
-              <div class="widget-title">
-                <h2>HAT/RIK</h2>
-              </div><!-- end widget-title -->
-
-              <div class="widget-content">
-               
-               <div class="info-box">
-                <ul>
-                  <li>3.92</li>
-                  <li><span>35/65</span></li>
-                  <li>3.92</li>
-                </ul>
-                <div class="middle-bar">
-                  <span>30/75</span>
-                  <div class="left-box"></div>
-                  <div class="right-box"></div>
-                </div><!-- end middle-bar -->
-                <div class="second-info-box">
-                  <span>1 (2X2) 2</span>
-                </div><!-- end second-info-box -->
-
-               </div><!-- end info-box -->
-
-               <div class="evolution">
-                 <span>4.1110 G<span class="evolution-arrow red"></span></span>
-               </div><!-- end evolution -->
-
-               <div class="box-actions">
-                <ul>
-                  <li class="first"><a href="#">hold</a></li>
-                  <li><a href="#">cancel</a></li>
-                </ul>
-               </div><!-- end box-actions -->
-
-              </div><!-- end widget-content -->
-
-            </div><!-- end widget rik -->
-
-          </div><!-- end sidebar -->
-
+		
+					<?php include_once ($_SERVER['DOCUMENT_ROOT']."/tradingpit/application/views/trading/ebroker.php"); ?>
+					
         </section><!-- end main-section -->
 
-        <section class="main-section darker-bg">
-
-          <div class="section-title">
-            <h2><span class="green-square"></span>Positions</h2>
-          </div><!-- end section-title -->
-
-          <div class="main-section-content">
-
-            <div class="ticket-conv-tabs">
-              <ul>
-                <li class="current"><a href="#">Ticket/Conv</a></li>
-                <li><a href="#">Filters</a></li>
-              </ul>
-            </div><!-- end ticket-conv-tabs -->
-
-            <div class="table-container ticket-conv first">
-              <table>
-                <thead>
-                  <tr>
-                    <th class="first">Code</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>User</th>
-                    <th>Swift</th>
-                    <th>Period</th>
-                    <th>Deal</th>
-                    <th>Rate</th>
-                    <th>Volume</th>
-                    <th>Status</th>
-                    <th>Maker</th>
-                    <th class="last">Taker</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-
-                  <tr class="first">
-                    <td>BFBZ</td>
-                    <td>05 JUL</td>
-                    <td>13:33</td>
-                    <td>FLRN</td>
-                    <td>HAT/RIK</td>
-                    <td>SPOT</td>
-                    <td>SELL</td>
-                    <td>4.1180</td>
-                    <td>2MIO</td>
-                    <td>123456</td>
-                    <td>BFBZ</td>
-                    <td>AATK</td>
-                  </tr>
-
-                  <tr class="last">
-                    <td>HSAN</td>
-                    <td>05 JUL</td>
-                    <td>13:11</td>
-                    <td>FLRN</td>
-                    <td>TER/RIK</td>
-                    <td>SPOT</td>
-                    <td>BUY</td>
-                    <td>3.9245</td>
-                    <td>2MIO</td>
-                    <td>EB1234</td>
-                    <td>AATK</td>
-                    <td>HSAN</td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div><!-- end table-container ticket-conv first -->
-
-            <div class="table-container ticket-conv second">
-              <div class="table-container-title">
-                <h2>FX OPEN POSITIONS</h2>
-              </div><!-- end table-container-title -->
-              <table>
-                <thead>
-                  <tr>
-                    <th class="first">CCY</th>
-                    <th class="dark-bg">Open Amount<br><span>Currency</span></th>
-                    <th>Open Amount<br><span>Reporting currency</span></th>
-                    <th class="dark-bg">Position Limit</th>
-                    <th>Rate</th>
-                    <th class="last">RISK</th>
-                  </tr>
-
-                  <tr class="second-row">
-                    <th class="first" colspan="6">
-                      <ul>
-                        <li class="green"><a href="#">TER</a></li>
-                        <li><a href="#">HAT</a></li>
-                        <li class="last"><a href="#">RIK</a></li>
-                      </ul>
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody>
-
-                  <tr class="first even">
-                    <td>TER</td>
-                    <td class="dark-bg">-7,000,000</td>
-                    <td>-7,000,000</td>
-                    <td class="dark-bg">5,040,000</td>
-                    <td>3.9210</td>
-                    <td>BREAK</td>
-                  </tr>
-
-                  <tr class="odd">
-                    <td>HAT</td>
-                    <td class="dark-bg">-5,000,000</td>
-                    <td>-7,000,000</td>
-                    <td class="dark-bg">5,040,000</td>
-                    <td>3.9210</td>
-                    <td>IN LIMIT</td>
-                  </tr>
-
-                  <tr class="even">
-                    <td>TER</td>
-                    <td class="dark-bg">-7,000,000</td>
-                    <td>-7,000,000</td>
-                    <td class="dark-bg">5,040,000</td>
-                    <td>3.9210</td>
-                    <td>IN LIMIT</td>
-                  </tr>
-
-                  <tr class="odd">
-                    <td>TER</td>
-                    <td class="dark-bg">-7,000,000</td>
-                    <td>-7,000,000</td>
-                    <td class="dark-bg">5,040,000</td>
-                    <td>3.9210</td>
-                    <td>IN LIMIT</td>
-                  </tr>
-
-                  <tr class="even agg">
-                    <td>AGG</td>
-                    <td class="dark-bg">-7,000,000</td>
-                    <td>-7,000,000</td>
-                    <td class="dark-bg">5,040,000</td>
-                    <td>N/A</td>
-                    <td>BREAK</td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div><!-- end table-container ticket-conv first -->
-
-          </div><!-- end main-section-content --> 
-
-          <div class="sidebar">
-            <div class="widget tier1">
-
-              <div class="widget-title">
-                <h2>TIER 1<span>(Last update 03:20 AM)</span></h2>
-              </div><!-- end widget-title -->
-
-              <div class="widget-content">
-                <div class="widget-tier1-table">
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>OWN CAPITAL</td>
-                        <td>TER</td>
-                        <td class="last">63,000,000</td>
-                      </tr>
-                      <tr class="last">
-                        <td>OWN FUNDS</td>
-                        <td>TER</td>
-                        <td class="last">63,000,000</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div><!-- end widget-tier1-table -->
-
-              </div><!-- end widget-content -->
-
-            </div><!-- end widget tier1 -->
-
-            <div class="widget-separator-two"></div>
-
-             <div class="widget acc-central-bank">
-
-              <div class="widget-title">
-                <h2>Accounts with the <span>Central bank</span></h2>
-              </div><!-- end widget-title -->
-
-              <div class="widget-content">
-                <div class="widget-acc-central-bank-table">
-                  <table>
-                    <tbody>
-                      <tr class="even">
-                        <td>TER</td>
-                        <td class="second">56,000,000</td>
-                        <td></td>
-                      </tr>
-
-                      <tr class="odd">
-                        <td class="green-td">HAT</td>
-                        <td class="second">-5,000,000</td>
-                        <td class="overdraft">OVERDRAFT</td>
-                      </tr>
-
-                      <tr class="even">
-                        <td>RIK</td>
-                        <td class="second">47,990,000</td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div><!-- end widget-acc-central-bank-table -->
-
-              </div><!-- end widget-content -->
-
-            </div><!-- end widget acc-central-bank -->
-
-          </div><!-- end sidebar -->
-
-        </section><!-- end main-section -->
 
       </article><!-- end main-content -->
 
@@ -964,7 +637,7 @@ function check_existing() {
             }
         }
     });
-    setTimeout("check_existing();", 900);
+    setTimeout("check_existing();", 9000);////////////////////////////////////
 }
 
 function check_new() {
@@ -1000,12 +673,16 @@ function check_new() {
             }
         }
     });
-    setTimeout("check_new();", 700);
+    setTimeout("check_new();", 4000); ////////////////////////////////////////
 }
 $(function() {
     check_new();
     check_existing();
 });
+</script>
+
+<script>
+	$('#hold-overlay').hide ();
 </script>
 
 </body>
