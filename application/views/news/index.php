@@ -10,6 +10,7 @@
   <script src="<?php print base_url() ?>js/jquery-1.8.2.min.js"></script>
   <script src="<?php print base_url() ?>js/jquery-ui-1.9.1.custom.js"></script>
   <script src="<?php print base_url() ?>js/date.js"></script>
+  
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -111,12 +112,9 @@
 
 </body>
 
+  <script> var base_url = "<?= base_url() ?>"; </script>
+  <script src="<?php print base_url() ?>js/jquery.js">  </script>
+  <script src="<?php print base_url() ?>js/news.js">  </script>
 
-<script>
-	var base_url = "<?= base_url() ?>";
-</script>
-
-<script src="<?php print base_url() ?>js/jquery.js">  </script>
-<script src="<?php print base_url() ?>js/news.js">  </script>
 
 </html>

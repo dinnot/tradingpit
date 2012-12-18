@@ -1,18 +1,17 @@
 $("#body_filter").change (
 	function () {
-		get_news ();
+		get_news() ;
 	}
 );
 
 $("#country_filter").change (
 	function () {
-		get_news ();
+		get_news() ;
 	}
 );
 
 function get_news () {
 	
-	//var url = "<?= base_url() ?>index.php/news/get_news";
 	var url = base_url + "news/get_news";
 	data_in = new Object ();
 	
@@ -23,7 +22,6 @@ function get_news () {
 	var country_filter = $("#country_filter").val() ; 
 	if( country_filter != 0 )  
 		data_in['country_filter'] = country_filter ;
-		
 	
 	$.ajax({
 		action: 'POST',
@@ -104,3 +102,5 @@ function clock () {
 
 clock ();
 setInterval (clock, 1000);
+
+

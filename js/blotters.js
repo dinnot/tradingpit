@@ -1,10 +1,29 @@
+var blotters_class = function () { 
+
+	this.name = 'blotters' ; 
+	this.delay = 100 ; 
+	this.timeout = 3000 ; 
+	
+	this.pull = Object() ; 
+	this.pull['get_blotters'] = 0 ; 
+	
+}
+
+
+blotters_class.prototype.update = function( data ) {
+	display_blotters( data['get_blotters'] ) ;
+}	 
+
+
+
+
 $("#TER").click( function () {
 				$(".hide").hide();
 				$(".TER").show(); 
 				$(this).addClass('green');
 				$("#RIK").removeClass('green');
 				$("#HAT").removeClass('green');
-				get_blotters()
+				
 		});
 	
 			
@@ -14,7 +33,7 @@ $("#HAT").click( function () {
 				$(this).addClass('green');
 				$("#TER").removeClass('green');
 				$("#RIK").removeClass('green');
-				get_blotters()
+				
 		});
 
 
@@ -25,7 +44,7 @@ $("#RIK").click( function () {
 				$(this).addClass('green');
 				$("#TER").removeClass('green');
 				$("#HAT").removeClass('green');
-				get_blotters()
+				
 		});
 		
 		
@@ -68,6 +87,8 @@ function display_blotters ( data ) {
 
 function display_spot_positions( spot_positions ) { 
 
+	console.log(spot_positions);
+	
 	$("#TRPA").text( spot_positions[0]['position_amount'] ) ;
 	$("#TRPR").text( spot_positions[0]['position_rate'] ) ;
 
@@ -222,11 +243,8 @@ function display_mm_deals( mm_deals ) {
 	}
 }
 
-function clock () {
-	var currentTime = new Date ();
-	$("#time").text (currentTime.toString("h:mm:ss tt"));	
-	$("#date").text (currentTime.toString("dd/MM/yyyy"));
-}
 
-clock ();
-setInterval (clock, 1000);
+blotters = new blotters_class ();
+
+get_blotters();
+Observable.subscribe (blotters);

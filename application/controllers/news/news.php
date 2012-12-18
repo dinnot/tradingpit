@@ -31,7 +31,7 @@
 		}
 
 		public function index() {
-				
+			
 			$data["news"] = $this->News_model->get_news();
 			
 			$this->load->view('news/index', $data);

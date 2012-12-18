@@ -31,7 +31,6 @@ class Trading extends CI_Controller {
     public function compute_spot_positions ( &$data ) { 
 
         $user_id = $this->user->id ;
-        //$user_id = 15;
         $this->load->model("Blotters_model");
         $data['spot_positions']= $this->Blotters_model->get_users_fx_positions($user_id);
 

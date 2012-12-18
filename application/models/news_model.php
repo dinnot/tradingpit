@@ -39,17 +39,20 @@
 		}
 		
 		public function apply_body_filter() {
-			$body_filter = $this->input->get_post ("body_filter");
 			
-				if( $body_filter ) 
-					$this->db->like('body',$body_filter);
+			$body_filter = $this->input->get_post("body_filter");
+			
+			if( $body_filter ) 
+				$this->db->like('body',$body_filter);
 		}
 		
 		public function apply_country_filter() {
+			
+			
 			$country_filter = $this->input->get_post("country_filter");
 			
-				if( $country_filter != 0 ) 
-					$this->db->where("countries.id",$country_filter);
+			if( $country_filter != 0 ) 
+				$this->db->where("countries.id",$country_filter);
 		}
 		
 		public function insert_news() {
