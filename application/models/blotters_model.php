@@ -461,7 +461,7 @@
 			for( $j = 0 ; $j < 3 ; $j++ ) {
 				
 				$agg['rep_ccy'][$j] = 0 ;
-				
+				$agg['risk'] = "IN LIMIT" ;
 				
 				for( $i = 0 ; $i < 3 ; $i++ ) {
 				

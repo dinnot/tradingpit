@@ -65,17 +65,17 @@
               <li class="second">
               	<span class="light-green">TER/RIK</span> 
             	<span id = "TRPA"> <?php echo $spot_positions[0]['position_amount'] ?> </span>
-              	<span id = "TRPR" class="gray">@<?php echo $spot_positions[0]['position_rate'] ?> </span></li>
+              	<span id = "TRPR" class="gray">@<?php echo round($spot_positions[0]['position_rate'],4) ?> </span></li>
               
               <li>
               	<span class="green">HAT/RIK</span> 
               	<span id = "HRPA"> <?php echo $spot_positions[1]['position_amount'] ?> </span>
-                <span id = "HRPR" class="gray">@<?php echo $spot_positions[1]['position_rate'] ?> </span></li>
+                <span id = "HRPR" class="gray">@<?php echo round($spot_positions[1]['position_rate'],4) ?> </span></li>
               
               <li class="last">
               	<span class="green">HAT/TER</span>
               	<span id = "HTPA"> <?php echo $spot_positions[2]['position_amount'] ?> </span>
-                <span id = "HTPR" class="gray">@<?php echo $spot_positions[2]['position_rate'] ?> </span></li>
+                <span id = "HTPR" class="gray">@<?php echo round($spot_positions[2]['position_rate'],4) ?> </span></li>
             </ul>
           </div><!-- end spot-positions -->
         
@@ -313,7 +313,7 @@
 					<td id = "FX<?=$i?>1"> <?php echo $deal['first_currency'].'/'.$deal['second_currency'] ?> </td>
 					<td id = "FX<?=$i?>2"> <?php echo $deal['amount_base_ccy'] ?> </td>
 					<td id = "FX<?=$i?>3"> <?php echo $deal['price'] ?> </td>
-					<td id = "FX<?=$i?>4"> <?php echo abs( $deal['amount_base_ccy'] * $deal['price'] ) ?> </td>
+					<td id = "FX<?=$i?>4"> <?php echo -$deal['amount_base_ccy'] * $deal['price']  ?> </td>
 					<td id = "FX<?=$i?>5"> <?php echo $deal['counter_party_name'] ?> </td>
 					<td id = "FX<?=$i?>6"> <?php echo date('d.m.y',$deal['value_date']) ?> </td>
 					<td id = "FX<?=$i?>7"> <?php echo date('d.m.y',$deal['trade_date']) ?> </td>
@@ -371,7 +371,7 @@
 					<td id = "MM<?=$i?>1"> <?php echo $deal['ccy_name'] ?> </td>
 					<td id = "MM<?=$i?>2"> <?php echo $deal['amount_base_ccy'] ?> </td>
 					<td id = "MM<?=$i?>3"> <?php echo $deal['price'] ?> </td>
-					<td id = "MM<?=$i?>4"> <?php echo abs( $deal['amount_base_ccy'] * $deal['price'] ) ?> </td>
+					<td id = "MM<?=$i?>4"> <?php echo -$deal['amount_base_ccy'] * $deal['price']  ?> </td>
 					<td id = "MM<?=$i?>5"> <?php echo $deal['counter_party_name'] ?> </td>
 					<td id = "MM<?=$i?>6"> <?php echo date('d.m.y',$deal['value_date']) ?> </td>
 					<td id = "MM<?=$i?>7"> <?php echo date('d.m.y',$deal['trade_date']) ?> </td>

@@ -89,14 +89,14 @@ function display_spot_positions( spot_positions ) {
 
 	console.log(spot_positions);
 	
-	$("#TRPA").text( spot_positions[0]['position_amount'] ) ;
-	$("#TRPR").text( spot_positions[0]['position_rate'] ) ;
+	$("#TRPA").text( spot_positions[0]['position_amount'].toFixed(4) ) ;
+	$("#TRPR").text( spot_positions[0]['position_rate'].toFixed(4) ) ;
 
-	$("#HRPA").text( spot_positions[1]['position_amount'] ) ;
-	$("#HRPR").text( spot_positions[1]['position_rate'] ) ;
+	$("#HRPA").text( spot_positions[1]['position_amount'].toFixed(4) ) ;
+	$("#HRPR").text( spot_positions[1]['position_rate'].toFixed(4) ) ;
 
-	$("#HTPA").text( spot_positions[2]['position_amount'] ) ;
-	$("#HTPR").text( spot_positions[2]['position_rate'] ) ;
+	$("#HTPA").text( spot_positions[2]['position_amount'].toFixed(4) ) ;
+	$("#HTPR").text( spot_positions[2]['position_rate'].toFixed(4) ) ;
 
 }
 
