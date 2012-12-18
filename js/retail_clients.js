@@ -22,7 +22,7 @@ retail_client_class.prototype.set_exchange_rate = function (pair_id) {
 	sell = get_price ( $('#bf_sell_'+pair_id).val(),  $('#pips_sell_'+pair_id).val());
 	buy = get_price ( $('#bf_buy_'+pair_id).val(),  $('#pips_buy_'+pair_id).val ());
 	
-	if( !validate_price(sell) || !validate_price(buy) || !validate(pair_id) ) {
+	if( !validate_price(sell) || !validate_price(buy) || !validate_pair_id (pair_id) ) {
 		return ;
 	}
 	
@@ -53,9 +53,9 @@ retail_client_class.prototype.update = function (data) {
 	$('#retail_sell_2').text (data['amount'][2]['sell']);
 	$('#retail_buy_2').text (data['amount'][2]['buy']);
 	$('#total_volume_1').text ( parseFloat (data['amount'][1]['sell']) + parseFloat (data['amount'][1]['buy']));
-	$('#net_position_1').text ( parseFloat (-data['amount'][1]['sell']) +  parseFloat ( data['amount'][1]['buy']));
+	$('#net_position_1').text ( parseFloat (data['amount'][1]['sell']) +  parseFloat ( -data['amount'][1]['buy']));
 	$('#total_volume_2').text ( parseFloat (data['amount'][2]['sell']) +  parseFloat ( data['amount'][2]['buy']));
-	$('#net_position_2').text ( parseFloat (-data['amount'][2]['sell']) +  parseFloat ( data['amount'][2]['buy']));
+	$('#net_position_2').text ( parseFloat (data['amount'][2]['sell']) +  parseFloat ( -data['amount'][2]['buy']));
 }
 
 function swap (pair) {

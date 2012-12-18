@@ -59,7 +59,7 @@
 		// update in insert_fx_deal, update_balances
 		function make_corporate_deal ($offer) {
 			$bank = $this->get_user_bank ($offer['user_id']);
-			if ($offer['deal'] == 1) $offer['amount'] = -$offer['amount'];
+			if ($offer['deal'] != 1) $offer['amount'] = -$offer['amount'];
 		
 			$deal = 	array ();
 			$deal['user_id'] = $offer['user_id'];
@@ -84,7 +84,7 @@
 			$this->update_total_day_amount ($offer->user_id, $offer->pair_id, $offer->deal, $new_amount);
 		
 			$bank = $this->get_user_bank ($offer->user_id);
-			if ($offer->deal == 1) $offer->amount = -$offer->amount;
+			if ($offer->deal != 1) $offer->amount = -$offer->amount;
 		
 			$deal = array ();
 			$deal['user_id'] = $offer->user_id;

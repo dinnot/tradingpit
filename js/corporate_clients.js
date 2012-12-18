@@ -165,7 +165,7 @@ function timer () {
 				rem = 0;
 				
 			if (!used) {
-				if (rem % 2 == 0) {
+				if (rem % 2 == 1) {
 					var menu_id = $('#clients_menu');
 					menu_id.css ('background-color', '#000');
 				}
@@ -183,6 +183,11 @@ function timer () {
 				  
 				  delete corporate_clients.timer_queue[i];
 			}
+		}
+		
+		if (used == 0) {
+				var menu_id = $('#clients_menu');
+				menu_id.css ('background-color', '');		
 		}
 	}
 }

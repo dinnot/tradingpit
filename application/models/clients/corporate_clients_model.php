@@ -29,7 +29,7 @@
 			for ($i = 0; isset ($offers[$i]) ; $i++) {
 				if ($time - $offers[$i]['display_date'] <= $seconds) {
 					$offers[$i]['currency'] = $pairs[$offers[$i]['currency']];
-					$offers[$i]['deal'] == 1 ? $offers[$i]['deal'] = "SELL" : $offers[$i]['deal'] = "BUY";
+					$offers[$i]['deal'] == 1 ? $offers[$i]['deal'] = "SELLS" : $offers[$i]['deal'] = "BUYS";
 					$offers_to_display[] = $offers[$i];
 				}
 				
