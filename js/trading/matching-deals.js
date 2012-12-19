@@ -5,6 +5,7 @@ var matching_class = function () {
 	
 	this.pull = new Object ();
 	this.pull['get_user_prices'] = 0;
+	this.pull['get_user_deals'] = 0;
 
 	this.prices_hash = new Object ();
 	this.prices = [];
@@ -32,7 +33,9 @@ matching_class.prototype = {
 			data : {'price_id': price_id},
 			price_id : price_id,
 			_this : this,
+			dataType : 'json',
 			success : function (data, textStatus, jqXHR) {
+					console.log ('dsadas');
 					this._this.hide_user_price (price_id);						
 			}, 
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -41,7 +44,7 @@ matching_class.prototype = {
 		});
 	},
 	update_user_prices :function (prices) {
-		
+
 		var len = prices.length;
 		var hash = Object ();
 
@@ -66,6 +69,20 @@ matching_class.prototype = {
 				this.hide_user_price (this.prices[i]);
 			}
 		}
+	},		
+	update_user_deals : function (data) {
+		
+		deals_id = $('#deals');
+		deals_id.text ('');
+		for (i = 0; i < data.length; i++) {
+			
+			if (data[i]['ccy_pair'] == 1) pair = 'TER/RIK'; // urattt
+			else pair = 'HAT/RIK';
+			
+			deals_id.append (
+			'<tr><td>BFBZ</td><td>BRING FORTH</td><td></td><td>'+pair+'</td><td>'+data[i]['amount_base_ccy']+'</td><td>SPOT</td><td>'+data[i]['price']+'</td><td class="light-blue"></td><td>DONE</td></tr>'
+			);	
+		}
 	},
 	get_user_prices : function () {
 		$.ajax ({
@@ -81,11 +98,27 @@ matching_class.prototype = {
 			}  
 		});	
 	},
+	get_user_deals : function () {
+		$.ajax ({
+			url: base_url+'trading/ebroker/get_user_deals',
+			type : 'POST',
+			_this: this,
+			dataType: 'json',    		
+			success : function (data, textStatus, jqXHR) {
+				this._this.update_user_deals (data);
+			}, 
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(textStatus, errorThrown);
+			}  
+		});
+	},
 	update : function (data) {
 		this.update_user_prices (data['get_user_prices']);
+		this.update_user_deals (data['get_user_deals']);
 	}
 }
 
 var matching = new matching_class ();
 matching.get_user_prices ();
+matching.get_user_deals ();
 Observable.subscribe (matching);

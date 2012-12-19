@@ -70,10 +70,19 @@ class ebroker extends CI_Controller {
 		$this->output->set_content_type('application/jsonp');
 		$this->output->set_output ( json_encode ( $prices ) );			
 	}
+
+	function get_user_deals () {
+		$users_id = $this->user->id;
+		$deals = $this->ebroker_model->get_user_deals ($users_id);
+
+		$this->output->set_content_type('application/jsonp');
+		$this->output->set_output ( json_encode ( $deals ) );			
+	}
 	
 	function remove_user_price () {
 		$users_id = $this->user->id;
 		$price_id = $this->input->get_post ('price_id');
+
 		$this->ebroker_model->remove_user_price ($users_id, $price_id);
 	}
 	

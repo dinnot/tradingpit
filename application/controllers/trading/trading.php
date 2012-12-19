@@ -52,7 +52,8 @@ class Trading extends CI_Controller {
         	return ;
         	
         $ret = $this->Trading_model->createEnquiries($this->user->id, $this->user->bid, 7, $data['pair'], $data['amount'], $settings);
-        $this->load->view("ajax", array("error"=>false, "data"=>$ret));
+        //echo "<pre>";print_r($data);print_r($settings);print_r($ret);echo"</pre>";
+		$this->load->view("ajax", array("error"=>false, "data"=>$ret));
     }
     
     public function respond() {

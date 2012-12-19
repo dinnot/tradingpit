@@ -155,6 +155,7 @@
 			 	
 			 	if ( $user_id != $db[$i]['user_id'] ) {
 				
+
 					$aux = $db[$i]['counter_party'] ;
 					$db[$i]['counter_party'] = $db[$i]['user_id'] ;
 					$db[$i]['user_id'] = $aux;

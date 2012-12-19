@@ -17,6 +17,7 @@
 	
   <script src="<?php print base_url () ?>js/jquery-1.8.2.min.js"></script>
   <script src="<?php print base_url () ?>js/jquery-ui-1.9.1.custom.js"></script>
+	<script src="<?php print base_url () ?>js/validate.js"></script>
   <script src="<?php print base_url () ?>js/observable.js"></script>
   <script src="<?php print base_url () ?>js/corporate_clients.js"></script>
   <script src="<?php print base_url () ?>js/retail_clients.js"></script>
@@ -229,6 +230,11 @@
                 
 
                 </tbody>
+
+                <tbody id="deals">
+              
+                </tbody>
+
               </table>
 
               <div class="on-hold-overlay" id="hold-overlay">
@@ -384,7 +390,7 @@ function buyEnq(idv) {
         data = jQuery.parseJSON(data);
         if(!data.error) {
             $("#enq"+idv+" td").css("background-color", "#B9DFBC");
-            setTimeout(function(){deleteEnq(idv)}, 5000);
+            setTimeout(function(){deleteEnq(idv)}, 1000);
         } else {
             for(i = 0; i < cnt; i++) {
                if(list[i].getId() == idv) {
@@ -413,7 +419,7 @@ function sellEnq(idv) {
         data = jQuery.parseJSON(data);
         if(!data.error) {
             $("#enq"+idv+" td").css("background-color", "#E09F9F");
-            setTimeout(function(){deleteEnq(idv)}, 5000);
+            setTimeout(function(){deleteEnq(idv)}, 1000);
         } else {
             for(i = 0; i < cnt; i++) {
                if(list[i].getId() == idv) {
@@ -442,7 +448,7 @@ function cancelEnq(idv) {
         data = jQuery.parseJSON(data);
         if(!data.error) {
             $("#enq"+idv+" td").css("background-color", "black");
-            setTimeout(function(){deleteEnq(idv)}, 5000);
+            setTimeout(function(){deleteEnq(idv)}, 1000);
         } else {
             for(i = 0; i < cnt; i++) {
                if(list[i].getId() == idv) {
@@ -522,11 +528,11 @@ function enquiry() {
             if(new_sts == 3) {
                 $("#enq"+this.data.id+"_trn").html("");
                 $("#enq"+this.data.id+" td").css("background-color", "#E09F9F");
-                setTimeout(function(){deleteEnq(dis.data.id)}, 5000);
+                setTimeout(function(){deleteEnq(dis.data.id)}, 1000);
             } else if(new_sts == 4) {
                 $("#enq"+this.data.id+"_trn").html("");
                 $("#enq"+this.data.id+" td").css("background-color", "#B9DFBC");
-                setTimeout(function(){deleteEnq(dis.data.id)}, 5000);
+                setTimeout(function(){deleteEnq(dis.data.id)}, 1000);
             }
         }
     }
@@ -630,7 +636,7 @@ function check_existing() {
         for(i in data) {
             if(data[i].status == 0) {
                 $("#enq"+data[i].id+" td").css("background-color", "black");
-                setTimeout(function(){deleteEnq(data[i].id)}, 5000);
+                setTimeout(function(){deleteEnq(data[i].id)}, 1000);
             } else {
                 var j;
                 for(j = 0; j < cnt; j++) {
@@ -642,7 +648,7 @@ function check_existing() {
             }
         }
     });
-    setTimeout("check_existing();", 9000);////////////////////////////////////
+    setTimeout("check_existing();", 1000);////////////////////////////////////
 }
 
 function check_new() {
@@ -678,7 +684,7 @@ function check_new() {
             }
         }
     });
-    setTimeout("check_new();", 4000); ////////////////////////////////////////
+    setTimeout("check_new();", 1000); ////////////////////////////////////////
 }
 $(function() {
     check_new();

@@ -50,6 +50,7 @@ function display_news (news) {
 	for (var i = 0; i < news.length; i++) {
 	
 		var timestamp = news[i]['date'] * 1000;
+
 		date1 = new Date(timestamp).toString('MMM-d');
 		date2 = new Date(timestamp).toString('HH:mm');
 				

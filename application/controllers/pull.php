@@ -106,6 +106,13 @@ class Pull extends CI_Controller {
 		return $prices;			
 	}
 	
+	function get_user_deals () {
+		$users_id = $this->user->id;
+		$prices = $this->ebroker_model->get_user_deals ($users_id);
+
+		return $prices;			
+	}
+	
 	public function get_blotters () {
 		
 		$user_id = $this->user->id ;		

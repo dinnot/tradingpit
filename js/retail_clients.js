@@ -58,9 +58,9 @@ retail_client_class.prototype.update = function (data) {
 	$('#retail_sell_2').text (data['amount'][2]['sell']);
 	$('#retail_buy_2').text (data['amount'][2]['buy']);
 	$('#total_volume_1').text ( parseFloat (data['amount'][1]['sell']) + parseFloat (data['amount'][1]['buy']));
-	$('#net_position_1').text ( parseFloat (-data['amount'][1]['sell']) +  parseFloat ( data['amount'][1]['buy']));
+	$('#net_position_1').text ( parseFloat (data['amount'][1]['sell']) +  parseFloat ( -data['amount'][1]['buy']));
 	$('#total_volume_2').text ( parseFloat (data['amount'][2]['sell']) +  parseFloat ( data['amount'][2]['buy']));
-	$('#net_position_2').text ( parseFloat (-data['amount'][2]['sell']) +  parseFloat ( data['amount'][2]['buy']));
+	$('#net_position_2').text ( parseFloat (data['amount'][2]['sell']) +  parseFloat ( -data['amount'][2]['buy']));
 }
 
 function swap (pair) {

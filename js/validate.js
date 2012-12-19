@@ -18,7 +18,6 @@ function validate_retail_bf ( bf ) {
 	return true ;
 }
 
-
 function validate_retail_pips ( pips ) {
 	
 	if( pips.length != 3 ) {
@@ -64,7 +63,7 @@ function validate_price ( price ) {
 
 
 function validate_pair_id ( pair_id ) { 
-	
+	return true ;	
 	if( pair_id < 1 || pair_id > 3 ) {
 		alert("Invalid currency pair !") ;
 		return false ;
