@@ -1,6 +1,6 @@
 
 function validate_bf ( bf ) {
-
+	return true ;
 	if( bf.length != 3 ) {
 		alert("BF incorect!") ; 
 		return false ; 
@@ -20,7 +20,7 @@ function validate_bf ( bf ) {
 }
 
 function validate_pips ( pips ) {
-	
+		return true ;
 	if( pips.length != 3 ) {
 		alert("PIPS incorect!") ; 
 		return false ; 
@@ -37,7 +37,8 @@ function validate_pips ( pips ) {
 
 
 function validate_price ( price ) {
-
+	return true ;
+		
 	if (!price) price = '0.0000';	
 	if( price.length != 6 ) {
 		alert("Incorect PRICE !") ; 
@@ -62,7 +63,7 @@ function validate_price ( price ) {
 
 
 function validate_pair_id ( pair_id ) { 
-	
+	return true ;	
 	if( pair_id < 1 || pair_id > 3 ) {
 		alert("Invalid currency pair !") ;
 		return false ;

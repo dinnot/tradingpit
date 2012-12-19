@@ -88,10 +88,49 @@ class Ebroker_model extends CI_Model {
 	
 	function get_user_prices ($users_id) {	
 		$this->db->from ('eb_prices')->where ('users_id', $users_id);
+		//$this->db->order_by ('pairs_id', 'desc');
+		
 		return $this->db->get ()->result_array ();
 	}
 	
+	function get_user_deals ($users_id) {	
+		$this->db->from ('deals')->where ('user_id', $users_id);
+		$this->db->where ('is_eb', 1);
+		$this->db->order_by ('id', 'desc');
+		$this->db->limit (6);	
+		return $this->db->get ()->result_array ();
+	}
+	
+	public function get_user_bank ($user_id) {
+		$this->db->from ("users");
+		$this->db->where ("users.id", $user_id);
+		$this->db->join ("jobs", "users.id = jobs.id", "left");			
+		$result = $this->db->get ()->row ();
+		
+		return $result->banks_id;
+	}
+
+	
+	function add_deal ($deal, $users_id, $bank) {
+
+		$add['ccy_pair'] = $deal['pairs_id'];
+		$add['amount_base_ccy'] = $deal['amount'] * 1000000;
+		if ($deal['deal'] == 'sell') $add['amount_base_ccy'] = -$add['amount_base_ccy'];
+		$add['price'] = $deal['price'];
+		$add['counter_party'] = $deal['users_id'];
+		$add['user_id'] = $users_id;
+		$add['value_date'] = time ();
+		$add['trade_date'] = $add['value_date'];
+		$add['type'] = 1;
+		$add['period'] = 1;
+		$add['is_eb'] = 1;
+				
+		$this->db->insert ("deals", $add);
+		$this->trading_model->updateBalances ($users_id, $bank, $add['amount_base_ccy'], $add['ccy_pair'], $add['price']);		
+	}
+	
 	function make_deal ($deal ,$users_id) {
+		$bank = $this->get_user_bank ($users_id);
 		
 		$this->db->from ('eb_prices');
 		$this->db->where (array ('deal'=>$deal['deal'], 'price'=>$deal['price'], 'pairs_id'=>$deal['pairs_id'] ));
@@ -116,6 +155,8 @@ class Ebroker_model extends CI_Model {
 					$amount = $deal['amount'];
 				}
 				// transfer amount
+					$row['amount'] = $amount;
+				$this->add_deal ($row, $users_id, $bank);
 			}
 			else {
 				$this->db->where ('id', $row['id']);

@@ -9,18 +9,18 @@
                
                <div class="info-box">
                 <ul id="1_bf">
-                  <li >3.92</li>
+                  <li>-</li>
                   <li>/</li>
                   <!--<li><span>35/65</span></li>-->
-                  <li>3.92</li>
+                  <li>-</li>
                 </ul>
                 <div class="middle-bar">
-                  <span id="1_pips">30/75</span>
+                  <span id="1_pips">-/-</span>
                   <div class="left-box" onclick=display_form(1,'buy')></div>
                   <div class="right-box" onclick=display_form(1,'sell')></div>
                 </div><!-- end middle-bar -->
                 <div class="second-info-box">
-                  <span id="1_amount">1 / 2</span>
+                  <span id="1_amount">- / -</span>
                 </div><!-- end second-info-box -->
 
                </div><!-- end info-box -->
@@ -53,18 +53,17 @@
                
                <div class="info-box">
                 <ul id="2_bf">
-                  <li>3.92</li>
+                  <li>-</li>
                   <li>/</li>
-                  <!--<li><span>35/65</span></li>-->
-                  <li>3.92</li>
+                  <li>-</li>
                 </ul>
                 <div class="middle-bar">
-                  <span id="2_pips">30/75</span>
+                  <span id="2_pips">-/-</span>
                   <div class="left-box" onclick=display_form(2,'buy')></div>
                   <div class="right-box" onclick=display_form(2,'sell')></div>
                 </div><!-- end middle-bar -->
                 <div class="second-info-box">
-                  <span id="2_amount">1 / 2</span>
+                  <span id="2_amount">- / -</span>
                 </div><!-- end second-info-box -->
 
                </div><!-- end info-box -->

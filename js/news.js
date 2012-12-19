@@ -50,9 +50,9 @@ function display_news (news) {
 	for (var i = 0; i < news.length; i++) {
 	
 		var timestamp = news[i]['date'] * 1000;
-		date1 = new Date(timestamp).toString('dd/MMM');
+		date1 = new Date(timestamp).toString('dd-MM');
 		date2 = new Date(timestamp).toString('HH:mm');
-		
+				
 		
 		$("#news_table").append ("<tr>");
 		$('#news_table tr:last').append($("<td class=\"first\"></td>").text(date1));

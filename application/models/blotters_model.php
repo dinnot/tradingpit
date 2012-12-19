@@ -154,7 +154,7 @@
 				
 					$aux = $db[$i]['counter_party_name'] ;
 					$db[$i]['counter_party_name'] = $db[$i]['user_name'] ;
-					$db[$i]['user_name'] = $db[$i]['counter_party_name'];
+					$db[$i]['user_name'] = $aux;
 					
 					$db[$i]['amount_base_ccy'] *= (-1) ;
 				}
@@ -202,7 +202,7 @@
 				
 					$aux = $db[$i]['counter_party_name'] ;
 					$db[$i]['counter_party_name'] = $db[$i]['user_name'] ;
-					$db[$i]['user_name'] = $db[$i]['counter_party_name'];
+					$db[$i]['user_name'] = $aux;;
 					
 					$db[$i]['amount_base_ccy'] *= (-1) ;
 				}

@@ -11,8 +11,9 @@
   <script src="<?php print base_url() ?>js/jquery-1.8.2.min.js"></script>
   <script src="<?php print base_url() ?>js/jquery-ui-1.9.1.custom.js"></script>
   <script src="<?php print base_url() ?>js/jquery.js"></script>
+  <script src="<?php print base_url() ?>js/date.js"></script>
 
-	<script src="<?php print base_url () ?>js/validate.js"></script> 
+ 
   <script src="<?php print base_url () ?>js/observable.js"></script>
   <script src="<?php print base_url () ?>js/corporate_clients.js"></script>
   <script src="<?php print base_url () ?>js/retail_clients.js"></script>
@@ -306,7 +307,7 @@
                   </tr>
                 </thead>
 
-                <tbody>
+                <tbody id = "FX_deals">
 
  			<?php 
  				$i = -1 ; 
@@ -315,7 +316,7 @@
  			?> 
 		
 				<tr>
-					<td id = "FX<?=$i?>0"> <?php echo $deal['period_name'] ?> </td>
+					<td id = "FX<?=$i?>0"> SPOT </td>
 					<td id = "FX<?=$i?>1"> <?php echo $deal['first_currency'].'/'.$deal['second_currency'] ?> </td>
 					<td id = "FX<?=$i?>2"> <?php echo $deal['amount_base_ccy'] ?> </td>
 					<td id = "FX<?=$i?>3"> <?php echo $deal['price'] ?> </td>
@@ -364,7 +365,7 @@
                   </tr>
                 </thead>
 
-                <tbody>
+                <tbody id = "MM_deals" >
 
                 	<?php 
                 		$i = -1 ; 

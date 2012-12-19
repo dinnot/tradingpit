@@ -54,7 +54,7 @@
 			$this->db->where ("offer_id", $offer['offer_id']);
 			
 			if ($offer['market'] == "FX") {
-				if ($offer['deal'] == "SELL") {
+				if ($offer['deal'] == "SELLS") {
 					$this->db->order_by ("quote", "desc");
 					$this->db->where ("quote >", 0);
 				}
@@ -181,6 +181,7 @@
 		function get_random_client () {
 			$this->db->select ('id');			
 			$this->db->from ('clients');
+			$this->db->where ('id !=', 0);
 			$this->db->order_by ('id', 'random');
 			$this->db->limit (1);
 			$query = $this->db->get ();			
