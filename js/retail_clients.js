@@ -10,8 +10,8 @@ var retail_client_class = function () {
 }
 
 get_price = function (bf, pips) {
-	while (pips.length < 3)
-	 pips = "0" + pips;
+	//while (pips.length < 3)
+	 //	pips = pips + "0";
 
 	return bf + pips;
 }
@@ -22,9 +22,14 @@ retail_client_class.prototype.set_exchange_rate = function (pair_id) {
 	sell = get_price ( $('#bf_sell_'+pair_id).val(),  $('#pips_sell_'+pair_id).val());
 	buy = get_price ( $('#bf_buy_'+pair_id).val(),  $('#pips_buy_'+pair_id).val ());
 	
-	if( !validate_price(sell) || !validate_price(buy) || !validate(pair_id) ) {
+	if( !validate_price(sell) || !validate_price(buy) || !validate_pair_id(pair_id) ) {
 		return ;
 	}
+	
+	if( sell > buy ) {
+		alert("buy > sell !") ;
+		return ; 
+	} 
 	
 	data_in = {
 		'pair_id' : pair_id,

@@ -92,7 +92,7 @@ corporate_clients_class.prototype.display_offer = function (data) {
 	var status = data['status'];	
 	var id = data['offer_id'];
 	if (status == 0) {		
-		quote = '<input type="text" id="input_quote_'+id+'" class="general-td-input" value="0.0000" style="width:45px;">';		
+		quote = '<input type="text" id="input_quote_'+id+'" maxlength = "6" class="general-td-input" value="0.0000" style="width:45px;">';		
 	}
 	else {
 		quote = data['quote'];

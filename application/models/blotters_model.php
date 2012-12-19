@@ -9,7 +9,7 @@
 		}
 		
 		
-		public function get_clients_deals ( $user_id, $type ) {
+		public function get_clients_deals ( $user_id, $type, $limit = 0 ) {
 		
 			
 			$what = array() ;
@@ -53,14 +53,14 @@
 			$this->db->where('user_id',$user_id) ;
 			$this->db->where($where) ;
 			$this->db->order_by('trade_date','desc') ; 
-			$this->db->limit(10,0);
+			if( $limit) $this->db->limit($limit,0);
 			$query = $this->db->get() ;
 		
 			return $query->result_array() ;
 			
 		}
 		
-		public function get_users_deals ( $user_id, $type ) {
+		public function get_users_deals ( $user_id, $type, $limit = 0 ) {
 		
 			$what = array() ; 
 			$what[] = "deals.id as deal_id";
@@ -98,7 +98,7 @@
 				$this->db->join('currencies','ccy_pair = currencies.id','left') ;
 			
 			$this->db->join('periods','periods.id = period','left') ;
-			$this->db->join('users u1','u1.id = user_id','left');
+			$this->db->join('users u1',' u1.id = user_id','left');
 			$this->db->join('users u2', 'u2.id = counter_party','left'); 
 			$this->db->where('type',$type);
 			$this->db->where('counter_party',$user_id );
@@ -107,7 +107,7 @@
 			$this->db->where('type',$type);
 			$this->db->where($where);
 			$this->db->order_by('trade_date','desc');
-			$this->db->limit(10,0);
+			if( $limit) $this->db->limit($limit,0);
 			$query = $this->db->get();
 			
 			return $query->result_array() ;
@@ -116,8 +116,8 @@
 		
 		public function get_fx_deals ( $user_id ) {
 		
-			$clients = $this->get_clients_deals( $user_id, 1 );
-			$users   = $this->get_users_deals ( $user_id, 1 ) ;
+			$clients = $this->get_clients_deals( $user_id, 1, 10 );
+			$users   = $this->get_users_deals ( $user_id, 1, 10 ) ;
 			
 			$db = array() ; 
 			
@@ -149,15 +149,23 @@
 			$N = count($db) ;
 						
 			
-			for( $i = 0 ; $i < $N ; $i++ ) 
-				if ( $user_id != $db[$i]['user_id'] ) {
+			for( $i = 0 ; $i < $N ; $i++ ) { 
+			 	
+			 	$db[$i]['amount_var_ccy'] = round(-$db[$i]['amount_base_ccy'] * $db[$i]['price'],4);
+			 	
+			 	if ( $user_id != $db[$i]['user_id'] ) {
 				
-					$aux = $db[$i]['counter_party_name'] ;
-					$db[$i]['counter_party_name'] = $db[$i]['user_name'] ;
-					$db[$i]['user_name'] = $db[$i]['counter_party_name'];
+					$aux = $db[$i]['counter_party'] ;
+					$db[$i]['counter_party'] = $db[$i]['user_id'] ;
+					$db[$i]['user_id'] = $aux;
+					
+					$aux = $db[$i]['counter_party'] ;
+					$db[$i]['counter_party'] = $db[$i]['user_id'] ;
+					$db[$i]['user_id'] = $aux;
 					
 					$db[$i]['amount_base_ccy'] *= (-1) ;
 				}
+			}
 			
 			
 			return $db ;			
@@ -165,8 +173,8 @@
 
 		public function get_mm_deals ( $user_id ) {
 		
-			$clients = $this->get_clients_deals( $user_id, 2 );
-			$users   = $this->get_users_deals ( $user_id, 2 ) ;
+			$clients = $this->get_clients_deals( $user_id, 2, 10 );
+			$users   = $this->get_users_deals ( $user_id, 2, 10 ) ;
 			
 			$db = array() ; 
 			
@@ -197,15 +205,23 @@
 			$N = count($db) ;
 						
 			
-			for( $i = 0 ; $i < $N ; $i++ ) 
+			for( $i = 0 ; $i < $N ; $i++ ) {
+			
+			 	$db[$i]['amount_var_ccy'] = round(-$db[$i]['amount_base_ccy'] * $db[$i]['price'],4);
+			 	
 				if ( $user_id != $db[$i]['user_id'] ) {
 				
 					$aux = $db[$i]['counter_party_name'] ;
 					$db[$i]['counter_party_name'] = $db[$i]['user_name'] ;
-					$db[$i]['user_name'] = $db[$i]['counter_party_name'];
+					$db[$i]['user_name'] = $aux;;
+					
+					$aux = $db[$i]['counter_party'] ;
+					$db[$i]['counter_party'] = $db[$i]['user_id'] ;
+					$db[$i]['user_id'] = $aux;
 					
 					$db[$i]['amount_base_ccy'] *= (-1) ;
 				}
+			}
 			
 			return $db ;			
 		
@@ -303,9 +319,7 @@
 				$spot_positions[$i]['position_rate'] = $spot_positions[$i]['sumrate'] ;
 				if( $spot_positions[$i]['position_rate'] )
 					$spot_positions[$i]['position_rate'] /= $spot_positions[$i]['position_amount'] ; 	
-					
-//				$spot_positions[$i]['position_rate'] = round($spot_positions[$i]['position_rate'], 4); 	
-				
+						
 			}	
 		
 			return $spot_positions ;
@@ -338,7 +352,6 @@
 			
 			return $capital ;
 		}
-		
 		
 		public function compute_banks_funds ( $user_id ) {
 
@@ -375,7 +388,7 @@
 			return $funds ;
 		}
 	
-	
+		
 		public function compute_fx_positions( $user_id ) {
 			
 		
@@ -400,57 +413,62 @@
 			
 			$fx_positions[0]['amount'] =  $spot_positions[0]['position_amount'] - 
 					              $spot_positions[2]['position_amount'] * 
-						      $spot_positions[2]['position_rate'] ; 
+						      $spot_positions[2]['position_rate']   ; 
 		
 			$fx_positions[1]['amount'] = -$spot_positions[0]['position_amount'] *
-						      $spot_positions[0]['position_rate'] - 
+						      $spot_positions[0]['position_rate']   - 
 					              $spot_positions[1]['position_amount'] * 
-						      $spot_positions[1]['position_rate'] ; 
+						      $spot_positions[1]['position_rate']   ; 
 			
 
 			$fx_positions[2]['amount'] =  $spot_positions[1]['position_amount'] + 
 						      $spot_positions[2]['position_amount'] ; 
 		
-		
-		
-							     
+									     
 		/////////////////////////////////////////   REPORTING CURRENCY       //////////////////////////////////////////////
-		
-@			$fx_positions[0]['rep_ccy'][0] =   $fx_positions[0]['amount']   ; 
-@			$fx_positions[0]['rep_ccy'][1] =   $spot_positions[0]['position_amount'] * 
-@							   $spot_positions[0]['position_rate']   -   
-@						     	   $spot_positions[2]['position_amount'] * 
-@						           $spot_positions[2]['position_rate']   *
-@						           $this->Game_model->getSettingValue('bot_bprice1') ; 
-@			$fx_positions[0]['rep_ccy'][2] =   $spot_positions[0]['position_amount'] /
-@							   $spot_positions[2]['position_rate']   -  
-@							   $spot_positions[2]['position_amount'] ;
-@								   
-@	
-@			$fx_positions[1]['rep_ccy'][0] =  -$spot_positions[0]['position_amount'] *
-@							   $spot_positions[0]['position_rate']   /
-@							   $this->Game_model->getSettingValue('bot_sprice1') -
-@							   $spot_positions[1]['position_amount'] *
-@							   $spot_positions[1]['position_rate']   /
-@							   $this->Game_model->getSettingValue('bot_sprice1') ;
-@			$fx_positions[1]['rep_ccy'][1] =   $fx_positions[1]['amount']   ;
-@			$fx_positions[1]['rep_ccy'][2] =  -$spot_positions[0]['position_amount'] *
-@						           $spot_positions[0]['position_rate']   /
-@						           $spot_positions[1]['position_rate']   -
-@						           $spot_positions[1]['position_amount'] ;
 
-@			$fx_positions[2]['rep_ccy'][0] =   $spot_positions[1]['position_amount'] * 
-@							   $spot_positions[1]['position_rate'] /
-@							   $this->Game_model->getSettingValue('bot_sprice1') + 
-@							   $spot_positions[2]['position_amount'] *
-@							   $spot_positions[2]['position_rate'] ; 
-@			$fx_positions[2]['rep_ccy'][1] =   $spot_positions[1]['position_amount'] *
-@							   $spot_positions[1]['position_rate']   +  
-@							   $spot_positions[2]['position_amount'] *
-@							   $spot_positions[2]['position_rate'] *			   
-@							   $this->Game_model->getSettingValue('bot_bprice1') ; 
-@			$fx_positions[2]['rep_ccy'][2] =   $fx_positions[2]['amount']   ; 
-            
+			$bank_buys_ter_rik  = $this->Game_model->getSettingValue('bot_bprice1') ; 
+			$bank_sells_ter_rik = $this->Game_model->getSettingValue('bot_sprice1') ; 
+			$bank_buys_hat_rik  = $this->Game_model->getSettingValue('bot_bprice2') ;
+			$bank_sells_hat_rik = $this->Game_model->getSettingValue('bot_sprice2') ;  
+			$bank_buys_hat_ter  = $this->Game_model->getSettingValue('bot_bprice3') ;
+			$bank_sells_hat_ter = $this->Game_model->getSettingValue('bot_sprice3') ;  
+
+			$user_buys_ter_rik  = $spot_positions[0]['position_rate'] ;
+			$user_sells_ter_rik = $spot_positions[0]['position_rate'] ;	
+			$user_buys_hat_rik  = $spot_positions[1]['position_rate'] ;
+			$user_sells_hat_rik = $spot_positions[1]['position_rate'] ;	
+			$user_buys_hat_ter  = $spot_positions[2]['position_rate'] ;
+			$user_sells_hat_ter = $spot_positions[2]['position_rate'] ;	
+
+
+			if( !$user_buys_ter_rik  ) $user_buys_ter_rik  = $bank_sells_ter_rik ; 
+			if( !$user_sells_ter_rik ) $user_sells_ter_rik = $bank_buys_ter_rik  ;
+			if( !$user_buys_hat_rik  ) $user_buys_hat_rik  = $bank_sells_hat_rik ;
+			if( !$user_sells_hat_rik ) $user_sells_hat_rik = $bank_buys_hat_rik  ;
+			if( !$user_buys_hat_ter  ) $user_buys_hat_ter  = $bank_sells_hat_ter ;
+			if( !$user_sells_hat_ter ) $user_sells_hat_ter = $bank_buys_hat_ter  ;
+
+		
+			$fx_positions[0]['rep_ccy'][0] =   $fx_positions[0]['amount'] ; 
+			$fx_positions[0]['rep_ccy'][1] =   $spot_positions[0]['position_amount'] * $user_sells_ter_rik     
+						     	  -$spot_positions[2]['position_amount'] * $user_sells_hat_ter * $bank_buys_ter_rik ; 
+			$fx_positions[0]['rep_ccy'][2] =   $spot_positions[0]['position_amount'] / $user_buys_hat_ter 
+							  +$spot_positions[2]['position_amount'] ;
+								   
+	
+			$fx_positions[1]['rep_ccy'][0] =  -$spot_positions[0]['position_amount'] * $user_sells_ter_rik / $bank_sells_ter_rik 
+							  -$spot_positions[1]['position_amount'] * $user_sells_hat_rik / $bank_sells_ter_rik ;
+			$fx_positions[1]['rep_ccy'][1] =   $fx_positions[1]['amount'] ;
+			$fx_positions[1]['rep_ccy'][2] =  -$spot_positions[0]['position_amount'] * $user_sells_ter_rik / $user_buys_hat_rik
+						          -$spot_positions[1]['position_amount'] ;
+
+			$fx_positions[2]['rep_ccy'][0] =   $spot_positions[1]['position_amount'] * $user_sells_hat_rik / $bank_sells_ter_rik  
+							  +$spot_positions[2]['position_amount'] * $user_sells_hat_ter ; 
+			$fx_positions[2]['rep_ccy'][1] =   $spot_positions[1]['position_amount'] * $user_sells_hat_rik
+							  +$spot_positions[2]['position_amount'] * $user_sells_hat_ter * $bank_buys_ter_rik ; 
+			$fx_positions[2]['rep_ccy'][2] =   $fx_positions[2]['amount'] ; 
+           
             
             
             		////////////////////////////////////// POSITION LIMIT /  RATE /   RISK    /////////////////////////////////////

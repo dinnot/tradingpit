@@ -89,14 +89,14 @@ function display_spot_positions( spot_positions ) {
 
 	console.log(spot_positions);
 	
-	$("#TRPA").text( spot_positions[0]['position_amount'].toFixed(4) ) ;
-	$("#TRPR").text( spot_positions[0]['position_rate'].toFixed(4) ) ;
+	$("#TRPA").text( spot_positions[0]['position_amount'] ) ;
+	$("#TRPR").text( "@" + parseFloat( spot_positions[0]['position_rate'] ).toFixed(4) ) ;
 
-	$("#HRPA").text( spot_positions[1]['position_amount'].toFixed(4) ) ;
-	$("#HRPR").text( spot_positions[1]['position_rate'].toFixed(4) ) ;
+	$("#HRPA").text( spot_positions[1]['position_amount'] ) ;
+	$("#HRPR").text( "@" + parseFloat( spot_positions[1]['position_rate'] ).toFixed(4) ) ;
 
-	$("#HTPA").text( spot_positions[2]['position_amount'].toFixed(4) ) ;
-	$("#HTPR").text( spot_positions[2]['position_rate'].toFixed(4) ) ;
+	$("#HTPA").text( spot_positions[2]['position_amount'] ) ;
+	$("#HTPR").text( "@" + parseFloat( spot_positions[2]['position_rate'] ).toFixed(4) ) ;
 
 }
 
@@ -197,49 +197,60 @@ function display_acb( banks_balances ) {
 
 function display_fx_deals ( fx_deals ) {
 	
+	$("#FX_deals").text('');
+	
 	for( var i = 0 ; i < fx_deals.length ; i++ ) {
 		
 			
 		var timestamp = fx_deals[i]['value_date'] * 1000;
-		date1 = new Date(timestamp).toString('dd/MMM');	
+		date1 = new Date(timestamp).toString('dd.MM.yy');
+		
 		timestamp = fx_deals[i]['trade_date'] * 1000;
-		date2 = new Date(timestamp).toString('dd/MMM');	
+		date2 = new Date(timestamp).toString('dd.MM.yy');	
 		
-			
-		$("FX"+i+"0").text( fx_deals[i]['period_name'] ) ; 	
-		$("FX"+i+"1").text( fx_deals[i]['ccy_name'] ) ; 					
-		$("FX"+i+"2").text( fx_deals[i]['amount_base_ccy'] ) ; 					
-		$("FX"+i+"3").text( fx_deals[i]['price'] ) ; 					
-		$("FX"+i+"4").text( Math.abs(fx_deals[i]['amount_base_ccy'] * fx_deals[i]['price']) ) ; 					
-		$("FX"+i+"5").text( fx_deals[i]['counter_party_name'] ) ; 					
-		$("FX"+i+"6").text( date1 ) ; 					
-		$("FX"+i+"7").text( date2 ) ; 					
-		$("FX"+i+"8").text( fx_deals[i]['deal_id'] ) ; 								
-		$("FX"+i+"9").text( fx_deals[i]['user_name'] ) ; 										
-		
+		$("#FX_deals").append( 
+			'<tr>' + 
+			'<td>' + "SPOT" + '</td>' +
+			'<td>' + fx_deals[i]['first_currency'] + '/' + fx_deals[i]['second_currency'] + '</td>' +
+			'<td>' + fx_deals[i]['amount_base_ccy'] + '</td>' +
+			'<td>' + fx_deals[i]['price'] + '</td>' +
+			'<td>' + fx_deals[i]['amount_var_ccy'] + '</td>' +
+			'<td>' + fx_deals[i]['counter_party_name'] + '</td>' +
+			'<td>' + date1 + '</td>' +
+			'<td>' + date2 + '</td>' +
+			'<td>' + fx_deals[i]['deal_id'] + '</td>' +
+			'<td>' + fx_deals[i]['user_name'] + '</td>' +
+			'</tr>'
+		);
 	}
 }
 
 function display_mm_deals( mm_deals ) {
 
+	$("#MM_deals").text('');
+
 	for( var i = 0 ; i < mm_deals.length ; i++ ) {
 		
 		var timestamp = mm_deals[i]['value_date'] * 1000;
-		date1 = new Date(timestamp).toString('dd/MMM');	
+		date1 = new Date(timestamp).toString('dd.MM.yy');
+		
 		timestamp = mm_deals[i]['trade_date'] * 1000;
-		date2 = new Date(timestamp).toString('dd/MMM');	
-		
-		$("MM"+i+"0").text( mm_deals[i]['period_name'] ) ; 	
-		$("MM"+i+"1").text( mm_deals[i]['ccy_name'] ) ; 					
-		$("MM"+i+"2").text( mm_deals[i]['amount_base_ccy'] ) ; 					
-		$("MM"+i+"3").text( mm_deals[i]['price'] ) ; 					
-		$("MM"+i+"4").text( Math.abs(mm_deals[i]['amount_base_ccy'] * mm_deals[i]['price']) ) ; 					
-		$("MM"+i+"5").text( mm_deals[i]['counter_party_name'] ) ; 					
-		$("MM"+i+"6").text( date1 ) ; 					
-		$("MM"+i+"7").text( date2 ) ; 					
-		$("MM"+i+"8").text( mm_deals[i]['deal_id'] ) ; 								
-		$("MM"+i+"9").text( mm_deals[i]['user_name'] ) ; 										
-		
+		date2 = new Date(timestamp).toString('dd.MM.yy');	
+				
+		$("#MM_deals").append( 
+			'<tr>' + 
+			'<td>' + mm_deals[i]['period_name'] + '</td>' +
+			'<td>' + mm_deals[i]['ccy_name'] + '</td>' +
+			'<td>' + mm_deals[i]['amount_base_ccy'] + '</td>' +
+			'<td>' + mm_deals[i]['price'] + '</td>' +
+			'<td>' + mm_deals[i]['amount_var_ccy'] + '</td>' +
+			'<td>' + mm_deals[i]['counter_party_name'] + '</td>' +
+			'<td>' + date1 + '</td>' +
+			'<td>' + date2 + '</td>' +
+			'<td>' + mm_deals[i]['deal_id'] + '</td>' +
+			'<td>' + mm_deals[i]['user_name'] + '</td>' +
+			'</tr>'
+			);
 	}
 }
 

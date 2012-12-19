@@ -1,5 +1,4 @@
-
-function validate_bf ( bf ) {
+function validate_retail_bf ( bf ) {
 
 	if( bf.length != 3 ) {
 		alert("BF incorect!") ; 
@@ -19,7 +18,8 @@ function validate_bf ( bf ) {
 	return true ;
 }
 
-function validate_pips ( pips ) {
+
+function validate_retail_pips ( pips ) {
 	
 	if( pips.length != 3 ) {
 		alert("PIPS incorect!") ; 
@@ -38,10 +38,13 @@ function validate_pips ( pips ) {
 
 function validate_price ( price ) {
 	
-	if( price.length != 6 ) {
+	if( price.length > 6 ) {
 		alert("Incorect PRICE !") ; 
 		return false ; 
 	}
+	
+	while( price.length < 6 ) 
+		price += "0" ;
 	
 	if( price[1] != '.' ) { 
 		alert("Incorect PRICE!") ; 

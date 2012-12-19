@@ -11,6 +11,7 @@
   <script src="<?php print base_url() ?>js/jquery-1.8.2.min.js"></script>
   <script src="<?php print base_url() ?>js/jquery-ui-1.9.1.custom.js"></script>
   <script src="<?php print base_url() ?>js/jquery.js"></script>
+  <script src="<?php print base_url() ?>js/date.js"></script>
 
  
   <script src="<?php print base_url () ?>js/observable.js"></script>
@@ -71,17 +72,28 @@
               <li class="second">
               	<span class="light-green">TER/RIK</span> 
             	<span id = "TRPA"> <?php echo $spot_positions[0]['position_amount'] ?> </span>
-              	<span id = "TRPR" class="gray">@<?php echo round($spot_positions[0]['position_rate'],4) ?> </span></li>
+              	<span id = "TRPR" class="gray">@<?php if(!$spot_positions[0]['position_rate'] ) 
+              						echo "0.0000" ;
+              					      else
+              						echo round($spot_positions[0]['position_rate'],4) ?> </span></li>
               
               <li>
               	<span class="green">HAT/RIK</span> 
               	<span id = "HRPA"> <?php echo $spot_positions[1]['position_amount'] ?> </span>
-                <span id = "HRPR" class="gray">@<?php echo round($spot_positions[1]['position_rate'],4) ?> </span></li>
+                <span id = "HRPR" class="gray">@<?php 
+                				    if(!$spot_positions[1]['position_rate'] ) 
+              						echo "0.0000" ;
+              					    else
+              					      echo round($spot_positions[1]['position_rate'],4) ?> </span></li>
               
               <li class="last">
               	<span class="green">HAT/TER</span>
               	<span id = "HTPA"> <?php echo $spot_positions[2]['position_amount'] ?> </span>
-                <span id = "HTPR" class="gray">@<?php echo round($spot_positions[2]['position_rate'],4) ?> </span></li>
+                <span id = "HTPR" class="gray">@<?php 
+                			    	   if(!$spot_positions[2]['position_rate'] ) 
+              						echo "0.0000" ;
+              					   else
+              					      echo round($spot_positions[2]['position_rate'],4) ?> </span></li>
             </ul>
           </div><!-- end spot-positions -->
         
@@ -306,7 +318,7 @@
                   </tr>
                 </thead>
 
-                <tbody>
+                <tbody id = "FX_deals">
 
  			<?php 
  				$i = -1 ; 
@@ -315,16 +327,16 @@
  			?> 
 		
 				<tr>
-					<td id = "FX<?=$i?>0"> <?php echo $deal['period_name'] ?> </td>
-					<td id = "FX<?=$i?>1"> <?php echo $deal['first_currency'].'/'.$deal['second_currency'] ?> </td>
-					<td id = "FX<?=$i?>2"> <?php echo $deal['amount_base_ccy'] ?> </td>
-					<td id = "FX<?=$i?>3"> <?php echo $deal['price'] ?> </td>
-					<td id = "FX<?=$i?>4"> <?php echo -$deal['amount_base_ccy'] * $deal['price']  ?> </td>
-					<td id = "FX<?=$i?>5"> <?php echo $deal['counter_party_name'] ?> </td>
-					<td id = "FX<?=$i?>6"> <?php echo date('d.m.y',$deal['value_date']) ?> </td>
-					<td id = "FX<?=$i?>7"> <?php echo date('d.m.y',$deal['trade_date']) ?> </td>
-					<td id = "FX<?=$i?>8"> <?php echo $deal['deal_id'] ?> </td>
-					<td id = "FX<?=$i?>9"> <?php echo $deal['user_name'] ?> </td>
+					<td> SPOT </td>
+					<td> <?php echo $deal['first_currency'].'/'.$deal['second_currency'] ?> </td>
+					<td> <?php echo $deal['amount_base_ccy'] ?> </td>
+					<td> <?php echo $deal['price'] ?> </td>
+					<td> <?php echo $deal['amount_var_ccy'] ?> </td>
+					<td> <?php echo $deal['counter_party_name'] ?> </td>
+					<td> <?php echo date('d.m.y',$deal['value_date']) ?> </td>
+					<td> <?php echo date('d.m.y',$deal['trade_date']) ?> </td>
+					<td> <?php echo $deal['deal_id'] ?> </td>
+					<td> <?php echo $deal['user_name'] ?> </td>
 				</tr>
 		
 			<?php endforeach ?>
@@ -364,7 +376,7 @@
                   </tr>
                 </thead>
 
-                <tbody>
+                <tbody id = "MM_deals" >
 
                 	<?php 
                 		$i = -1 ; 
@@ -373,16 +385,16 @@
                 	?> 
 		
 				<tr>
-					<td id = "MM<?=$i?>0"> <?php echo $deal['period_name'] ?> </td>
-					<td id = "MM<?=$i?>1"> <?php echo $deal['ccy_name'] ?> </td>
-					<td id = "MM<?=$i?>2"> <?php echo $deal['amount_base_ccy'] ?> </td>
-					<td id = "MM<?=$i?>3"> <?php echo $deal['price'] ?> </td>
-					<td id = "MM<?=$i?>4"> <?php echo -$deal['amount_base_ccy'] * $deal['price']  ?> </td>
-					<td id = "MM<?=$i?>5"> <?php echo $deal['counter_party_name'] ?> </td>
-					<td id = "MM<?=$i?>6"> <?php echo date('d.m.y',$deal['value_date']) ?> </td>
-					<td id = "MM<?=$i?>7"> <?php echo date('d.m.y',$deal['trade_date']) ?> </td>
-					<td id = "MM<?=$i?>8"> <?php echo $deal['deal_id'] ?> </td>
-					<td id = "MM<?=$i?>9"> <?php echo $deal['user_name'] ?> </td>
+					<td> <?php echo $deal['period_name'] ?> </td>
+					<td> <?php echo $deal['ccy_name'] ?> </td>
+					<td> <?php echo $deal['amount_base_ccy'] ?> </td>
+					<td> <?php echo $deal['price'] ?> </td>
+					<td> <?php echo $deal['amount_var_ccy'] ?> </td>
+					<td> <?php echo $deal['counter_party_name'] ?> </td>
+					<td> <?php echo date('d.m.y',$deal['value_date']) ?> </td>
+					<td> <?php echo date('d.m.y',$deal['trade_date']) ?> </td>
+					<td> <?php echo $deal['deal_id'] ?> </td>
+					<td> <?php echo $deal['user_name'] ?> </td>
 				</tr>
 			
 			<?php endforeach ?>
