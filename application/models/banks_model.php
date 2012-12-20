@@ -133,7 +133,20 @@
                         "countries_id"=>2  //hardcoded -> needs to be changed!
                 );
             $this->db->set($data)->insert("users");
-            return $this->db->insert_id();
+            $id =  $this->db->insert_id();
+			$currencies = $this->db->get("currencies");
+			$data = array();
+			foreach($currencies->result() as $currency) {
+				$amount = 0;
+				$data[] = array("users_id"=>$id, "currencies_id"=>$currency->id, "amount"=>$amount);
+				$data2[] = array("users_id"=>$id, "ccy_pair"=>$currency->id, "amount"=>$amount);
+			}
+			$this->db->insert_batch("users_balances", $data);
+			$this->db->insert_batch("users_fx_positions", $data2);
+			$this->db->insert_batch("users_mm_positions", $data);
+			$this->db->insert_batch("users_fx_pnl", $data);
+			$this->db->insert_batch("users_mm_pnl", $data);
+			return $id;
         }
         
         public function createBank($owners, $ceo = false) {
