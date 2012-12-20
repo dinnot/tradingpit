@@ -17,7 +17,7 @@ matching_class.prototype = {
 		if (price['pairs_id'] == 1) pair = 'TER/RIK'; // urattt
 		else pair = 'HAT/RIK';
 		match_id.prepend (
-			'<tr id="matching_'+price['id']+'"><td>'+price['deal']+'</td><td>'+pair+'</td><td id="amount_'+price['id']+'">'+ parseInt (price['amount']) * 1000000+'</td><td>SPOT</td><td>'+price['price']+'</td><td class="light-blue"></td><td onclick="matching.remove_user_price('+price['id']+')">CANCEL</td></tr>'
+			'<tr id="matching_'+price['id']+'"><td>'+price['deal']+'</td><td>'+pair+'</td><td id="amount_'+price['id']+'">'+ display_amount(parseInt (price['amount']) * 1000000) +'</td><td>SPOT</td><td>'+price['price']+'</td><td class="light-blue"></td><td onclick="matching.remove_user_price('+price['id']+')">CANCEL</td></tr>'
 			);	
 	},
 	hide_user_price : function (price_id) {
@@ -54,7 +54,7 @@ matching_class.prototype = {
 				amount_id = $('#amount_'+prices[i]['id']);
 				prices[i]['amount']*= 1000000;
 				if (amount_id.text () != prices[i]['amount'] )
-					amount_id.text (prices[i]['amount']);
+					amount_id.text( display_amount(prices[i]['amount']));
 			}
 			else {
 				this.prices_hash[prices[i]['id']] = 1;
@@ -81,7 +81,7 @@ matching_class.prototype = {
 			else pair = 'HAT/RIK';
 			
 			deals_id.append (
-			'<tr><td></td><td>'+pair+'</td><td>'+data[i]['amount_base_ccy']+'</td><td>SPOT</td><td>'+data[i]['price']+'</td><td class="light-blue"></td><td>DONE</td></tr>'
+			'<tr><td></td><td>'+pair+'</td><td>'+display_amount(data[i]['amount_base_ccy'])+'</td><td>SPOT</td><td>'+data[i]['price']+'</td><td class="light-blue"></td><td>DONE</td></tr>'
 			);	
 		}
 	},

@@ -115,9 +115,9 @@ function display_fx_positions ( fx_positions ) {
 		$("#PL"+i+"1").text( display_amount(fx_positions[i]['limit'][1] ) ) ; 
 		$("#PL"+i+"2").text( display_amount(fx_positions[i]['limit'][2] ) ) ;
 	
-		$("#PRT"+i+"0").text( display_amount(fx_positions[i]['rate'][0] ) ) ;
-		$("#PRT"+i+"1").text( display_amount(fx_positions[i]['rate'][1] ) ) ; 
-		$("#PRT"+i+"2").text( display_amount(fx_positions[i]['rate'][2] ) ) ;
+		$("#PRT"+i+"0").text( fx_positions[i]['rate'][0] ) ;
+		$("#PRT"+i+"1").text( fx_positions[i]['rate'][1] ) ; 
+		$("#PRT"+i+"2").text( fx_positions[i]['rate'][2] ) ;
 		
 		$("#PRK"+i+"0").text( fx_positions[i]['risk'][0] ) ;
 		$("#PRK"+i+"1").text( fx_positions[i]['risk'][1] ) ; 
