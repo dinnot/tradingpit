@@ -52,14 +52,16 @@ corporate_clients_class.prototype.get_status = function (status, id) {
 corporate_clients_class.prototype.send_quote = function (id) {
 	
 	url = base_url+'trading/clients/set_quote';
+	price = $('#input_quote_'+id).val ();
+	if (!price) price = '0.0000';
 	
-	if( !validate_price( $('#input_quote_'+id).val () ) ) {
+	if( !validate_price( price ) ) {
 		return ;
 	} 
 	
 	dataIn = {
 		offer_id : id,
-		quote : $('#input_quote_'+id).val ()
+		quote : price
 	};
 	
 	$.ajax({
@@ -67,11 +69,12 @@ corporate_clients_class.prototype.send_quote = function (id) {
 	url: url,
 	data: dataIn,
 	async: true,
+	price: price,
 	dataType: 'json',
 	success: function (data, textStatus, jqXHR) {                    
 		action = '';
 		
-		$('#quote_'+id).text ($('#input_quote_'+id).val ());
+		$('#quote_'+id).text (price);
 		corporate_clients.update_status (id, 1);
 	}, 
 	error: function(XMLHttpRequest, textStatus, errorThrown) {

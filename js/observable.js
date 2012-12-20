@@ -22,7 +22,7 @@ Observable_class.prototype = {
 		for (; i < len; i++) 
 			data_in[ready[i]['name']] = ready[i]['pull'];
 	
-		url = base_url + "/pull";
+		url = base_url + "pull";
 			  	
 		$.ajax ({
 			url : url,
