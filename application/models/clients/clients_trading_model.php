@@ -59,8 +59,8 @@
 		// update in insert_fx_deal, update_balances
 		function make_corporate_deal ($offer) {
 			
-			$new_amount = $this->get_total_day_corporate_amount ($offer->user_id, $offer->pair_id, $offer->deal) + $offer->amount;
-			$this->update_total_day_corporate_amount ($offer->user_id, $offer->pair_id, $offer->deal, $new_amount);
+			$new_amount = $this->get_total_day_corporate_amount ($offer['user_id'], $offer['currency'], $offer['deal']) + $offer['amount'];
+			$this->update_total_day_corporate_amount ($offer['user_id'], $offer['currency'], $offer['deal'], $new_amount);
 		
 			
 			$bank = $this->get_user_bank ($offer['user_id']);
@@ -217,7 +217,7 @@
 			}
 				
 			$query = $query->row ();
-			if ($deal == 1)
+			if ($deal != 1)
 				return $query->sell;
 			return $query->buy;
 		}
@@ -233,7 +233,7 @@
 		function update_total_day_corporate_amount ($user_id, $pair_id, $deal, $amount) {
 			$this->db->where (array ('user_id' => $user_id, 'pair_id'=> $pair_id));
 			$what = array ();
-			if ($deal == 1) $what['sell'] = $amount;			
+			if ($deal != 1) $what['sell'] = $amount;			
 			else $what['buy'] = $amount;
 			$this->db->update ("users_corporate_amount", $what);
 		}
