@@ -71,7 +71,7 @@ function validate_deal_pips ( pips ) {
 	pips = pips.toString() ; 
 	
 	if( pips.length > 2 ) {
-		alert("PIPS incorect!") ; 
+		alert("PIPS incorect!1") ; 
 		return false ; 
 	}
 	
@@ -80,7 +80,7 @@ function validate_deal_pips ( pips ) {
 		
 	for( var i = 0 ; i < 2 ; i++ ) 
 		if( pips[i] > '9' || pips[i] < '0' ) {
-			alert("PIPS incorect!") ; 
+			alert("PIPS incorect!2") ; 
 			return false ; 
 		}
 		
