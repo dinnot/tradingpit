@@ -33,6 +33,7 @@ class Clients extends CI_Controller {
 		$this->load->model('trading_model');
 		$this->load->model('econ_model');
 		$this->load->model('Validate_model');
+		$this->load->model('Blotters_model');
 	}
 	
 	public function index () {		
@@ -41,6 +42,8 @@ class Clients extends CI_Controller {
 		$data['user_id'] = $user_id;
 		$data['retail_rate'] = $this->retail_clients_model->get_all_rate_exchange ($user_id);
 		$data['amount'] = $this->clients_trading_model->get_user_amount ($user_id);
+		$data['flow_positions'] = $this->Blotters_model->get_clients_deals($user_id,1,7) ;
+		$data['fx_total'] = $this->clients_trading_model->get_user_total_amount($user_id);
 				
 		$this->load->view ("clients", $data); 
   }

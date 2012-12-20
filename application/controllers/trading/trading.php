@@ -44,10 +44,10 @@ class Trading extends CI_Controller {
     }
     
     public function add() {
-        $data = $_POST;
+        $data = $this->input->post();
+		print_r($data);
         $this->load->model("Game_model");
         $settings = $this->Game_model->getAllSettings();
-        
         if( !$this->Validate_model->validate_pair_id($data['pair']) ) 
         	return ;
         	

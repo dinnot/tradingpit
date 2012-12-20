@@ -20,6 +20,7 @@
 	<script src="<?php print base_url () ?>js/messages/conversations.js"></script>
 	<script src="<?php print base_url () ?>js/corporate_clients.js"></script>
 	<script src="<?php print base_url () ?>js/retail_clients.js"></script>
+	<script src="<?php print base_url () ?>js/flow_positions.js"></script>
 
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -123,14 +124,32 @@
                       <thead>
                         <tr>
                           <th class="first">Code</th>
-                          <th>Date</th>
-                          <th>Time</th>
-                          <th>Rate</th>
+                          <th>Date </th> 
+                          <th>Time </th>
+                          <th>User </th>
+                          <th>Swift </th>
+                          <th>Period </th>
+                          <th>Rate </th>
                           <th class="last">Volume</th>
                         </tr>
                       </thead>
 
                       <tbody id="deals">
+			
+				<?php foreach ( $flow_positions as $flow ) : ?> 
+				
+				<tr>
+				<td> <?php echo $flow['counter_party_name'] ?> </td>
+				<td> <?php echo date('d.m.y',$flow['value_date']) ?> </td>
+				<td> <?php echo date('H:i',$flow['value_date']) ?> </td>
+				<td> <?php echo $flow['user_name'] ?> </td>
+				<td> <?php echo $flow['first_currency'].'/'.$flow['second_currency'] ?>  </td>
+				<td> <?php echo $flow['period_name'] ?>  </td>
+				<td> <?php echo $flow['price'] ?> </td>
+				<td> <?php echo $flow['amount_base_ccy'] ?> </td>
+				</tr>
+   		                
+   		                <?php endforeach ?>
 
                       </tbody>
                     </table>
@@ -149,18 +168,18 @@
                       <tbody>
                         <tr>
                           <td class="first">Fx</td>
-                          <td></td>
-                          <td></td>
+                          <td id = "daily_fx"></td>
+                          <td id = "total_fx"> <?php echo $fx_total[1] ?></td>
                         </tr>
                         <tr>
                           <td class="first">MM</td>
-                          <td></td>
-                          <td></td>
+                          <td id = "daily_mm"></td>
+                          <td id = "total_mm"></td>
                         </tr>
                         <tr>
                           <td class="first">PnL</td>
-                          <td></td>
-                          <td></td>
+                          <td id = "daily_pnl"></td>
+                          <td id = "total_pnl"></td>
                         </tr>
                       </tbody>
                     </table>
