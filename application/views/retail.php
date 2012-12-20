@@ -17,13 +17,13 @@
               <div class="retail-box-white-zone">
 
 								<div class="top-values">
-                  <span class="top-value left"><input type="text" value="<?php print $retail_rate[1]['sell_bf'] ?>" style="width:20px;" id="bf_sell_1"/></span>
-                  <span class="top-value right"><input type="text" value="<?php print $retail_rate[1]['buy_bf'] ?>" style="width:20px;" id="bf_buy_1"/></span>
+                  <span class="top-value left"><input type="text" value="<?php print $retail_rate[1]['sell_bf'] ?>" style="width:20px;" id="bf_sell_1" onclick = "this.select()" maxlength = "3" /></span>
+                  <span class="top-value right"><input type="text" value="<?php print $retail_rate[1]['buy_bf'] ?>" style="width:20px;" id="bf_buy_1" onclick = "this.select()" maxlength = "3" /></span>
                 </div><!-- end top-values -->
 
                 <div class="middle-values">
-                  <span class="middle-value left"><input type="text" value="<?php print $retail_rate[1]['sell_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_sell_1"/></span>
-                  <span class="middle-value right"><input type="text" value="<?php print $retail_rate[1]['buy_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_buy_1" /></span>
+                  <span class="middle-value left"><input type="text" value="<?php print $retail_rate[1]['sell_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_sell_1" onclick = "this.select()"  maxlength = "3" /></span>
+                  <span class="middle-value right"><input type="text" value="<?php print $retail_rate[1]['buy_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_buy_1" onclick = "this.select()" maxlength = "3" /></span>
                 </div><!-- end middle-values -->
                 <button onClick=retail_client.set_exchange_rate(1)>Send</button>
               </div><!-- end retail-box-white-zone -->
@@ -79,15 +79,15 @@
               <div class="retail-box-white-zone">
 
 								<div class="top-values">
-                  <span class="top-value left"><input type="text" value="<?php print $retail_rate[2]['sell_bf'] ?>" style="width:20px;" id="bf_sell_2"/></span>
-                  <span class="top-value right"><input type="text" value="<?php print $retail_rate[2]['buy_bf'] ?>" style="width:20px;" id="bf_buy_2"/></span>
+                  <span class="top-value left"><input type="text" value="<?php print $retail_rate[2]['sell_bf'] ?>" style="width:20px;" id="bf_sell_2" onclick = "this.select()" maxlength = "3" /></span>
+                  <span class="top-value right"><input type="text" value="<?php print $retail_rate[2]['buy_bf'] ?>" style="width:20px;" id="bf_buy_2" onclick = "this.select()" maxlength = "3" /></span>
                 </div><!-- end top-values -->
 
                 <div class="middle-values">
-                  <span class="middle-value left"><input type="text" value="<?php print $retail_rate[2]['sell_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_sell_2"/></span>
-                  <span class="middle-value right"><input type="text" value="<?php print $retail_rate[2]['buy_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_buy_2" /></span>
+                  <span class="middle-value left"><input type="text" value="<?php print $retail_rate[2]['sell_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_sell_2" onclick = "this.select()" maxlength = "3" /></span>
+                  <span class="middle-value right"><input type="text" value="<?php print $retail_rate[2]['buy_pips'] ?>" style="width:35px;margin-left:8px;" id="pips_buy_2" onclick = "this.select()" maxlength = "3" /></span>
                 </div><!-- end middle-values -->
-                <button onClick=retail_client.set_exchange_rate(2)>Send</button>
+                <button id = "Send" onClick=retail_client.set_exchange_rate(2)>Send</button>
               </div><!-- end retail-box-white-zone -->
 
             </div><!-- end retail-box -->
@@ -119,4 +119,120 @@
 
             </div><!-- end widget tier1 -->
           </div><!-- end main-section-inside -->
+
+
+<script>
+
+$("#bf_sell_1").keyup(   
+
+	function () { 
+		var content = $(this).val() ;
+		if( content.length == 1 ) { 
+			content += "." ;  
+			$(this).val(content) ;
+		}
+		if( content.length == 3 ) {
+			$("#bf_buy_1").val(content) ;	
+			$("#pips_sell_1").select() ; 			
+		
+		}
+	
+	} 
+) ;
+
+
+$("#bf_buy_1").keyup(
+
+	function () { 
+		var content = $(this).val() ;
+		if( content.length == 1 ) { 
+			content += "." ;  
+			$(this).val(content) ;
+		}
+		if( content.length == 3 ) {
+			$("#pips_sell_1").select() ; 			
+		
+		}
+		
+	} 	
+) ;
+
+$("#pips_sell_1").keyup( 
+
+	function () { 
+		var content = $(this).val() ;
+		
+		if( content.length == 3 ) {
+			$("#pips_buy_1").select() ; 			
+		
+		}
+	
+	} 
+) ;
+
+$("#pips_buy_1").keyup( 
+
+	function () { 
+		var content = $(this).val() ;
+			
+	} 
+) ;
+
+$("#bf_sell_2").keyup(   
+
+	function () { 
+		var content = $(this).val() ;
+		if( content.length == 1 ) { 
+			content += "." ;  
+			$(this).val(content) ;
+		}
+		if( content.length == 3 ) {
+			$("#bf_buy_2").val(content);
+			$("#pips_sell_2").select() ; 			
+		
+		}
+	
+	} 
+) ;
+
+
+$("#bf_buy_2").keyup(
+
+	function () { 
+		var content = $(this).val() ;
+		if( content.length == 1 ) { 
+			content += "." ;  
+			$(this).val(content) ;
+		}
+		if( content.length == 3 ) {
+			$("#pips_sell_2").select() ; 			
+		
+		}
+		
+	} 	
+) ;
+
+$("#pips_sell_2").keyup( 
+
+	function () { 
+		var content = $(this).val() ;
+		
+		if( content.length == 3 ) {
+			$("#pips_buy_2").select() ; 			
+		
+		}
+	
+	} 
+) ;
+
+$("#pips_buy_2").keyup( 
+
+	function () { 
+		var content = $(this).val() ;
+			
+	} 
+) ;
+
+
+</script>
 

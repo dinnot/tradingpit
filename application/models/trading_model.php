@@ -81,7 +81,7 @@
                 $deal = $query->row();
                 $this->db->set(array(
                     "ccy_pair"=>$deal->currency_pair,
-                    "amount_base_ccy"=>$deal->amount,
+                    "amount_base_ccy"=>$deal->amount * 1000000,
                     "price"=>$deal->price_sell,
                     "counter_party"=>$deal->second_user,
                     "value_date"=>$now,
@@ -105,7 +105,7 @@
                 $deal = $query->row();
                 $this->db->set(array(
                     "ccy_pair"=>$deal->currency_pair,
-                    "amount_base_ccy"=>0-$deal->amount,
+                    "amount_base_ccy"=>0-$deal->amount * 1000000,
                     "price"=>$deal->price_buy,
                     "counter_party"=>$deal->second_user,
                     "value_date"=>$now,

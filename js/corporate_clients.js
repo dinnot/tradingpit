@@ -13,8 +13,10 @@ function set_time_difference () {
 var corporate_clients_class = function () {
 
 	this.name = "corporate_clients";
-	this.delay = 1000;
+	this.delay = 300;
 	this.timeout = 1000;
+	
+	//this.page = ;
 	
 	this.pull = new Object ();
 	this.pull["get_corporate_offers"] = 0; // nu trimitem nimic la server pentru pull
@@ -90,7 +92,7 @@ corporate_clients_class.prototype.display_offer = function (data) {
 	var status = data['status'];	
 	var id = data['offer_id'];
 	if (status == 0) {		
-		quote = '<input type="text" id="input_quote_'+id+'" class="general-td-input" value="0.0000" style="width:45px;">';		
+		quote = '<input type="text" id="input_quote_'+id+'" maxlength = "6" class="general-td-input" value="0.0000" style="width:45px;">';		
 	}
 	else {
 		quote = data['quote'];
@@ -155,11 +157,24 @@ function timer () {
 	if (corporate_clients.timer_queue.length >= 0) {	
 		time = parseInt (new Date ().getTime () / 1000 + time_difference);
 
-		for (i in corporate_clients.timer_queue) {
+		var used = 0;
+		for (i in corporate_clients.timer_queue) {		
 			var id = corporate_clients.timer_queue[i]['id'];
 			var rem = seconds - (time - corporate_clients.timer_queue[i]['date']);
 			if (rem < 0)
 				rem = 0;
+				
+			if (!used) {
+				if (rem % 2 == 1) {
+					var menu_id = $('#clients_menu');
+					menu_id.css ('background-color', '#000');
+				}
+				else {
+					var menu_id = $('#clients_menu');
+					menu_id.css ('background-color', '');
+				}
+			}
+			used = 1;
 				
 			$('#counter_'+id).text ( rem );
 			if (rem  == 0) {			
@@ -168,6 +183,11 @@ function timer () {
 				  
 				  delete corporate_clients.timer_queue[i];
 			}
+		}
+		
+		if (used == 0) {
+				var menu_id = $('#clients_menu');
+				menu_id.css ('background-color', '');		
 		}
 	}
 }

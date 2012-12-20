@@ -67,12 +67,14 @@ class Clients extends CI_Controller {
   
   function set_quote () {  
   	$offer_id = $this->input->get_post ("offer_id");
-		$user_id = $this->user->id;
+	$user_id = $this->user->id;
   	$quote = $this->input->get_post ("quote");  	
-  	$v = $this->clients_trading_model->set_quote ($offer_id, $user_id, $quote);
+
+	if( !$this->Validate_model->validate_price($quote) || !$this->Validate_model->validate_users_offer($user_id,$offer_id) ) 
+  		 return;
   	
-  	if( !$v || !$this->Validate_model->validate_price($quote) ) 
-  		 $this->load->view("ajax", array("error"=>true));
+  	$this->clients_trading_model->set_quote ($offer_id, $user_id, $quote);
+  	
   }
   
   function set_result () {
@@ -88,11 +90,9 @@ class Clients extends CI_Controller {
 		$rate['buy'] = $this->input->get_post ('buy');
 		
 		
-		if( !$this->Validate_model->Validate_price($rate['sell']) || !$this->Validate_model->Validate_price($rate['buy']) || !$this->Validate_model->Validate_pair_id($rate['pair_id']) ) {
-		
-  		 	$this->load->view("ajax", array("error"=>true));		
+		if( !$this->Validate_model->validate_price($rate['sell']) || !$this->Validate_model->validate_price($rate['buy']) || !$this->Validate_model->validate_pair_id($rate['pair_id']) ) 		
 		        return ; 
-		 }
+		 
 		
 		$this->clients_trading_model->set_exchange_rate ($rate);
 	}

@@ -19,13 +19,6 @@
 		// actualizam in baza de date cand un user stabileste pretul pentru o oferta de corporate
 		function set_quote ($offer_id, $user_id, $quote) {
 		
-			$this->db->from("users_has_corporate_offers");
-			$this->db->where( array( "offer_id" => $offer_id , "user_id" => $user_id ) )  ;
-			$cnt = $this->db->count_all_results(); ;
-			
-			if( $cnt == 0 ) 
-				return -1 ;
-		
 			$this->db->from ("clients_offers")->where ('id', $offer_id);
 			$result = $this->db->get ()->row ();
 
@@ -66,7 +59,7 @@
 		// update in insert_fx_deal, update_balances
 		function make_corporate_deal ($offer) {
 			$bank = $this->get_user_bank ($offer['user_id']);
-			if ($offer['deal'] == 1) $offer['amount'] = -$offer['amount'];
+			if ($offer['deal'] != 1) $offer['amount'] = -$offer['amount'];
 		
 			$deal = 	array ();
 			$deal['user_id'] = $offer['user_id'];
@@ -76,6 +69,7 @@
 			$deal['counter_party'] = - ($offer['client_id']);
 			$deal['value_date'] = time ();
 			$deal['trade_date'] = time ();
+			$deal['period'] = 1;
 		
 			if ($offer['market'] == "FX") {
 				$this->trading_model->updateBalances ($offer['user_id'], $bank, $offer['amount'], $offer['currency'],$offer['quote']);				
@@ -91,7 +85,7 @@
 			$this->update_total_day_amount ($offer->user_id, $offer->pair_id, $offer->deal, $new_amount);
 		
 			$bank = $this->get_user_bank ($offer->user_id);
-			if ($offer->deal == 1) $offer->amount = -$offer->amount;
+			if ($offer->deal != 1) $offer->amount = -$offer->amount;
 		
 			$deal = array ();
 			$deal['user_id'] = $offer->user_id;
@@ -101,6 +95,7 @@
 			$deal['counter_party'] = 0;
 			$deal['value_date'] = $offer->date;
 			$deal['trade_date'] = $offer->date;
+			$deal['period'] = 1;
 			
 			$bank = $this->get_user_bank ($offer->user_id);		
 			$this->trading_model->updateBalances ($offer->user_id, $bank, $offer->amount, $offer->pair_id, $price);				

@@ -41,7 +41,7 @@
 			
 		}
 		
-   	        public function get_blotters() {			
+		public function get_blotters() {			
 	     
 		        $user_id = $this->user->id ;
 			
@@ -50,5 +50,86 @@
 	   		$this->output->set_content_type('application/jsonp');
 			$this->output->set_output ( json_encode ( $data ) );
 	       }
+	       
+	       public function get_spot_positions () {
+	       	
+	       		$user_id = $this->user->id ;
+			
+			$data = $this->Blotters_model->compute_blotters($user_id) ;
+
+	   		$this->output->set_content_type('application/jsonp');
+			$this->output->set_output ( json_encode ( $data ) );
+	       }
+	       
+	        public function get_banks_balances () {
+	       	
+	       		$user_id = $this->user->id ;
+			
+			$data = $this->Blotters_model->get_banks_balances($user_id) ;
+
+	   		$this->output->set_content_type('application/jsonp');
+			$this->output->set_output ( json_encode ( $data ) );
+	       }
+	       
+	        public function get_banks_capital () {
+	       	
+	       		$user_id = $this->user->id ;
+			
+			$data = $this->Blotters_model->compute_banks_capital($user_id) ;
+
+	   		$this->output->set_content_type('application/jsonp');
+			$this->output->set_output ( json_encode ( $data ) );
+	       }
+	       
+	        public function get_banks_funds () {
+	       	
+	       		$user_id = $this->user->id ;
+			
+			$data = $this->Blotters_model->compute_banks_funds($user_id) ;
+
+	   		$this->output->set_content_type('application/jsonp');
+			$this->output->set_output ( json_encode ( $data ) );
+	       }
+	       
+	        public function get_fx_positions () {
+	       	
+	       		$user_id = $this->user->id ;
+			
+			$data = $this->Blotters_model->compute_fx_positions($user_id) ;
+
+	   		$this->output->set_content_type('application/jsonp');
+			$this->output->set_output ( json_encode ( $data ) );
+	       }
+		
+         	public function get_agg () {
+	       	
+	       		$user_id = $this->user->id ;
+			
+			$data = $this->Blotters_model->compute_agg($user_id) ;
+
+	   		$this->output->set_content_type('application/jsonp');
+			$this->output->set_output ( json_encode ( $data ) );
+	       }	       
+	       
+	        public function get_fx_deals () {
+	       	
+	       		$user_id = $this->user->id ;
+			
+			$data = $this->Blotters_model->get_fx_deals($user_id) ;
+
+	   		$this->output->set_content_type('application/jsonp');
+			$this->output->set_output ( json_encode ( $data ) );
+	       }
+	       
+	       	public function get_mm_deals () {
+	       	
+	       		$user_id = $this->user->id ;
+			
+			$data = $this->Blotters_model->get_mm_deals($user_id) ;
+
+	   		$this->output->set_content_type('application/jsonp');
+			$this->output->set_output ( json_encode ( $data ) );
+	       }
+	       
 	}
 ?>

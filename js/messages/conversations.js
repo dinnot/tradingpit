@@ -1,12 +1,13 @@
 var conversations_class = function () {
 	this.convs = Object ();
 	this.last_conv = 0;
+	
 	this.name = 'conversations';
 	this.delay = 500;
 	this.timeout = 1000;
 	
 	this.pull = Object ();
-	this.pull['get_conversations'] = {'last_conv': 0}; // nu trimitem nimic la server pentru pull
+	this.pull['get_conversations'] = {'last_conv': 0}; 
 }
 
 conversations_class.prototype = {

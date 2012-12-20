@@ -89,7 +89,7 @@
            	 ?>
 
 			<tr>
-				<td class="first"> <?php echo date("M-d",$news_item["date"]) ; ?>     </td>  
+				<td class="first"> <?php echo date("d-m",$news_item["date"]) ; ?>     </td>  
 				<td class="red-td"> <?php echo date("H:i",$news_item["date"]) ; ?>     </td>
 				<td> <?php echo $news_item["country_name"] ;  ?>     </td>  
 				<td>	
