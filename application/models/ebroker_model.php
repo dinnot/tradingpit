@@ -51,6 +51,7 @@ class Ebroker_model extends CI_Model {
 		$this->db->order_by ('price', $order);
 		$this->db->limit (1);
 		$query = $this->db->get ();
+//		print $query->num_rows ();
 		if ($query->num_rows () == 0)
 			$result['all'] = '0.0000';
 		else
@@ -68,9 +69,16 @@ class Ebroker_model extends CI_Model {
 		$amount = 0;
 		foreach ($results as $row) {
 			$amount+= $row['amount'];
-			if ($amount > 10)
-				return '> 10';
+			if ($amount >= 100) 
+				break;
 		}
+		
+		if ($amount >= 10)
+			$amount = 'X';
+			
+		if ($amount >= 100)
+			$amount = 'C';
+		
 		return $amount;		
 	}
 	
@@ -95,7 +103,7 @@ class Ebroker_model extends CI_Model {
 			$best[$pairs_id]['available']['buy']['pips'] = $this->get_pips ($price['available']);			
 			$best[$pairs_id]['available']['buy']['amount'] = $this->get_best_amount ($price['available'], $pairs_id, 'buy', $users_id);
 
-			$price = $this->get_best_price ('asc', $pairs_id, 'sell', $users_id);									
+			$price = $this->get_best_price ('asc', $pairs_id, 'sell', $users_id);												
 			$best[$pairs_id]['all']['sell'] = $price['all'];						
 			$best[$pairs_id]['available']['sell']['bf'] = $this->get_bf ($price['available']);				
 			$best[$pairs_id]['available']['sell']['pips'] = $this->get_pips ($price['available']);

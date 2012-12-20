@@ -1,15 +1,33 @@
 var ebroker_class = function () {
 	this.name = "ebroker";
 	this.delay = 500;
-	this.timeout = 1000;
+	this.timeout = 3000;
 	
 	this.pull = new Object ();
 	this.pull['get_best_prices'] = 0;
 	this.hold = 0;
+	
+	this.available_buy = [0, 0, 0];
+	this.available_sell = [0, 0, 0];
 }
 
 ebroker_class.prototype = {
 	add_price : function (pairs_id, deal, amount, price) {
+	
+		if (deal == 'sell') {	
+			if (this.available_buy[pairs_id] != 0 && parseFloat(price) < this.available_buy[pairs_id]) {
+				alert ('It is a better price in the toy!');
+				return ;
+			}
+		}
+		else {
+			if (this.available_sell[pairs_id] != 0 && parseFloat(price) > this.available_sell[pairs_id]) {
+				alert ('It is a better price in the toy!');
+				return ;
+			}
+		}
+		
+	
 		$.ajax ({			
 			type: 'POST',
 			url: base_url+'trading/ebroker/add_price',
@@ -21,6 +39,8 @@ ebroker_class.prototype = {
 	},
 	make_deal : function  (pairs_id, deal, price) {
 		amount = prompt ("Amount : ");
+		if (!amount)
+			return ;
 		
 		$.ajax ({
 			url : base_url+'trading/ebroker/make_deal',
@@ -41,6 +61,9 @@ ebroker_class.prototype.display_best_prices = function (prices) {
 	for (pairs_id = 1; pairs_id <= 2; pairs_id++) {
 		buy_price = prices[pairs_id]['available']['buy']['bf'] + prices[pairs_id]['available']['buy']['pips'];		
 		sell_price = prices[pairs_id]['available']['sell']['bf'] + prices[pairs_id]['available']['sell']['pips'];
+		
+		this.available_buy[pairs_id] = parseFloat (buy_price);		
+		this.available_sell[pairs_id] = parseFloat (sell_price);
 		
 		$('#'+pairs_id+'_bf').text ('');
 		$('#'+pairs_id+'_bf').append (
@@ -93,6 +116,9 @@ ebroker = new ebroker_class ();
 function display_form (pairs_id, deal) {
 	amount = prompt ("Amount");
 	price = prompt ("Price");
+	
+	if (!amount || !price)
+		return ;
 	
 	ebroker.add_price (pairs_id, deal, amount, price);
 }
