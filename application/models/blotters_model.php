@@ -6,6 +6,7 @@
 			
 			$this->load->database() ;  
 			$this->load->model("Game_model");
+			$this->load->model("Validate_model");
 		}
 		
 		

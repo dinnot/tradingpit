@@ -120,5 +120,16 @@ class Pull extends CI_Controller {
 		return $blotters ;
 		
 	}
+	
+	public function get_flow_positions () { 
+		
+		$user_id = $this->user->id ; 
+		
+		$flow_positions['flow_positions'] = $this->Blotters_model->get_clients_deals($user_id,1,7) ;
+		$flow_positions['fx_total'] =  $this->clients_trading_model->get_user_total_amount($user_id);
+		
+		return $flow_positions ;
+		
+	}
 			
 };
