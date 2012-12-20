@@ -18,6 +18,32 @@ function validate_retail_bf ( bf ) {
 	return true ;
 }
 
+
+function validate_deal_bf( bf ) {
+
+	if( bf.length > 4 ) { 
+		alert("PIPS incorect!") ; 
+		return false ; 
+	}
+	
+	while( bf.length < 4 ) 	
+		bf += "0" ; 
+
+	if( bf[1] != '.' ) {
+		alert("BF incorect!") ;
+		return false ; 
+	}
+
+	if( bf[0] > '9' || bf[0] < '0' || bf[2] > '9' || bf[2] < '0' || bf[3] > '9' || bf[3] < '0' ) {
+		alert("BF incorect!") ;
+		return false ; 
+	}
+	
+	return true ; 
+}
+
+
+
 function validate_retail_pips ( pips ) {
 	
 	if( pips.length != 3 ) {
@@ -34,6 +60,25 @@ function validate_retail_pips ( pips ) {
 	return true ; 
 }
 
+function validate_deal_pips ( pips ) {
+
+	if( pips.length > 2 ) {
+		alert("PIPS incorect!") ; 
+		return false ; 
+	}
+	
+	while( pips.length < 2 ) 
+		pips += "0" ;
+		
+	for( var i = 0 ; i < 2 ; i++ ) 
+		if( pips[i] > '9' || pips[i] < '0' ) {
+			alert("PIPS incorect!") ; 
+			return false ; 
+		}
+		
+	return true ;
+
+}
 
 function validate_price ( price ) {
 	
