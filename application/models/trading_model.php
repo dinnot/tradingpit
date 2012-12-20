@@ -5,14 +5,54 @@
             $pair = $this->getCurrenciesByPair($currency_pair); 
             $sumrate = $amount * $rate;
             $this->db->set("amount", "amount + {$amount}", false)->set("sumrate", "sumrate + {$sumrate}", false)->where(array("users_id"=>$user, "ccy_pair"=>$currency_pair))->update("users_fx_positions");
-            
-            //TODO: update PNL when passing 0
-            
+            $query = $this->db->where(array("users_id"=>$user, "ccy_pair"=>$currency_pair))->get('users_fx_positions');
+			//echo $query->num_rows()." - ".$user." - ".$currency_pair."\n";
+            $data = $query->row();
+			//print_r($data);
+			if(($data->amount > 0 && $data->amount - $amount < 0) || ($data->amount < 0 && $data->amount - $amount > 0)) {
+				$rest = $data->amount - 0;
+				$pnlvol = ($data->sumrate - $rest * $rate) * -1;
+				$this->db->set('amount', "amount + {$pnlvol}", false)->where(array('users_id'=>$user, 'currencies_id'=>$pair->currency1))->update('users_fx_pnl');
+				$this->db->set("amount", $rest)->set("sumrate", $rest * $rate)->where(array("users_id"=>$user, "ccy_pair"=>$currency_pair))->update("users_fx_positions");
+			} else if($data->sumrate > 0 && $data->sumrate - $sumrate < 0) {
+				$prate = ($data->sumrate - $sumrate) / ($data->amount - $amount);
+				$pnlvol = ($rate-$prate) * $amount * -1;
+				$this->db->set('amount', "amount + {$pnlvol}", false)->where(array('users_id'=>$user, 'currencies_id'=>$pair->currency1))->update('users_fx_pnl');
+				$this->db->set("sumrate", $data->amount * $prate)->where(array("users_id"=>$user, "ccy_pair"=>$currency_pair))->update("users_fx_positions");
+			}
+           
             //update bank's balance
             $this->db->set("amount", "amount + {$amount}", false)->where(array("banks_id"=>$bank, "currencies_id"=>$pair->currency0))->update("banks_balances");
             $this->db->set("amount", "amount - ".($amount * $rate), false)->where(array("banks_id"=>$bank, "currencies_id"=>$pair->currency1))->update("banks_balances");
         }
         
+		public function getPnl($user, $game_settings) {
+			$q = $this->db->where('users_id', $user)->get('users_fx_pnl');
+			$val = array(); $ret = array();
+			foreach($q->result() as $row) {
+				$val[$row->currencies_id] = $row->amount;
+			}
+			foreach($val as $c=>$a) {
+				$ret[$c]['real'] = $a;
+				foreach($val as $cz=>$az) {
+					if($cz != $c) {
+						$ret[$c]['real'] += $this->convertCurr($cz, $c, $az, $game_settings);
+					}
+				}
+			}
+			return $ret;
+		}
+		
+		public function convertCurr($cr1, $cr2, $am, $game_settings) {
+			if($cp = $this->getPair($cr1, $cr2)) {
+				return $am * $game_settings["bot_bprice{$cp->id}"]->value;
+			} else if($cp = $this->getPair($cr2, $cr1)) {
+				return $am / $game_settings["bot_bprice{$cp->id}"]->value;
+			} else {
+				return 0;
+			}
+		}
+		
         public function createEnquiries($user, $bank, $number, $pair, $amount, $game_settings) {
             $pairs = $this->getPairs();
             $toadd = array();
@@ -167,5 +207,14 @@
             }
             return $ret;
         }
+		
+		public function getPair($c1, $c2) {
+			$q = $this->db->where(array('currency0'=>$c1, 'currency1'=>$c2))->get('currency_pairs');
+			if($q->num_rows <= 0) {
+				return false;
+			} else {
+				return $q->row();
+			}
+		}
     }
 ?>

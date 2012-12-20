@@ -146,7 +146,7 @@
 		
 		function get_user_amount ($user_id) {
 			
-			$amount = array ();
+			$amount = array ();			
 			for ($pair_id = 1; $pair_id <= 2; $pair_id++) {
 				$this->db->from ("users_retail_amount");
 				$this->db->where (array('user_id' => $user_id, 'pair_id' => $pair_id));

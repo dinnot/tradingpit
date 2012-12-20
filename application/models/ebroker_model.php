@@ -13,6 +13,7 @@ class Ebroker_model extends CI_Model {
 			return 0;
 		$this->db->where ('users_id', $users_id);
 		$price['users_id'] = $users_id;
+//		$price['banks_id'] = $this->get_user_bank ($users);
 		$this->db->insert ('eb_prices', $price);
 	}
 
@@ -36,13 +37,26 @@ class Ebroker_model extends CI_Model {
 		$this->db->from ('eb_prices');
 		$this->db->where (array('pairs_id' => $pairs_id, 'deal'=>$deal));
 		$this->db->where ('users_id !=', $users_id);
+
 		$this->db->order_by ('price', $order);
 		$this->db->limit (1);
 		$query = $this->db->get ();
 		if ($query->num_rows () == 0)
-			return '0.0000';
-		$row = $query->row ();
-		return $row->price;
+			$result['available'] = '0.0000';
+		else 
+			$result['available'] = $query->row ()->price;
+		
+		$this->db->from ('eb_prices');
+		$this->db->where (array('pairs_id' => $pairs_id, 'deal'=>$deal));
+		$this->db->order_by ('price', $order);
+		$this->db->limit (1);
+		$query = $this->db->get ();
+		if ($query->num_rows () == 0)
+			$result['all'] = '0.0000';
+		else
+			$result['all'] = $query->row ()->price;
+		
+		return $result;
 	}
 	
 	function get_best_amount ($price, $pairs_id, $deal, $users_id) {
@@ -52,8 +66,11 @@ class Ebroker_model extends CI_Model {
 		$results = $this->db->get ()->result_array ();
 		
 		$amount = 0;
-		foreach ($results as $row) 
+		foreach ($results as $row) {
 			$amount+= $row['amount'];
+			if ($amount > 10)
+				return '> 10';
+		}
 		return $amount;		
 	}
 	
@@ -73,14 +90,16 @@ class Ebroker_model extends CI_Model {
 		$best = array ();
 		for ($pairs_id = 1; $pairs_id <= 2; $pairs_id++) {
 			$price = $this->get_best_price ('desc', $pairs_id, 'buy', $users_id);
-			$best[$pairs_id]['buy']['bf'] = $this->get_bf ($price);			
-			$best[$pairs_id]['buy']['pips'] = $this->get_pips ($price);			
-			$best[$pairs_id]['buy']['amount'] = $this->get_best_amount ($price, $pairs_id, 'buy', $users_id);
+			$best[$pairs_id]['all']['buy'] = $price['all'];
+			$best[$pairs_id]['available']['buy']['bf'] = $this->get_bf ($price['available']);			
+			$best[$pairs_id]['available']['buy']['pips'] = $this->get_pips ($price['available']);			
+			$best[$pairs_id]['available']['buy']['amount'] = $this->get_best_amount ($price['available'], $pairs_id, 'buy', $users_id);
 
 			$price = $this->get_best_price ('asc', $pairs_id, 'sell', $users_id);									
-			$best[$pairs_id]['sell']['bf'] = $this->get_bf ($price);				
-			$best[$pairs_id]['sell']['pips'] = $this->get_pips ($price);
-			$best[$pairs_id]['sell']['amount'] = $this->get_best_amount ($price, $pairs_id, 'sell', $users_id);
+			$best[$pairs_id]['all']['sell'] = $price['all'];						
+			$best[$pairs_id]['available']['sell']['bf'] = $this->get_bf ($price['available']);				
+			$best[$pairs_id]['available']['sell']['pips'] = $this->get_pips ($price['available']);
+			$best[$pairs_id]['available']['sell']['amount'] = $this->get_best_amount ($price['available'], $pairs_id, 'sell', $users_id);
 		}
 		
 		return $best;
@@ -115,7 +134,7 @@ class Ebroker_model extends CI_Model {
 
 		$add['ccy_pair'] = $deal['pairs_id'];
 		$add['amount_base_ccy'] = $deal['amount'] * 1000000;
-		if ($deal['deal'] == 'sell') $add['amount_base_ccy'] = -$add['amount_base_ccy'];
+		if ($deal['deal'] == 'buy') $add['amount_base_ccy'] = -$add['amount_base_ccy'];
 		$add['price'] = $deal['price'];
 		$add['counter_party'] = $deal['users_id'];
 		$add['user_id'] = $users_id;
@@ -126,7 +145,10 @@ class Ebroker_model extends CI_Model {
 		$add['is_eb'] = 1;
 				
 		$this->db->insert ("deals", $add);
-		$this->trading_model->updateBalances ($users_id, $bank, $add['amount_base_ccy'], $add['ccy_pair'], $add['price']);		
+		$this->trading_model->updateBalances ($add['user_id'], $bank, $add['amount_base_ccy'], $add['ccy_pair'], $add['price']);		
+		
+		$bank = $this->get_user_bank ($add['counter_party']);
+		$this->trading_model->updateBalances ($add['counter_party'], $bank, -$add['amount_base_ccy'], $add['ccy_pair'], $add['price']);		
 	}
 	
 	function make_deal ($deal ,$users_id) {
@@ -154,8 +176,9 @@ class Ebroker_model extends CI_Model {
 					$this->db->update ('eb_prices', array ('used'=>0, 'amount'=>($row['amount'] - $deal['amount'])));
 					$amount = $deal['amount'];
 				}
+				
 				// transfer amount
-					$row['amount'] = $amount;
+				$row['amount'] = $amount;
 				$this->add_deal ($row, $users_id, $bank);
 			}
 			else {

@@ -1,5 +1,7 @@
 function validate_retail_bf ( bf ) {
 
+	bf = bf.toString() ;
+	
 	if( bf.length != 3 ) {
 		alert("BF incorect!") ; 
 		return false ; 
@@ -21,6 +23,8 @@ function validate_retail_bf ( bf ) {
 
 function validate_deal_bf( bf ) {
 
+	bf = bf.toString() ;	
+	
 	if( bf.length > 4 ) { 
 		alert("PIPS incorect!") ; 
 		return false ; 
@@ -45,7 +49,9 @@ function validate_deal_bf( bf ) {
 
 
 function validate_retail_pips ( pips ) {
-	
+
+	price = price.toString ();
+		
 	if( pips.length != 3 ) {
 		alert("PIPS incorect!") ; 
 		return false ; 
@@ -61,7 +67,9 @@ function validate_retail_pips ( pips ) {
 }
 
 function validate_deal_pips ( pips ) {
-
+	
+	pips = pips.toString() ; 
+	
 	if( pips.length > 2 ) {
 		alert("PIPS incorect!") ; 
 		return false ; 
@@ -81,6 +89,11 @@ function validate_deal_pips ( pips ) {
 }
 
 function validate_price ( price ) {
+	
+	price = price.toString ();
+	
+	if( price.length == 1 ) 
+		price += ".0000";
 	
 	if( price.length > 6 ) {
 		alert("Incorect PRICE !") ; 
@@ -118,7 +131,3 @@ function validate_pair_id ( pair_id ) {
 }
 
 			
-		
-
-
-

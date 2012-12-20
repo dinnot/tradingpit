@@ -39,17 +39,20 @@ ebroker_class.prototype = {
 
 ebroker_class.prototype.display_best_prices = function (prices) {
 	for (pairs_id = 1; pairs_id <= 2; pairs_id++) {
-		buy_price = prices[pairs_id]['buy']['bf'] + prices[pairs_id]['buy']['pips'];		
-		sell_price = prices[pairs_id]['sell']['bf'] + prices[pairs_id]['sell']['pips'];
+		buy_price = prices[pairs_id]['available']['buy']['bf'] + prices[pairs_id]['available']['buy']['pips'];		
+		sell_price = prices[pairs_id]['available']['sell']['bf'] + prices[pairs_id]['available']['sell']['pips'];
 		
 		$('#'+pairs_id+'_bf').text ('');
 		$('#'+pairs_id+'_bf').append (
-			'<li >'+prices[pairs_id]['buy']['bf']+' </li> <li> / </li> <li> '+prices[pairs_id]['sell']['bf']+'</li>'
+			'<li >'+prices[pairs_id]['available']['buy']['bf']+' </li> <li> / </li> <li> '+prices[pairs_id]['available']['sell']['bf']+'</li>'
 		);
 		$('#'+pairs_id+'_pips').text ('');
-		$('#'+pairs_id+'_pips').append ('<a href="#" onclick="ebroker.make_deal('+pairs_id+', \'buy\', \''+buy_price+'\')">'+prices[pairs_id]['buy']['pips']+'</a>'+'/'+		'<a href="#"  onclick="ebroker.make_deal('+pairs_id+', \'sell\', \''+sell_price+'\')">'+prices[pairs_id]['sell']['pips']+'</a>');
+		$('#'+pairs_id+'_pips').append ('<a href="#" onclick="ebroker.make_deal('+pairs_id+', \'buy\', \''+buy_price+'\')">'+prices[pairs_id]['available']['buy']['pips']+'</a>'+'/'+		'<a href="#"  onclick="ebroker.make_deal('+pairs_id+', \'sell\', \''+sell_price+'\')">'+prices[pairs_id]['available']['sell']['pips']+'</a>');
 						
-		$('#'+pairs_id+'_amount').text (prices[pairs_id]['buy']['amount']+' / '+prices[pairs_id]['sell']['amount']);
+		$('#'+pairs_id+'_amount').text (prices[pairs_id]['available']['buy']['amount']+' / '+prices[pairs_id]['available']['sell']['amount']);
+		
+		
+		$('#best_'+pairs_id).text (prices[pairs_id]['all']['buy']+' / '+prices[pairs_id]['all']['sell']);
 	}
 }
 

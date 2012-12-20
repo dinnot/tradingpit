@@ -26,12 +26,12 @@
                </div><!-- end info-box -->
 
                <div class="evolution">
-                 <span>3.9210 P<span class="evolution-arrow green"></span></span>
+                 <span id="best_1">-</span>
                </div><!-- end evolution -->
 
                <div class="box-actions">
                 <ul>
-                  <li class="first"><a href="#">hold</a></li>
+                 <!-- <li class="first"><a href="#">hold</a></li> -->
                   <li><a href="#" onclick=ebroker.cancel_users_prices(1)>cancel</a></li>
                 </ul>
                </div><!-- end box-actions -->
@@ -69,12 +69,12 @@
                </div><!-- end info-box -->
 
                <div class="evolution">
-                 <span>4.1110 G<span class="evolution-arrow red"></span></span>
+                 <span id="best_2">-</span>
                </div><!-- end evolution -->
 
                <div class="box-actions">
                 <ul>
-                  <li class="first"><a href="#">hold</a></li>
+                  <!-- <li class="first"><a href="#">hold</a></li> -->
                   <li><a href="#" onclick=ebroker.cancel_users_prices(2)>cancel</a></li>
                 </ul>
                </div><!-- end box-actions -->
