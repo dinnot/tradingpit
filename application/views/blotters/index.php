@@ -12,7 +12,7 @@
   <script src="<?php print base_url() ?>js/jquery-ui-1.9.1.custom.js"></script>
   <script src="<?php print base_url() ?>js/jquery.js"></script>
   <script src="<?php print base_url() ?>js/date.js"></script>
-
+  <script src="<?php print base_url() ?>js/validate.js"></script>
  
   <script src="<?php print base_url () ?>js/observable.js"></script>
   <script src="<?php print base_url () ?>js/corporate_clients.js"></script>

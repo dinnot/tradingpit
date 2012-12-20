@@ -40,7 +40,7 @@ function display_flow_positions( flow ) {
 			'<td>' + flow[i]['first_currency'] + '/' + flow[i]['second_currency'] + '</td>' + 
 			'<td>' + flow[i]['period_name'] + '</td>' + 
 			'<td>' + flow[i]['price'] + '</td>' + 
-			'<td>' + flow[i]['amount_base_ccy'] + '</td>' + 
+			'<td>' + display_amount(flow[i]['amount_base_ccy']) + '</td>' + 
 			'</tr>'
 		
 		) ; 
@@ -54,7 +54,7 @@ function display_fx_total ( fx_total ) {
 	if( $('#pair_1').is(":hidden") ) 
 		pair_id = 2 ;
 		
-	$("#total_fx").text( fx_total[pair_id] ) ;
+	$("#total_fx").text( display_amount(fx_total[pair_id]) ) ;
 	
 }
 	

@@ -152,8 +152,8 @@
 			
 			for( $i = 0 ; $i < $N ; $i++ ) { 
 			 	
-			 	$db[$i]['amount_var_ccy'] = round(-$db[$i]['amount_base_ccy'] * $db[$i]['price'],4);
-			 	
+			 	$db[$i]['amount_var_ccy'] = round(-$db[$i]['amount_base_ccy'] * $db[$i]['price']);
+			 
 			 	if ( $user_id != $db[$i]['user_id'] ) {
 				
 
@@ -209,7 +209,7 @@
 			
 			for( $i = 0 ; $i < $N ; $i++ ) {
 			
-			 	$db[$i]['amount_var_ccy'] = round(-$db[$i]['amount_base_ccy'] * $db[$i]['price'],4);
+			 	$db[$i]['amount_var_ccy'] = round(-$db[$i]['amount_base_ccy'] * $db[$i]['price']);
 			 	
 				if ( $user_id != $db[$i]['user_id'] ) {
 				
@@ -337,20 +337,22 @@
 						 
 			if( $banks_currency == 0 ) {
 
-				$capital[0] =  $banks_capital ; 
-				$capital[1] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice1'), 4 ) ;
-				$capital[2] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice3'), 4 ) ;
+				$capital[0] =  round( $banks_capital ) ; 
+				$capital[1] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice1') ) ;
+				$capital[2] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice3') ) ;
+				
 			}
 			elseif ( $banks_currency == 1 ) {
-				$capital[0] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice1'), 4 ) ; 
-				$capital[1] =  $banks_capital ;
-				$capital[2] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice2'), 4 ) ;
+				$capital[0] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice1') ) ; 
+				$capital[1] =  round( $banks_capital ) ;
+				$capital[2] =  round( $banks_capital / $this->Game_model->getSettingValue('bot_sprice2') ) ;
 			}
 			else {
-				$capital[0] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice3'), 4 ) ; 
-				$capital[1] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice2'), 4 ) ; 
-				$capital[2] =  $banks_capital ;
+				$capital[0] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice3') ) ; 
+				$capital[1] =  round( $banks_capital * $this->Game_model->getSettingValue('bot_bprice2') ) ; 
+				$capital[2] =  round( $banks_capital ) ;
 			}
+			
 			
 			return $capital ;
 		}
@@ -479,16 +481,16 @@
 				
 				for( $j = 0 ; $j < 3 ; $j++ ) {
 					
-					$fx_positions[$i]['rep_ccy'][$j] = round( $fx_positions[$i]['rep_ccy'][$j], 4 ) ;
+					$fx_positions[$i]['rep_ccy'][$j] = round( $fx_positions[$i]['rep_ccy'][$j] ) ;
 
 					if( abs($fx_positions[$i]['rep_ccy'][$j]) > abs($fx_positions[$i]['amount']) )
-@						$fx_positions[$i]['rate'][$j] = round($fx_positions[$i]['rep_ccy'][$j] / $fx_positions[$i]['amount'],4) ;  
+@						$fx_positions[$i]['rate'][$j] = round($fx_positions[$i]['rep_ccy'][$j] / $fx_positions[$i]['amount'], 4 ) ;  
 					else
-@						$fx_positions[$i]['rate'][$j] = round($fx_positions[$i]['amount'] / $fx_positions[$i]['rep_ccy'][$j],4) ; 
-						 				
-					$fx_positions[$i]['limit'][$j] = round($percentage * $funds[$j],4) ; 
+@						$fx_positions[$i]['rate'][$j] = round($fx_positions[$i]['amount'] / $fx_positions[$i]['rep_ccy'][$j], 4 ) ; 
+					
+					$fx_positions[$i]['limit'][$j] = round($percentage * $funds[$j]) ; 
+					
 					$fx_positions[$i]['risk'][$j] = "IN LIMIT" ;
-				
 					if( $j != $banks_currency && abs($fx_positions[$i]['rep_ccy'][$j]) > $fx_positions[$i]['limit'][$j] )
 						$fx_positions[$i]['risk'][$j] = "BREAK" ;
 				}	

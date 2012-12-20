@@ -109,7 +109,7 @@ corporate_clients_class.prototype.display_offer = function (data) {
 		'<td>CLNT</td>'+
 		'<td id="name_'+id+'">'+data['name']+'</td>'+
 		'<td id="market_'+id+'">'+data['market']+'</td>'+
-		'<td id="amount_'+id+'">'+data['amount']+'</td>'+
+		'<td id="amount_'+id+'">'+display_amount(data['amount'])+'</td>'+
 		'<td id="ccy_'+id+'">'+data['currency']+'</td>'+
 		'<td id="deal_'+id+'">'+data['deal']+'</td>'+
 		'<td id="period_'+id+'">'+data['period_id']+'</td>'+		

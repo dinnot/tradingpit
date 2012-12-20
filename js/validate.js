@@ -50,7 +50,7 @@ function validate_deal_bf( bf ) {
 
 function validate_retail_pips ( pips ) {
 
-	price = price.toString ();
+	pips = pips.toString ();
 		
 	if( pips.length != 3 ) {
 		alert("PIPS incorect!") ; 
@@ -71,7 +71,7 @@ function validate_deal_pips ( pips ) {
 	pips = pips.toString() ; 
 	
 	if( pips.length > 2 ) {
-		alert("PIPS incorect!") ; 
+		alert("PIPS incorect!1") ; 
 		return false ; 
 	}
 	
@@ -80,7 +80,7 @@ function validate_deal_pips ( pips ) {
 		
 	for( var i = 0 ; i < 2 ; i++ ) 
 		if( pips[i] > '9' || pips[i] < '0' ) {
-			alert("PIPS incorect!") ; 
+			alert("PIPS incorect!2") ; 
 			return false ; 
 		}
 		
@@ -130,4 +130,35 @@ function validate_pair_id ( pair_id ) {
 	return true ;
 }
 
-			
+		
+function display_amount(amount) {
+	
+	semn = "" ; 
+	if( amount < 0 ) { 
+		amount = -amount ; 
+		semn = "-" ; 
+	}
+	
+	amount = amount.toString() ;
+	
+	var r = amount.length % 3 ;
+	var i = 0 ; 
+	var B = "" ;
+	
+	if( r == 0 ) { 
+		if( amount.length < 3 ) 
+			return semn + amount ; 
+		else
+			r = 3 ; 
+	}
+		
+	for( i = 0 ; i < r ; i++ ) 
+		B += amount[i] ;
+	
+	for( ; i < amount.length ; i+= 3 ) 
+		B += "," + amount[i] + amount[i+1] + amount[i+2] ; 
+		
+		
+	return semn + B ;
+}
+		
