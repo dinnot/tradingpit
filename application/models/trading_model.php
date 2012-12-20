@@ -25,7 +25,7 @@
         }
         
 		public function getPnl($user, $game_settings) {
-			$q = $this->db->where('users_id'=>$user)->get('users_fx_pnl');
+			$q = $this->db->where('users_id',$user)->get('users_fx_pnl');
 			$val = array(); $ret = array();
 			foreach($q->results as $row) {
 				$val[$row->currencies_id] = $row->amount;
@@ -42,9 +42,9 @@
 		}
 		
 		public function convertCurr($cr1, $cr2, $am, $game_settings) {
-			if($cp = $this->getPair($cr1, $cr2) {
+			if($cp = $this->getPair($cr1, $cr2) ) {
 				return $am * $game_settings["bot_bprice{$cp->id}"]->value;
-			} else if($cp = $this->getPair($cr2, $cr1) {
+			} else if($cp = $this->getPair($cr2, $cr1)) {
 				return $am / $game_settings["bot_bprice{$cp->id}"]->value;
 			} else {
 				return 0;
