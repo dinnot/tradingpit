@@ -44,11 +44,14 @@ class Trading extends CI_Controller {
     }
     
     public function add() {
-        $data = $_POST;
+        $data = $this->input->post();
+		print_r($data);
         $this->load->model("Game_model");
         $settings = $this->Game_model->getAllSettings();
+		print_r($settings);
         $ret = $this->Trading_model->createEnquiries($this->user->id, $this->user->bid, 7, $data['pair'], $data['amount'], $settings);
-        $this->load->view("ajax", array("error"=>false, "data"=>$ret));
+        print_r($ret);
+		$this->load->view("ajax", array("error"=>false, "data"=>$ret));
     }
     
     public function respond() {
