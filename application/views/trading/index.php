@@ -345,7 +345,7 @@ function trnEnq(idv) {
     
     pbuy = bf + pbuy / 10000;
     
-    if( !validate_deal_pips(pbuy) || !validate_deal_pips(psell) ) 
+    if( !validate_price(pbuy) || !validate_price(psell) ) 
     	return ;
     
     $.ajax({

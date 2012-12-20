@@ -89,13 +89,13 @@ function display_spot_positions( spot_positions ) {
 
 	console.log(spot_positions);
 	
-	$("#TRPA").text( spot_positions[0]['position_amount'] ) ;
+	$("#TRPA").text( display_amount(spot_positions[0]['position_amount']) ) ;
 	$("#TRPR").text( "@" + parseFloat( spot_positions[0]['position_rate'] ).toFixed(4) ) ;
 
-	$("#HRPA").text( spot_positions[1]['position_amount'] ) ;
+	$("#HRPA").text( display_amount(spot_positions[1]['position_amount'] ) ) ;
 	$("#HRPR").text( "@" + parseFloat( spot_positions[1]['position_rate'] ).toFixed(4) ) ;
 
-	$("#HTPA").text( spot_positions[2]['position_amount'] ) ;
+	$("#HTPA").text( display_amount(spot_positions[2]['position_amount']) ) ;
 	$("#HTPR").text( "@" + parseFloat( spot_positions[2]['position_rate'] ).toFixed(4) ) ;
 
 }
@@ -105,19 +105,19 @@ function display_fx_positions ( fx_positions ) {
 	for( var i = 0 ; i < 3 ; i++ ) {
 	
 		$("#PCN"+i).text( fx_positions[i]['ccy_name'] ) ;
-		$("#PAM"+i).text( fx_positions[i]['amount'] ) ;
+		$("#PAM"+i).text( display_amount(fx_positions[i]['amount']) ) ;
 		
-		$("#PRC"+i+"0").text( fx_positions[i]['rep_ccy'][0] ) ;
-		$("#PRC"+i+"1").text( fx_positions[i]['rep_ccy'][1] ) ; 
-		$("#PRC"+i+"2").text( fx_positions[i]['rep_ccy'][2] ) ;
+		$("#PRC"+i+"0").text( display_amount(fx_positions[i]['rep_ccy'][0] ) ) ;
+		$("#PRC"+i+"1").text( display_amount(fx_positions[i]['rep_ccy'][1] ) ) ; 
+		$("#PRC"+i+"2").text( display_amount(fx_positions[i]['rep_ccy'][2] ) ) ;
 	
-		$("#PL"+i+"0").text( fx_positions[i]['limit'][0] ) ;
-		$("#PL"+i+"1").text( fx_positions[i]['limit'][1] ) ; 
-		$("#PL"+i+"2").text( fx_positions[i]['limit'][2] ) ;
+		$("#PL"+i+"0").text( display_amount(fx_positions[i]['limit'][0] ) ) ;
+		$("#PL"+i+"1").text( display_amount(fx_positions[i]['limit'][1] ) ) ; 
+		$("#PL"+i+"2").text( display_amount(fx_positions[i]['limit'][2] ) ) ;
 	
-		$("#PRT"+i+"0").text( fx_positions[i]['rate'][0] ) ;
-		$("#PRT"+i+"1").text( fx_positions[i]['rate'][1] ) ; 
-		$("#PRT"+i+"2").text( fx_positions[i]['rate'][2] ) ;
+		$("#PRT"+i+"0").text( display_amount(fx_positions[i]['rate'][0] ) ) ;
+		$("#PRT"+i+"1").text( display_amount(fx_positions[i]['rate'][1] ) ) ; 
+		$("#PRT"+i+"2").text( display_amount(fx_positions[i]['rate'][2] ) ) ;
 		
 		$("#PRK"+i+"0").text( fx_positions[i]['risk'][0] ) ;
 		$("#PRK"+i+"1").text( fx_positions[i]['risk'][1] ) ; 
@@ -130,41 +130,41 @@ function display_fx_positions ( fx_positions ) {
 
 function display_agg( agg ) {
 
-	$("#ARC0").text( agg['rep_ccy'][0] ) ;
-	$("#ARC1").text( agg['rep_ccy'][1] ) ;
-	$("#ARC2").text( agg['rep_ccy'][2] ) ;
+	$("#ARC0").text( display_amount(agg['rep_ccy'][0] ) ) ;
+	$("#ARC1").text( display_amount(agg['rep_ccy'][1] ) ) ;
+	$("#ARC2").text( display_amount(agg['rep_ccy'][2] ) ) ;
 	
-	$("#AL0").text( agg['limit'][0] ) ;	
-	$("#AL1").text( agg['limit'][1] ) ;	
-	$("#AL2").text( agg['limit'][2] ) ;
+	$("#AL0").text( display_amount(agg['limit'][0] ) ) ;	
+	$("#AL1").text( display_amount(agg['limit'][1] ) ) ;	
+	$("#AL2").text( display_amount(agg['limit'][2] ) ) ;
 	
-	$("#ARK0").text( agg['risk'][0] ) ;		
-	$("#ARK1").text( agg['risk'][1] ) ;		
-	$("#ARK2").text( agg['risk'][2] ) ;		
+	$("#ARK0").text( display_amount(agg['risk'][0] ) ) ;		
+	$("#ARK1").text( display_amount(agg['risk'][1] ) ) ;		
+	$("#ARK2").text( display_amount(agg['risk'][2] ) ) ;		
 
 }
 
 function display_tier1_capital ( capital ) {
 
-	$("#TERCAP").text( capital[0] ) ;
-	$("#RIKCAP").text( capital[1] ) ;
- 	$("#HATCAP").text( capital[2] ) ;
+	$("#TERCAP").text( display_amount(capital[0] ) ) ;
+	$("#RIKCAP").text( display_amount(capital[1] ) ) ;
+ 	$("#HATCAP").text( display_amount(capital[2] ) ) ;
 
 }
 
 function display_tier1_funds ( capital ) {
 
-	$("#TERFUND").text( capital[0] ) ;
-	$("#RIKFUND").text( capital[1] ) ;
- 	$("#HATFUND").text( capital[2] ) ;
+	$("#TERFUND").text( display_amount(capital[0] ) ) ;
+	$("#RIKFUND").text( display_amount(capital[1] ) ) ;
+ 	$("#HATFUND").text( display_amount(capital[2] ) ) ;
 
 }
 
 function display_acb( banks_balances ) {
 	
-	$("TERACB").text( banks_balances[0]['banks_ccy_amount'] ) ;
-	$("RIKACB").text( banks_balances[1]['banks_ccy_amount'] ) ;
-	$("HATACB").text( banks_balances[2]['banks_ccy_amount'] ) ;	
+	$("#TERACB").text( display_amount(banks_balances[0]['banks_ccy_amount'] ) ) ;
+	$("#RIKACB").text( display_amount(banks_balances[1]['banks_ccy_amount'] ) ) ;
+	$("#HATACB").text( display_amount(banks_balances[2]['banks_ccy_amount'] ) ) ;	
 	
 	$("#TEROVD").removeClass("overdraft") ;
 	$("#TEROVD").text("") ;
@@ -212,9 +212,9 @@ function display_fx_deals ( fx_deals ) {
 			'<tr>' + 
 			'<td>' + "SPOT" + '</td>' +
 			'<td>' + fx_deals[i]['first_currency'] + '/' + fx_deals[i]['second_currency'] + '</td>' +
-			'<td>' + fx_deals[i]['amount_base_ccy'] + '</td>' +
+			'<td>' + display_amount(fx_deals[i]['amount_base_ccy']) + '</td>' +
 			'<td>' + fx_deals[i]['price'] + '</td>' +
-			'<td>' + fx_deals[i]['amount_var_ccy'] + '</td>' +
+			'<td>' + display_amount(fx_deals[i]['amount_var_ccy']) + '</td>' +
 			'<td>' + fx_deals[i]['counter_party_name'] + '</td>' +
 			'<td>' + date1 + '</td>' +
 			'<td>' + date2 + '</td>' +
@@ -241,9 +241,9 @@ function display_mm_deals( mm_deals ) {
 			'<tr>' + 
 			'<td>' + mm_deals[i]['period_name'] + '</td>' +
 			'<td>' + mm_deals[i]['ccy_name'] + '</td>' +
-			'<td>' + mm_deals[i]['amount_base_ccy'] + '</td>' +
+			'<td>' + display_amount(mm_deals[i]['amount_base_ccy']) + '</td>' +
 			'<td>' + mm_deals[i]['price'] + '</td>' +
-			'<td>' + mm_deals[i]['amount_var_ccy'] + '</td>' +
+			'<td>' + display_amount(mm_deals[i]['amount_var_ccy']) + '</td>' +
 			'<td>' + mm_deals[i]['counter_party_name'] + '</td>' +
 			'<td>' + date1 + '</td>' +
 			'<td>' + date2 + '</td>' +
@@ -257,5 +257,5 @@ function display_mm_deals( mm_deals ) {
 
 blotters = new blotters_class ();
 
-//get_blotters();
+get_blotters();
 Observable.subscribe (blotters);
