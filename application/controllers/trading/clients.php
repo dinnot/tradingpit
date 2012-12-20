@@ -101,7 +101,7 @@ class Clients extends CI_Controller {
 		
 		$user_id = $this->user->id;
 		$response = $this->retail_clients_model->check_next_client ($user_id);
-		$response['amount'] = $this->clients_trading_model->get_user_amount ($user_id);
+//		$response['amount'] = $this->clients_trading_model->get_user_amount ($user_id);
 		$this->output->set_content_type('application/json');
 		$this->output->set_output ( json_encode ( $response ) );
 	}

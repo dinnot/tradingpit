@@ -106,7 +106,7 @@
 			$users = $this->db->get ()->result_array ();
 			$num = count ($users);
 		
-			if ($num < 2)
+			if ($num < 1)
 				return ;
 						
 			$group = array ();

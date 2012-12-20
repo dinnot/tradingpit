@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
   class Retail_clients_model extends CI_Model {
-
+		
 		function __construct () {
 			parent::__construct();
 		}		
@@ -13,11 +13,15 @@
 			for ($deal = 1; $deal <= 2; $deal++) {
 				for ($pair_id = 1; $pair_id <= 2; $pair_id++) {					
 					$price = $this->get_rate_exchange (array ('user_id'=>$user_id, 'pair_id'=>$pair_id), $deal);
-				
+					if ($price == 0)
+						continue;
+					
 					$this->db->from ('users_has_retail_offers');
 					$this->db->where ( array ('user_id' => $user_id, 'pair_id' => $pair_id, 'deal' => $deal) );
 					$query = $this->db->get ();
+					
 					if ($query->num_rows == 0) {
+						
 						$this->db->insert ("users_has_retail_offers", array ('user_id' => $user_id, 'pair_id' => $pair_id, 'deal' => $deal,
 																															'date' => 0, 'amount' => 0));
 
@@ -31,14 +35,12 @@
 							$this->update_next_client ($user_id, $result->pair_id, $result->deal, array ('date' => 0, 'amount' =>'0'));													
 							
 							$clients[] = $result;
-							$this->clients_trading_model->make_retail_deal ($result, $price);
+							$this->clients_trading_model->make_retail_deal ($result, $result->price);
 							$this->generate_next_client ($user_id, $pair_id, $deal,$price);
 						}
 						
-						if ($result->date == 0) {
-							
+						if ($result->date == 0) 							
 							$this->generate_next_client ($user_id, $pair_id, $deal,$price);
-						}
 					}					
 				}
 			}
@@ -129,23 +131,23 @@
 			if ($pips_difference < 0) $pips_difference = -$pips_difference;
 			
 			$client = $this->get_client_details ($pips_difference);			
+			$client['price'] = $rate;
 			
 			if ($client['amount'] != 0) 
 				$this->update_next_client ($user_id, $pair_id, $deal, $client);			
 		}
 							
 		function get_bf ($price) {
-			$bf = $price * 10; $bf = (int) $bf; $bf/= 10;
-			return number_format($bf, 1, '.', '');
-		}
-		
-		function get_pips ($price) {
-			$bf = $price * 10; $bf = (int) $bf; $bf/= 10;
-			$pips = $price - $bf;
-			$pips = $pips * 10000;
-			$pips = (int) $pips;
-			return $pips;
-		}
+		$price = substr ($price, 0);
+		$price = substr ($price, 0, strlen ($price) - 3);		
+		return $price;
+	}
+	
+	function get_pips ($price) {
+		$price = substr ($price, 0);
+		$price = substr ($price, strlen ($price) - 3);		
+		return $price;
+	}
 							
 		function get_all_rate_exchange ($user_id) {
 			$this->db->from ('users_retail_rate');
