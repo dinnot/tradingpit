@@ -40,12 +40,15 @@ class Trading extends CI_Controller {
         $pairs = $this->Trading_model->getPairs();
         $data = array("pairs"=>$pairs, "amounts"=>array(1,2,3,4,5), "user"=>$this->user->id);
         $this->compute_spot_positions($data);
+		$this->load->model("Game_model");
+        $settings = $this->Game_model->getAllSettings();
+		$data['pnl'] = $this->Trading_model->getPnl($this->user->id, $settings);
         $this->load->view("trading/index", $data);
     }
     
     public function add() {
         $data = $this->input->post();
-		print_r($data);
+		//print_r($data);
         $this->load->model("Game_model");
         $settings = $this->Game_model->getAllSettings();
         if( !$this->Validate_model->validate_pair_id($data['pair']) ) 

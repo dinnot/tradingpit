@@ -695,6 +695,10 @@ $(function() {
 <script>
 	$('#hold-overlay').hide ();
 </script>
-
+<?php
+if(isset($pnl)) {
+	echo"<pre>";print_r($pnl);echo"</pre>";
+}
+?>
 </body>
 </html>

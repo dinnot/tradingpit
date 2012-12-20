@@ -5,8 +5,10 @@
             $pair = $this->getCurrenciesByPair($currency_pair); 
             $sumrate = $amount * $rate;
             $this->db->set("amount", "amount + {$amount}", false)->set("sumrate", "sumrate + {$sumrate}", false)->where(array("users_id"=>$user, "ccy_pair"=>$currency_pair))->update("users_fx_positions");
-            $query = $this->db->where(array("users_id"=>$user, "ccy_pair"=>$currency_pair))->get();
+            $query = $this->db->where(array("users_id"=>$user, "ccy_pair"=>$currency_pair))->get('users_fx_positions');
+			//echo $query->num_rows()." - ".$user." - ".$currency_pair."\n";
             $data = $query->row();
+			//print_r($data);
 			if(($data->amount > 0 && $data->amount - $amount < 0) || ($data->amount < 0 && $data->amount - $amount > 0)) {
 				$rest = $data->amount - 0;
 				$pnlvol = ($data->sumrate - $rest * $rate) * -1;
@@ -25,16 +27,16 @@
         }
         
 		public function getPnl($user, $game_settings) {
-			$q = $this->db->where('users_id',$user)->get('users_fx_pnl');
+			$q = $this->db->where('users_id', $user)->get('users_fx_pnl');
 			$val = array(); $ret = array();
-			foreach($q->results as $row) {
+			foreach($q->result() as $row) {
 				$val[$row->currencies_id] = $row->amount;
 			}
 			foreach($val as $c=>$a) {
-				$ret[$c] = $a;
+				$ret[$c]['real'] = $a;
 				foreach($val as $cz=>$az) {
 					if($cz != $c) {
-						$ret[$c] += $this->convertCurr($cz, $c, $az, $game_settings);
+						$ret[$c]['real'] += $this->convertCurr($cz, $c, $az, $game_settings);
 					}
 				}
 			}
@@ -42,7 +44,7 @@
 		}
 		
 		public function convertCurr($cr1, $cr2, $am, $game_settings) {
-			if($cp = $this->getPair($cr1, $cr2) ) {
+			if($cp = $this->getPair($cr1, $cr2)) {
 				return $am * $game_settings["bot_bprice{$cp->id}"]->value;
 			} else if($cp = $this->getPair($cr2, $cr1)) {
 				return $am / $game_settings["bot_bprice{$cp->id}"]->value;

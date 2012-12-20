@@ -1,4 +1,4 @@
-function validate_retail_bf ( bf ) {
+function validate_retail_bf ( bf ) { return true;
 
 	if( bf.length != 3 ) {
 		alert("BF incorect!") ; 
@@ -18,7 +18,7 @@ function validate_retail_bf ( bf ) {
 	return true ;
 }
 
-function validate_retail_pips ( pips ) {
+function validate_retail_pips ( pips ) { return true;
 	
 	if( pips.length != 3 ) {
 		alert("PIPS incorect!") ; 
@@ -35,7 +35,7 @@ function validate_retail_pips ( pips ) {
 }
 
 
-function validate_price ( price ) {
+function validate_price ( price ) { return true;
 	
 	if( price.length > 6 ) {
 		alert("Incorect PRICE !") ; 
@@ -50,7 +50,7 @@ function validate_price ( price ) {
 		return false ;
 	}
 	
-	for( var i = 0 ; i < 6 ; i++ ) {
+	for( var i = 0 ; i < 6 ; i++ ) { return true;
 		if( i == 1 ) continue ; 
 		if( price[i] > '9' || price[i] < '0' ) {
 			alert("Incorect PRICE !") ;
@@ -62,7 +62,7 @@ function validate_price ( price ) {
 }		
 
 
-function validate_pair_id ( pair_id ) { 
+function validate_pair_id ( pair_id ) {  return true;
 	return true ;	
 	if( pair_id < 1 || pair_id > 3 ) {
 		alert("Invalid currency pair !") ;
