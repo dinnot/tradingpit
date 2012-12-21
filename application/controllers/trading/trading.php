@@ -25,22 +25,15 @@ class Trading extends CI_Controller {
         }
         $this->load->model("Trading_model");
         $this->load->model("Validate_model");
+        $this->load->model("Blotters_model");
         $this->Users_model->updateTrading($this->user->id);
     }
 
-    public function compute_spot_positions ( &$data ) { 
-
-        $user_id = $this->user->id ;
-        $this->load->model("Blotters_model");
-        $data['spot_positions']= $this->Blotters_model->get_users_fx_positions($user_id);
-
-    }
-    
     public function index () {	
         $pairs = $this->Trading_model->getPairs();
         $data = array("pairs"=>$pairs, "amounts"=>array(1,2,3,4,5), "user"=>$this->user->id);
-        $this->compute_spot_positions($data);
-		$this->load->model("Game_model");
+        $data['spot_positions']= $this->Blotters_model->compute_spot_positions($this->user->id);
+        	$this->load->model("Game_model");
         $settings = $this->Game_model->getAllSettings();
 		$data['pnl'] = $this->Trading_model->getPnl($this->user->id, $settings);
         $this->load->view("trading/index", $data);

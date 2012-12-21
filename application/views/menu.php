@@ -1,3 +1,6 @@
+<script> var S = 0; </script>
+<script> var PNL_CCY = 1 ; </script> 
+
 <nav>
   <ul>
     <li class="level-one">
@@ -23,11 +26,22 @@
   <div class="date-time-info trading-page">
     <ul>
       <li class="first light-blue"><a href="#">PnL</a></li>
-      <li id='cr1' class="current"><a href="#" onclick='return makePNL(1);'>TER</a></li>
-      <li id='cr3'><a href="#" onclick='return makePNL(3);'>HAT</a></li>
-      <li id='cr2'><a href="#" onclick='return makePNL(2);'>RIK</a></li>
+      <li id='cr1' class="current"><a href="#" onclick='makePNL(1);'>TER</a></li>
+      <li id='cr3'><a href="#" onclick='makePNL(3);'>HAT</a></li>
+      <li id='cr2'><a href="#" onclick='makePNL(2);'>RIK</a></li>
       <li class="last"><a href="#" id='pnlval'>0</a></li>
     </ul>
   </div><!-- end date-time-info -->
 </nav>
+
+<script>
+	
+function makePNL(v) {
+	
+	PNL_CCY = v ; 
+	$('.current').removeClass('current');
+	$('#cr'+v).addClass('current');
+}
+
+</script>
 

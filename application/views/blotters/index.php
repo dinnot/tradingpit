@@ -413,5 +413,7 @@
 </body>
 
 	<script src="<?php print base_url() ?>js/blotters.js"></script>
-	
+
+
 </html>
+

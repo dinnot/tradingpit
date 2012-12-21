@@ -7,6 +7,7 @@
 			$this->load->database() ;  
 			$this->load->model("Game_model");
 			$this->load->model("Validate_model");
+			$this->load->model("Trading_model");
 		}
 		
 		
@@ -285,16 +286,10 @@
 		
 		public function get_users_fx_pnl ( $user_id ) {
 		
-			$what = array() ;
-			$wha[] = "amount" ;
+			$ret = $this->Trading_model->getPnl($user_id,$this->Game_model->getAllSettings() ) ;
 			
-			$this->db->select($what) ; 
-			$this->db->from('users_fx_pnl');
-			$this->db->where('users_id',$user_id) ;
-			$this->db->order_by('currencies_id');
-			$query = $this->db->get() ;
-			
-			return $query->result_array() ;
+			return $ret ; 	
+		
 		}
 		
 		public function get_users_mm_pnl ( $user_id ) {
@@ -360,31 +355,12 @@
 		public function compute_banks_funds ( $user_id ) {
 
 			$fx_pnl = $this->get_users_fx_pnl($user_id) ;
-			$mm_pnl = $this->get_users_mm_pnl($user_id) ;
+			//$mm_pnl = $this->get_users_mm_pnl($user_id) ;
 			$capital = $this->compute_banks_capital ($user_id) ; 		
 			
-			$pnl[0] = $fx_pnl[0]['amount'] + 
-				  $fx_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
-				  $fx_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice3') + 
-				  $mm_pnl[0]['amount'] + 
-				  $mm_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice1') +
-				  $mm_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice3') + 
-				  
-			$pnl[1] = $fx_pnl[0]['amount'] / $this->Game_model->getSettingValue('bot_sprice1') +  
-				  $fx_pnl[1]['amount'] +
-				  $fx_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice2') + 
-				  $mm_pnl[0]['amount'] / $this->Game_model->getSettingValue('bot_sprice1') +  
-				  $mm_pnl[1]['amount'] +
-				  $mm_pnl[2]['amount'] / $this->Game_model->getSettingValue('bot_sprice2') + 
-			
-			
-			$pnl[2] = $fx_pnl[0]['amount'] * $this->Game_model->getSettingValue('bot_bprice3') + 
-				  $fx_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice2') +
-				  $fx_pnl[2]['amount'] + 
-				  $mm_pnl[0]['amount'] * $this->Game_model->getSettingValue('bot_bprice3') +  
-				  $mm_pnl[1]['amount'] * $this->Game_model->getSettingValue('bot_bprice2') +
-				  $mm_pnl[2]['amount'] ; 
-			
+			$pnl[0] = $fx_pnl[1] ; 
+			$pnl[1] = $fx_pnl[2] ;
+			$pnl[2] = $fx_pnl[3] ;  
 				  
 			for( $i = 0 ; $i < 3 ; $i++ )
 				$funds[$i] = $capital[$i] + $pnl[$i] ; 
@@ -539,7 +515,8 @@
 			
 			$blotters["fx_deals"] = $this->get_fx_deals($user_id);
 			$blotters["mm_deals"] = $this->get_mm_deals($user_id);
-			
+
+			$blotters["fx_pnl"] = $this->get_users_fx_pnl($user_id) ; 
 			
 			return $blotters ;
 		

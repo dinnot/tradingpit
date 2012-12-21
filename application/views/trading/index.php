@@ -68,10 +68,32 @@
         <section class="top-main">
           <div class="spot-positions">
             <ul>
-              <li class="first green-gradient"><span>SPOT POSITIONS</span></li>
-              <li class="second"><span class="light-green">TER/RIK</span> 7.000.000<span class="gray">@3.9210 </span></li>
-              <li><span class="green">HAT/RIK</span> -5.000.000<span class="gray">@4.1180 </span></li>
-              <li class="last"><span class="green">HAT/TER</span>0<span class="gray">@1.0490 </span></li>
+            <li class="first green-gradient"><span>SPOT POSITIONS</span></li>
+              <li class="second">
+              	<span class="light-green">TER/RIK</span> 
+            	<span id = "TRPAT"> <?php echo $spot_positions[0]['position_amount'] ?> </span>
+              	<span id = "TRPRT" class="gray">@<?php if(!$spot_positions[0]['position_rate'] ) 
+              						echo "0.0000" ;
+              					      else
+              						echo round($spot_positions[0]['position_rate'],4) ?> </span></li>
+              
+              <li>
+              	<span class="green">HAT/RIK</span> 
+              	<span id = "HRPAT"> <?php echo $spot_positions[1]['position_amount'] ?> </span>
+                <span id = "HRPRT" class="gray">@<?php 
+                				    if(!$spot_positions[1]['position_rate'] ) 
+              						echo "0.0000" ;
+              					    else
+              					      echo round($spot_positions[1]['position_rate'],4) ?> </span></li>
+              
+              <li class="last">
+              	<span class="green">HAT/TER</span>
+              	<span id = "HTPAT"> <?php echo $spot_positions[2]['position_amount'] ?> </span>
+                <span id = "HTPRT" class="gray">@<?php 
+                			    	   if(!$spot_positions[2]['position_rate'] ) 
+              						echo "0.0000" ;
+              					   else
+              					      echo round($spot_positions[2]['position_rate'],4) ?> </span></li>
             </ul>
           </div><!-- end spot-positions -->
         
@@ -690,17 +712,22 @@ $(function() {
     check_new();
     check_existing();
 });
+
+
+
 </script>
 
 <script>
 	$('#hold-overlay').hide ();
 </script>
+<!--
 <?php
 if(isset($pnl)) {
 	echo"<pre>";print_r($pnl);echo"</pre>";
 	echo"<script>
 	var pnl=".json_encode($pnl).";
 	function makePNL(v) {
+		
 		$('#pnlval').text(pnl[v]);
 		$('.current').removeClass('current');
 		$('#cr'+v).addClass('current');
@@ -709,6 +736,83 @@ if(isset($pnl)) {
 	</script>";
 }
 ?>
+-->
+
+
+<script>
+function get_spot_positions() {
+
+	var url = base_url + "trading/blotters/get_spot_positions" ; 
+	
+	$.ajax({
+		action: 'POST',
+      		url: url,
+     		dataType: 'json',
+      
+      		success: function (data,textStatus, jqXHR) {                    
+				console.log (data);    		
+    			        display_spot_positions (data);
+			 }, 
+	  
+	        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        			//console.log(textStatus, errorThrown);
+      			}
+
+	});
+}
+
+function get_fx_pnl() {
+
+	var url = base_url + "trading/blotters/get_fx_pnl" ; 
+	
+	$.ajax({
+		action: 'POST',
+      		url: url,
+     		dataType: 'json',
+      
+      		success: function (data,textStatus, jqXHR) {                    
+				console.log (data);    		
+    			        display_fx_pnl (data);
+			 }, 
+	  
+	        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        			//console.log(textStatus, errorThrown);
+      			}
+
+	});
+}
+
+
+
+function display_spot_positions( spot_positions ) { 
+
+	console.log(spot_positions);
+	
+	$("#TRPAT").text( display_amount(spot_positions[0]['position_amount']) ) ;
+	$("#TRPRT").text( "@" + parseFloat( spot_positions[0]['position_rate'] ).toFixed(4) ) ;
+
+	$("#HRPAT").text( display_amount(spot_positions[1]['position_amount'] ) ) ;
+	$("#HRPRT").text( "@" + parseFloat( spot_positions[1]['position_rate'] ).toFixed(4) ) ;
+
+	$("#HTPAT").text( display_amount(spot_positions[2]['position_amount']) ) ;
+	$("#HTPRT").text( "@" + parseFloat( spot_positions[2]['position_rate'] ).toFixed(4) ) ;
+	
+}
+
+function display_fx_pnl ( fx_pnl ) { 
+	
+	//alert(PNL_CCY);
+	$('#pnlval').text(fx_pnl[PNL_CCY]);
+	
+}
+
+get_spot_positions();
+get_fx_pnl() ;
+setInterval("get_spot_positions()",1000);
+setInterval("get_fx_pnl()",1000);
+
+</script>
+
 </body>
 </html>
 

@@ -37,6 +37,8 @@
 			
 			$data = $this->Blotters_model->get_blotters($user_id) ;
 			
+			$settings = $this->Game_model->getAllSettings();
+					
 			$this->load->view('blotters/index', $data);
 			
 		}
@@ -46,16 +48,27 @@
 		        $user_id = $this->user->id ;
 			
 			$data = $this->Blotters_model->get_blotters($user_id) ;
+			$settings = $this->Game_model->getAllSettings();
+						
+	   		$this->output->set_content_type('application/jsonp');
+			$this->output->set_output ( json_encode ( $data ) );
+	       }
+	       
+	       public function get_fx_pnl () {
+	       		$user_id = $this->user->id ;
+			
+			$data = $this->Blotters_model->get_users_fx_pnl($user_id) ;
 
 	   		$this->output->set_content_type('application/jsonp');
 			$this->output->set_output ( json_encode ( $data ) );
 	       }
 	       
+	       
 	       public function get_spot_positions () {
 	       	
 	       		$user_id = $this->user->id ;
 			
-			$data = $this->Blotters_model->compute_blotters($user_id) ;
+			$data = $this->Blotters_model->compute_spot_positions($user_id) ;
 
 	   		$this->output->set_content_type('application/jsonp');
 			$this->output->set_output ( json_encode ( $data ) );

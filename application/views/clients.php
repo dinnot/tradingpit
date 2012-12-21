@@ -199,5 +199,38 @@
 	Observable.check ();	
 </script>
 
+<script>	
+function get_fx_pnl() {
+
+	var url = base_url + "trading/blotters/get_fx_pnl" ; 
+	
+	$.ajax({
+		action: 'POST',
+      		url: url,
+     		dataType: 'json',
+      
+      		success: function (data,textStatus, jqXHR) {                    
+				console.log (data);    		
+    			        display_fx_pnl (data);
+			 }, 
+	  
+	        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        			//console.log(textStatus, errorThrown);
+      			}
+
+	});
+}
+
+function display_fx_pnl ( fx_pnl ) { 
+	
+	//alert(PNL_CCY);
+	$('#pnlval').text(fx_pnl[PNL_CCY]);
+	
+}
+
+get_fx_pnl() ;
+setInterval("get_fx_pnl()",1000);
+
+</script>
 
 </html>

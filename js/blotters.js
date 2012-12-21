@@ -74,6 +74,7 @@ function get_blotters() {
 
 function display_blotters ( data ) {
 
+	display_fx_pnl( data['fx_pnl'] ) ; 
 	display_spot_positions( data['spot_positions'] ) ; 
 	display_fx_positions( data['fx_positions'] ) ; 
 	display_agg( data['agg'] ) ; 
@@ -82,7 +83,14 @@ function display_blotters ( data ) {
 	display_acb( data['banks_balances'] ) ; 
 	display_fx_deals( data['fx_deals'] ) ; 
 	display_mm_deals( data['mm_deals'] ) ;
+		
+}
 
+function display_fx_pnl ( fx_pnl ) { 
+	
+	//alert(PNL_CCY);
+	$('#pnlval').text(fx_pnl[PNL_CCY]);
+	
 }
 
 function display_spot_positions( spot_positions ) { 
