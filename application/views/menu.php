@@ -23,10 +23,10 @@
   <div class="date-time-info trading-page">
     <ul>
       <li class="first light-blue"><a href="#">PnL</a></li>
-      <li class="current"><a href="#">TER</a></li>
-      <li><a href="#">HAT</a></li>
-      <li><a href="#">RIK</a></li>
-      <li class="last"><a href="#">0</a></li>
+      <li id='cr1' class="current"><a href="#" onclick='return makePNL(1);'>TER</a></li>
+      <li id='cr3'><a href="#" onclick='return makePNL(3);'>HAT</a></li>
+      <li id='cr2'><a href="#" onclick='return makePNL(2);'>RIK</a></li>
+      <li class="last"><a href="#" id='pnlval'>0</a></li>
     </ul>
   </div><!-- end date-time-info -->
 </nav>

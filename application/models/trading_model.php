@@ -9,7 +9,7 @@
 			//echo $query->num_rows()." - ".$user." - ".$currency_pair."\n";
             $data = $query->row();
 			//print_r($data);
-			if(($data->amount > 0 && $data->amount - $amount < 0) || ($data->amount < 0 && $data->amount - $amount > 0)) {
+			if(($data->amount >= 0 && $data->amount - $amount <= 0) || ($data->amount <= 0 && $data->amount - $amount >= 0)) {
 				$rest = $data->amount - 0;
 				$pnlvol = ($data->sumrate - $rest * $rate) * -1;
 				$this->db->set('amount', "amount + {$pnlvol}", false)->where(array('users_id'=>$user, 'currencies_id'=>$pair->currency1))->update('users_fx_pnl');
@@ -28,15 +28,27 @@
         
 		public function getPnl($user, $game_settings) {
 			$q = $this->db->where('users_id', $user)->get('users_fx_pnl');
+			$q2 = $this->db->where('users_id', $user)->get('users_fx_positions');
 			$val = array(); $ret = array();
 			foreach($q->result() as $row) {
 				$val[$row->currencies_id] = $row->amount;
+				$ret[$row->currencies_id] = 0;
+			}
+			foreach($q2->result() as $row) {
+				if($row->amount != 0) {
+					$pair = $this->getCurrenciesByPair($row->ccy_pair);
+					$mrate = $game_settings["bot_bprice{$row->ccy_pair}"]->value;
+					$rate = $row->sumrate / $row->amount;
+					$pnl_unr = ($mrate - $rate) * $row->amount;
+					$val[$pair->currency1] += (int)$pnl_unr;
+				}
 			}
 			foreach($val as $c=>$a) {
-				$ret[$c]['real'] = $a;
+				$ret[$c] += $a;
 				foreach($val as $cz=>$az) {
 					if($cz != $c) {
-						$ret[$c]['real'] += $this->convertCurr($cz, $c, $az, $game_settings);
+						$ret[$c] += (int)$this->convertCurr($cz, $c, $az, $game_settings);
+						//echo "$c $a - $cz $az - $ret[$c]<br />";
 					}
 				}
 			}
@@ -49,7 +61,9 @@
 			} else if($cp = $this->getPair($cr2, $cr1)) {
 				return $am / $game_settings["bot_bprice{$cp->id}"]->value;
 			} else {
-				return 0;
+				$def = 2;
+				$x = $this->convertCurr($cr1, $def, $am, $game_settings);
+				return $this->convertCurr($def, $cr2, $x, $game_settings);
 			}
 		}
 		

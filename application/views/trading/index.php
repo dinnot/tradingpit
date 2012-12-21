@@ -517,9 +517,9 @@ function enquiry() {
                 html += "<td>"+this.data.pair+"</td>";
                 html += "<td>"+this.data.amount+"</td>";
                 html += "<td>SPOT</td>";
-                html += "<td class='dark-silver-bg one' colspan='2'><button onclick='buyEnq("+this.data.id+")'>"+calcPips(this.data.price_buy)+"</button>";
+                html += "<td class='dark-silver-bg one' colspan='2'><button onclick='sellEnq("+this.data.id+")'>"+calcPips(this.data.price_buy)+"</button>";
                 html += "<span class='decimal-indicator'><span>"+calcBf(this.data.price_buy)+"</span></td>";
-                html += "<td class='dark-silver-bg two'><button onclick='sellEnq("+this.data.id+")'>"+calcPips(this.data.price_sell)+"</button></td>";
+                html += "<td class='dark-silver-bg two'><button onclick='buyEnq("+this.data.id+")'>"+calcPips(this.data.price_sell)+"</button></td>";
                 html += "<td class='quote-td lnk' onclick='cancelEnq("+this.data.id+")'>Nothing there</td>";
                 $("#enq"+this.data.id).html(html);
             }
@@ -698,6 +698,15 @@ $(function() {
 <?php
 if(isset($pnl)) {
 	echo"<pre>";print_r($pnl);echo"</pre>";
+	echo"<script>
+	var pnl=".json_encode($pnl).";
+	function makePNL(v) {
+		$('#pnlval').text(pnl[v]);
+		$('.current').removeClass('current');
+		$('#cr'+v).addClass('current');
+	}
+	makePNL(1);
+	</script>";
 }
 ?>
 </body>
